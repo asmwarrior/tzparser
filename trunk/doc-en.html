@@ -80,70 +80,70 @@
 
 <h1>TzParser</h1>
 
-<h2>Table des matières</h2>
+<h2>Table of Contents</h2>
 
 <ul>
 	<li>
-		<a href='#pres'>Présentation</a>
+		<a href='#pres'>Presentation</a>
 	</li>
 	<li>
-		<a href='#bnf'>Ecrire un parser en TzBNF avec TzParser</a>
+		<a href='#bnf'>Writing a parser in TzBNF using TzParser</a>
 		<ul>
-			<li><a href='#bnfBase'>Syntaxe et règles de base</a></li>
-			<li><a href='#bnfNeed'>Optionalité, répétition et vérification</a></li>
-			<li><a href='#bnfTz'>Règles spéciales (TzRule) et modificateurs (TzModif)</a></li>
-			<li><a href='#bnfGroup'>Groupes</a></li>
-			<li><a href='#bnfAST'>Sauvegarde dans l'AST</a></li>
-			<li><a href='#bnfEx'>Exemple</a></li>
+			<li><a href='#bnfBase'>Syntax and basic rules</a></li>
+			<li><a href='#bnfNeed'>Optionality, repetition and checking</a></li>
+			<li><a href='#bnfTz'>Special rules (TzRule) and modifiers (TzModif)</a></li>
+			<li><a href='#bnfGroup'>Groups</a></li>
+			<li><a href='#bnfAST'>Saving into the AST</a></li>
+			<li><a href='#bnfEx'>Example</a></li>
 		</ul>
 	</li>
 	<li>
-		<a href='#cpp'>Ecrire un parser en C++ avec TzParser, correspondance avec la TzBNF</a>
+		<a href='#cpp'>Writing a parser in C++ using TzParser, correspondence to the TzBNF</a>
 		<ul>
-			<li><a href='#cppBase'>Syntaxe et règles de base</a></li>
-			<li><a href='#cppTz'>Règles spéciales (TzRule)</a></li>
-			<li><a href='#cppNeed'>Optionalité, répétition, vérification et modificateurs (TzModif)</a></li>
-			<li><a href='#cppGroup'>Groupes</a></li>
-			<li><a href='#cppAST'>Sauvegarde dans l'AST</a></li>
-			<li><a href='#cppEx'>Exemple</a></li>
+			<li><a href='#cppBase'>Syntax and basic rules</a></li>
+			<li><a href='#cppTz'>Special rules (TzRule)</a></li>
+			<li><a href='#cppNeed'>Optionality, repetition, checking and modifiers (TzModif)</a></li>
+			<li><a href='#cppGroup'>Groups</a></li>
+			<li><a href='#cppAST'>Saving into the AST</a></li>
+			<li><a href='#cppEx'>Example</a></li>
 		</ul>
 	</li>
 	<li>
-		<a href='#use'>Utiliser un parser en C++ créé ou généré avec TzParser</a>
+		<a href='#use'>Using a parser in C++ created or generated with TzParser</a>
 		<ul>
-			<li><a href='#useBase'>Utilisation basique</a></li>
-			<li><a href='#useStream'>Créer un stream pour TzParser</a></li>
-			<li><a href='#useAST'>Interfacer une librairie AST</a></li>
+			<li><a href='#useBase'>Basic use</a></li>
+			<li><a href='#useStream'>Creating a stream for TzParser</a></li>
+			<li><a href='#useAST'>Interfacing an AST library</a></li>
 		</ul>
 	</li>
 	<li>
-		<a href='#moreCpp'>Créer des règles avancées en C++</a>
+		<a href='#moreCpp'>How to create advanced rules in C++ ?</a>
 	</li>
 	<li>
-		<a href='#end'>Bug ? Contact ? Next ?</a>
+		<a href='#end'>Bugs ? Contact ? Next ?</a>
 	</li>
 </ul>
 
-<h2><a name="pres" class="sharp">Présentation</a></h2>
+<h2><a name="pres" class="sharp">Presentation</a></h2>
 
 <p>
-	La présente documentation suppose que vous avez des bases en parsing LL et ne vous expliquera pas le fonctionnement d'un parser LL.<br />
-	Pour cela : <a href="http://fr.wikipedia.org/wiki/Analyse_LL">http://fr.wikipedia.org/wiki/Analyse_LL</a> en français et <a href="http://en.wikipedia.org/wiki/LL_parser">http://en.wikipedia.org/wiki/LL_parser</a> en anglais.
+	This documentation is based on the assumption that you already have a basic knowledge of LL parsing and therefore will not describe how a LL parser works.<br />
+	If you should need it : <a href="http://fr.wikipedia.org/wiki/Analyse_LL">http://fr.wikipedia.org/wiki/Analyse_LL</a> (French version) and <a href="http://en.wikipedia.org/wiki/LL_parser">http://en.wikipedia.org/wiki/LL_parser</a> (English version).
 </p>
 
 <p>
-	TzParser est une librarie de parsing LL C++ et un logiciel de génération de parser LL C++.<br />
-	Cette librairie a été créée par Salomon BRYS (salomon . brys @ gmail . com) afin de permettre à n'importe quel programmeur de générer facilement un parser LL pour n'importe quel type de syntaxe.
+	TzParser is both a LL parsing library in C++ and a software that generates LL parsers in C++.<br />
+	This library was created by Salomon BRYS (salomon . brys @ gmail . com) to allow any programmer to easily generate a LL parser that works with any syntax.
 </p>
 
 <p>
-	La librairie TzParser est une librairie qui permet de créer facilement un parser en C++ intégrable dans votre application.<br />
-	Elle s'inspire de la BNF pour créer facilement des parser.<br />
-	Elle permet de parser un flux pour en récuperer un AST (Abstract Syntax Tree) en fonction d'une syntaxe.
+	The TzParser library is a library which allows the easy creation of a parser in C++ which can be integrated into your application.<br />
+	It is derived from the BNF so as to easily create parsers.<br />
+	It allows the parsing of a flux in order to get an AST (Abstract Syntaxe Tree) depending on the syntax.
 </p>
 
 <p>
-	Le logiciel TzParser est un logiciel qui génère du code parser C++ utilisant la librairie TzParser en fonction d'un fichier BNF.<br />
+	The TzParser software is a software which generates parsing code in C++, using the TzParser library based upon a BNF file.<br />
 </p>
 
 <h2><a name="bnf" class="sharp">Ecrire un parser en TzBNF avec TzParser</a></h2>
