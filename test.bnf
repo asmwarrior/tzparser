@@ -1,0 +1,35 @@
+
+
+Test	::=
+GetChar?
+GetChar*
+GetChar+
+GetChar{2}
+GetChar{+}
+GetChar{+, '-'}
+GetChar{2, '-'}
+GetChar{,}
+GetChar{2,}
+GetChar{,4}
+GetChar{2,4}
+GetChar{,,'-'}
+GetChar{2,,'-'}
+GetChar{,4,'-'}
+GetChar{2,4,'-'}
+
+;
+
+/*
+BNF				::=
+	plop
+
+	>Ignore("coucou")
+	[
+		[
+			plop:!Rule:<coucou "plop">
+		|
+			"coucou" TESTSTR
+		]+
+	]
+;
+*/
