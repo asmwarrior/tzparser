@@ -226,7 +226,7 @@ namespace tzParse
 		if (n > 15)
 			throw PrinterException("Cannot concat more than 15 elements", atoi(el->Attribute("Line")));
 
-		ret << "CONCAT" << n << '(';
+		ret << "P_CONCAT" << n << '(';
 		const char*	coma = "";
 		for (TiXmlElement* node = el->FirstChildElement(); node; node = node->NextSiblingElement())
 		{
@@ -331,7 +331,7 @@ namespace tzParse
 				if (string("CChar") == arg->Attribute("Type"))
 					ret << ".but('" << arg->Attribute("Value") << "')";
 				else
-					ret << ".butIn(" << makeLitteral(arg) << ')';
+					ret << ".notIn(" << makeLitteral(arg) << ')';
 
 				if (arg->NextSiblingElement())
 					throw PrinterException("To much Argument in #GetChar", atoi(el->Attribute("Line")));
