@@ -312,11 +312,11 @@ affect	::=
 </p>
 
 <pre>
-Identifier =Float      <span class="com">// Règle Test qui Parse un identifier et vérifie qu'il est suivi d'un float</span>
-                       <span class="com">//   sans consommer le float</span>
+Identifier =Float      <span class="com">// Test la règle qui Parse un identifier et vérifie qu'il est suivi d'un</span>
+                       <span class="com">//   float sans consommer ce float</span>
 
-Identifier !Float{2,}  <span class="com">// Règle Test qui Parse un identifier et vérifie qu'il n'est pas suivi d'au</span>
-                       <span class="com">//   moins 2 floats</span>
+Identifier !Float{2,}  <span class="com">// Test la règle qui Parse un identifier et vérifie qu'il n'est pas suivi</span>
+                       <span class="com">//   d'au moins 2 floats</span>
 </pre>
 
 <h3><a name="bnfTz" class="sharp">Règles spéciales (TzRule) et modificateurs (TzModif)</a></h3>
@@ -494,7 +494,7 @@ Test		::=
 <p>
 	Créé une règle Test, qui parse 0 à N Prec puis 0 ou 1 Check.<br />
 	Si ce Check est parsé, créé un noeud Check sans attribut Value (sachant que tous les attribut qui seront définis DANS cette règle seront sauvegardés dans cet attribut si aucun autre noueud n'a ete défini).<br />
-	Parse ensuite SOIT un n suivi d'un point, sans consommer ce point, SOIT un In, en ignorant tous les caractères blancs linéaires.<br />
+	Parse ensuite SOIT un In suivi d'un point, sans consommer ce point, SOIT un In, en ignorant tous les caractères blancs linéaires.<br />
 	Notez bien l'ordre dans lequel est défini ce groupe. Si l'on avait mis le In simple en premier, on aurait jamais parsé le point puisque la règle In simple aurait réussi même si elle est ensuite suivie d'un point.<br />
 	Un noeud In est créé qui contient un attribut Value avec ce qui a été parsé dans le groupe et un attribut point qui contient '0' ou '1' en fonction de ce qui a été parsé.<br />
 	Enfin, on parse éventuellement la règle After (qui parsera le '.', s'il y est) sans rien ignorer entre le groupe et elle.
