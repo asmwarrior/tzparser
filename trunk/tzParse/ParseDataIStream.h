@@ -21,15 +21,16 @@ typedef	AutoPtr<std::istream>	APistream;
 class ParseDataIStream : public IParseData
 {
 public:
-	ParseDataIStream(std::istream& s) : stream(s) {}
-	ParseDataIStream(std::istream* s) : stream(s) {}
+	ParseDataIStream(std::istream& s, bool p = false) : stream(s), print(p) {}
+	ParseDataIStream(std::istream* s, bool p = false) : stream(s), print(p) {}
 	~ParseDataIStream() {}
-	virtual char	getChar(void) { char c; stream->get(c); return c; }
+	virtual char	getChar(void) { char c; stream->get(c); if (print) std::cout << c; return c; }
 	virtual bool	isEndOfFile(void) { return stream->eof(); }
 	int	debug() { return (int)this; }
 
 private:
 	APistream	stream;
+	bool		print;
 };
 
 #endif	// !PARSE_DATA_ISTREAM_H__
