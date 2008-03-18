@@ -179,8 +179,8 @@ test	::=
   Please note that all the Tzparser basic rules start with a capital letter.
 */</span>
 GetChar     <span class="com">// Parses any character. Fails only if it is the end of the file</span>
-Identifier  <span class="com">// Parse an identifier (a series of letters, digits or underscores which does start</span>
-            <span class="com">//   with a digit)</span>
+Identifier  <span class="com">// Parses an identifier (a series of letters, digits or underscores which does not start</span>
+            <span class="com">// by a digit)</span>
 Integer     <span class="com">// Parses an integer</span>
 Float       <span class="com">// Parses a float</span>
 QuotedPair  <span class="com">// Parses the character \ followed by another simple character. For instance : \n</span>
@@ -228,7 +228,7 @@ Test	::=
 */</span>
 P_HT       = '\t';                   <span class="com">// Tab</span>
 P_SP       = ' ';                    <span class="com">// Space</span>
-P_LBLANKS  = P_HT . P_SP;            <span class="com">// Linear blank character</span>
+P_LBLANKS  = P_HT . P_SP;            <span class="com">// Linear blank characters</span>
 
 P_CR       = '\r';                   <span class="com">// Carriage return</span>
 P_LF       = '\n';                   <span class="com">// New line under Unix</span>
@@ -287,9 +287,9 @@ regle{2,4}      <span class="com">// Parses the rule from 2 to 4 time(s)</span>
 regle{,,'-'}    <span class="com">// Parses the rule from 0 to N time(s), separated by '-' characters, the equivalent</span>
                 <span class="com">// of regle{*,'-'}, also of regle{0,0,'-'}</span>
 regle{2,,'-'}   <span class="com">// Parses the rule from 2 to N time(s), separated by '-' characters, the equivalent</span>
-                <span class="com">// of regle{2,0,'-'}
+                <span class="com">// of regle{2,0,'-'}</span>
 regle{,4,'-'}   <span class="com">// Parses the rule from 0 to 4 time(s), separated by '-' characters, the equivalent</span>
-                <span class="com">// of regle{0,4,'-'}
+                <span class="com">// of regle{0,4,'-'}</span>
 regle{2,4,'-'}  <span class="com">// Parses the rule from 2 to 4 time(s), separated by '-' characters</span>
 </pre>
 
@@ -314,10 +314,10 @@ affect	::=
 </p>
 
 <pre>
-Identifier =Float      <span class="com">// <i>Test</i> rule which parses an identifier and checks if it is followed by a</span>
+Identifier =Float      <span class="com">// Tests the rule which parses an identifier and checks if it is followed by a</span>
                        <span class="com">// float without consuming the float</span>
 
-Identifier !Float{2,}  <span class="com">// <i>Test</i> rule which parses an identifier and checks that it is not followed</span>
+Identifier !Float{2,}  <span class="com">// Tests the rule which parses an identifier and checks that it is not followed</span>
                        <span class="com">// by at least two floats</span>  
 </pre>
 
@@ -333,28 +333,31 @@ Identifier !Float{2,}  <span class="com">// <i>Test</i> rule which parses an ide
 <span class="com">/*
   #GetChar can take 0, 1, 2 or 3 arguments
   arg 1 : Optional boolean, + if the GetChar is to be insensible to case, - (default) otherwise
-  arg 2 : Litteral or NULL, character or character string representing a list of characters to be parsed
+  arg 2 : Litteral or NULL, character or character string representing a list of characters to be
+          parsed
   arg 3 : Litteral, character or character string representing a list of characters not to be parsed
 */</span>
 #GetChar()                 <span class="com">// The equivalent of GetChar</span>
 #GetChar(P_ALPHA)          <span class="com">// Parses any character in P_ALPHA</span>
-#GetChar(+, P_LOWALPHA)    <span class="com">// Parses from 1 to N time(s) the equivalent of the previous example because</span>
-                           <span class="com">//   it is insensible to case</span>
+#GetChar(+, P_LOWALPHA)    <span class="com">// Parses from 1 to N time(s) the equivalent of the previous example</span>
+                           <span class="com">// because it is insensible to case</span>
 #GetChar(P_NUM, '0')       <span class="com">// Parses any character in P_NUM but 0</span>
 #GetChar(+, P_HEX, P_NUM)  <span class="com">// Parses from 1 to N time(s) any character in P_HEX but for those in</span>
-                           <span class="com">//   P_NUM while not respecting case (takes into account upper AND lower case)</span>
+                           <span class="com">// P_NUM while not respecting case (takes into account upper AND lower</span>
+  			   <span class="com">// case)</span>
 #GetChar("ABCDEFabcdef")   <span class="com">// The equivalent of the previous example</span>
 #GetChar(+, 0, P_NUM)      <span class="com">// Parses from 1 to N time(s) any character that is not in P_NUM</span>
 
 <span class="com">/*
   <i>#ReadUntil</i> takes a litteral as an argument
-  Keeps on parsing until it encounters this string or it fails if the end of the file ois reached
+  Keeps on parsing until it encounters this string or it fails if the end of the file is reached
 */</span>
 "/*" #ReadUntil("*/")      <span class="com">// Parses a C comment : parses from <span class="com">/* to the first */</span></span>
 
 <span class="com">/*
   <i>#Identifier</i> can take 0 or 1 boolean argument
-  If the argument is -, an identifier will be parsed while allowing the first character to be a digit
+  If the argument is -, an identifier will be parsed while allowing the first character to be a
+  digit
 */</span>
 #Identifier                <span class="com">// The equivalent of <i>Identifier</i></span>
 #Identifier(+)             <span class="com">// The equivalent of <i>Identifier</i> (+ is the default value)</span>
@@ -493,30 +496,30 @@ Test		::=
 <p>
 	Creates a <i>Test</i> rule, which parses from 0 to N <i>Prec</i> then 0 or 1 <i>Check</i>.<br />
 	If this <i>Check</i> is parsed, a <i>Check</i> node is created without a <i>value</i> attribute (knowing that all the attributes that will be defined WITHIN this rule will be saved in this attribute if no other node has been defined).<br />
-	Then it parses EITHER a n followed by a dot, without consuming this dot, OR an In, while ignoring all the linear blank characters.<br />
+	Then it parses EITHER a In followed by a dot, without consuming this dot, OR an In, while ignoring all the linear blank characters.<br />
 	Please pay close attention to the order in which the group is defined. If the simple In had been put first, the dot would never had been parsed since the simple In rule would have succeeded even if it was still followed by a dot.<br />
 	An In node is created, which contains a <i>value</i> attribute, itself containing what has been parsed in the group, and a <i>point</i> attribute which contains either '0' or '1' depending on what has been parsed.<br />
 	Finally, the <i>After</i> may be parsed (which will parse the character '.', if it is present) without ignoring anything between the group and the itself.
 </p>
 
-<h2><a name="cpp" class="sharp">Ecrire un parser en C++ avec TzParser, correspondace avec la TzBNF</a></h2>
+<h2><a name="cpp" class="sharp">Writing a parser in C++ using TzParser, correspondence to the TzBNF</a></h2>
 
-<h3><a name="cppbase" class="sharp">Syntaxe et regles de base</a></h3>
+<h3><a name="cppbase" class="sharp">Syntax and basic rules</a></h3>
 
 <p>
-	Un parser utilisant TzParser utilise 2 fichiers : un .h dans lequel sont declares les regles et les strings, et un .cpp dans lequel sont implementes les regles.<br />
-	Voici comment definir une regle et une string dans un .h (notez que les string sont des simples define, notez egalement que les macros CONCAT peut etre utilisee directement dans du code et qu'elles existent jusqu'au CONCAT15) :
+	A parser using TzParser uses 2 files : a .h in which the rules and the strings are declared, and a .cpp in which the rules are implemented.<br />
+	See below for how to define a rule and a string in a .h (Please note that the strings are just plain <i>define</i>, and also that the CONCAT macros can be used directly in the code and that they exist up to CONCAT15) :
 </p>
 
 <pre>
-RULE_DECLARE_SIMPLE(Test);                 <span class="com">// Definition de la regle Test</span>
+RULE_DECLARE_SIMPLE(Test);                 <span class="com">// Definition of the <i>Test</i> rule</span>
 
-#define MYSTR     "coucou"                 <span class="com">// Definition de la string MYSTR</span>
-#define MYCONCAT  CONCAT3("to", "-", "ma") <span class="com">// Definition de la string MYCONCAT qui vaudras "to-ma"</span>
+#define MYSTR     "coucou"                 <span class="com">// Definition of the MYSTR string</span>
+#define MYCONCAT  CONCAT3("to", "-", "ma") <span class="com">// Definition of the MYCONCAT string set to "to-ma"</span>
 </pre>
 
 <p>
-	La sytaxe C++ du TzParser a ete etudiee pour pouvoir etre le plus facilement possible transformable en C++, ce chapitre decriras donc principalement comment passer de la TzBNF au C++, ce que fait le generateur TzParser.<br />
+	The syntax of the TzParser in C++ was created to in oreder to make it as easy as possible its transformation into C++, ce chapitre decriras donc principalement comment passer de la TzBNF au C++, ce que fait le generateur TzParser.<br />
 	Cependant, comme souvent, la syntaxe C++ permet plus de liberte, que nous verrons en fin de chapitre avec les regles avancees.<br />
 	Voici comment implementer la regle Test declaree plus haut qui parse un Identifier suivi d'un Float :
 </p>
