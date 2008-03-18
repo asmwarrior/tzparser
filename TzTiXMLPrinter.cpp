@@ -23,14 +23,6 @@ namespace tzParse
 {
 	TzTiXMLPrinter::TzTiXMLPrinter(TiXmlDocument* doc)
 	{
-		for (TiXmlElement* node = doc->FirstChildElement("String"); node; node = node->NextSiblingElement("String"))
-		{
-			if (find(strings.begin(), strings.end(), node->Attribute("Name")) != strings.end())
-				throw PrinterException((string("Redefinition of string ") + node->Attribute("Name")).c_str(), atoi(node->Attribute("Line")));
-
-			head << "#define " << node->Attribute("Name") << ' ' << makeLitteral(node->FirstChildElement("Litteral")) << endl;
-			strings.push_back(node->Attribute("Name"));
-		}
 		strings.push_back("P_HT");
 		strings.push_back("P_SP");
 		strings.push_back("P_LBLANKS");
@@ -49,6 +41,14 @@ namespace tzParse
 		strings.push_back("P_TEXT");
 		strings.push_back("P_CHAR");
 		strings.push_back("P_HEX");
+		for (TiXmlElement* node = doc->FirstChildElement("String"); node; node = node->NextSiblingElement("String"))
+		{
+			if (find(strings.begin(), strings.end(), node->Attribute("Name")) != strings.end())
+				throw PrinterException((string("Redefinition of string ") + node->Attribute("Name")).c_str(), atoi(node->Attribute("Line")));
+
+			head << "#define " << node->Attribute("Name") << ' ' << makeLitteral(node->FirstChildElement("Litteral")) << endl;
+			strings.push_back(node->Attribute("Name"));
+		}
 
 		head << endl;
 
