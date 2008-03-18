@@ -152,8 +152,8 @@
 
 <p>
 	La syntaxe de la TzBNF s'inspire beaucoup de la BNF (Bachus Naur Form).<br />
-	Elle permet de decrire de maniere declarative les regles syntaxiques d'un langage.<br />
-	Voici une regle test vide :
+	Elle permet de décrire de manière déclarative les règles syntaxiques d'un langage.<br />
+	Voici une règle test vide :
 </p>
 
 <pre>
@@ -164,34 +164,34 @@ test	::=
 </pre>
 
 <p>
-	TzParser fournis un certains nombres de regles de bases permettant de creer des regles plus evoluees :
+	TzParser fournit un certain nombre de règles de bases permettant de créer des règles plus évoluées :
 </p>
 
 <pre>
 <span class="com">/*
-  Regles implicites
+  Règles implicites
 */</span>
-'c'         <span class="com">// Parse le caractere c</span>
-"hello"     <span class="com">// Parse la chaine de caracteres hello</span>
+'c'         <span class="com">// Parse le caractère c</span>
+"hello"     <span class="com">// Parse la chaine de caractères hello</span>
 
 <span class="com">/*
-  Regles de base.
-  Remarquez que toutes les regles de bases de TzParser commencent par une majuscule
+  Règles de base.
+  Remarquez que toutes les règles de base de TzParser commencent par une majuscule
 */</span>
-GetChar     <span class="com">// Parse n'importe quel caractere. N'echoue que si c'est la fin du fichier</span>
-Identifier  <span class="com">// Parse un identifier (suite de lettres, de chiffre ou d'underscore ne commencant pas</span>
+GetChar     <span class="com">// Parse n'importe quel caractère. N'échoue que si c'est la fin du fichier</span>
+Identifier  <span class="com">// Parse un identifier (suite de lettres, de chiffres ou d'underscores ne commençant pas</span>
             <span class="com">//   par un chiffre)</span>
 Integer     <span class="com">// Parse un entier</span>
-Float       <span class="com">// Parse un nombre a virgule flotante</span>
+Float       <span class="com">// Parse un nombre à virgule flottante</span>
 QuotedPair  <span class="com">// Parse le caractere \ suivi d'un simple caractere. Exemple : \n</span>
 CInChar     <span class="com">// Parse soit un simple caractere, soit un QuotedPair</span>
 CChar       <span class="com">// Parse un caractere a la norme C. Exemple : 'c', '\n'</span>
-CStr        <span class="com">// Parse une chaine de caractere a la norme C. Exemple : "Salut le \"monde\" !\n"</span>
+CStr        <span class="com">// Parse une chaine de caractères à la norme C. Exemple : "Salut le \"monde\" !\n"</span>
 EndOfFile   <span class="com">// Echoue si la fin du fichier n'est pas atteinte</span>
 </pre>
 
 <p>
-	Creons une regle affect qui va parser une affectation tres simple d'un entier type c :
+	Créons une règle affect qui va parser une affectation très simple d'un entier type c :
 </p>
 
 <pre>
@@ -202,9 +202,9 @@ affect	::=
 </pre>
 
 <p>
-	TzBNF vous permet aussi de creer des string et de concatener des string.<br />
-	De plus, TzBNF vous fournis plusieurs string deja pre-faites (inutiles maintenant, leur utilite est definite plus tard dans ce chapitre). Veuillez noter que la syntaxe [x-y] ne fait pas partie de TzBNF et est dans cet exemple par soucis de contraction.<br />
-	Par convention, les noms des string sont en majuscule.
+	TzBNF vous permet aussi de créer des string et de concaténer des string.<br />
+	De plus, TzBNF vous fournit plusieurs strings déjà pré-faites (inutiles maintenant, leur utilité est définie plus tard dans ce chapitre). Veuillez noter que la syntaxe [x-y] ne fait pas partie de TzBNF et est dans cet exemple par soucis de contraction.<br />
+	Par convention, les noms des strings sont en majuscule.
 </p>
 
 <pre>
@@ -212,33 +212,33 @@ affect	::=
   Creation strings
 */</span>
 NOM = "Salomon";                             <span class="com">// String simple</span>
-BONJOUR = "Bienvenue, " . NOM                <span class="com">// Concatenation</span>
+BONJOUR = "Bienvenue, " . NOM                <span class="com">// Concaténation</span>
 POINT = '.'                                  <span class="com">// String simple</span>
-MESSAGE = BONJOUR . POINT . ' ' . "Ca va ?"  <span class="com">//concatenation</span>
+MESSAGE = BONJOUR . POINT . ' ' . "Ca va ?"  <span class="com">//concaténation</span>
 
 <span class="com">/*
-  Utilisation d'une string dans une regle
+  Utilisation d'une string dans une règle
 */</span>
 Test	::=
     NOM  <span class="com">// Parse "Salomon"</span>
 ;
 
 <span class="com">/*
-  String standard definit par TzBNF
+  String standard définie par TzBNF
 */</span>
 P_HT       = '\t';                   <span class="com">// La tablulation</span>
 P_SP       = ' ';                    <span class="com">// L'espace</span>
-P_LBLANKS  = P_HT . P_SP;            <span class="com">// Caracteres blanc lineaires</span>
+P_LBLANKS  = P_HT . P_SP;            <span class="com">// Caractères blancs linéaires</span>
 
 P_CR       = '\r';                   <span class="com">// Retour chariot</span>
-P_LF       = '\n';                   <span class="com">// Nouvelle ligne unix</span>
-P_CRLF     = P_CR . P_LF;            <span class="com">// Nouvelle ligne windows</span>
+P_LF       = '\n';                   <span class="com">// Nouvelle ligne Unix</span>
+P_CRLF     = P_CR . P_LF;            <span class="com">// Nouvelle ligne Windows</span>
 P_NL       = P_CRLF;                 <span class="com">// Alias de P_CRLF</span>
 
-P_BLANKS   = P_LBLANKS . P_CRLF;     <span class="com">// Caracteres blancs</span>
+P_BLANKS   = P_LBLANKS . P_CRLF;     <span class="com">// Caractères blancs</span>
 
-P_UPALPHA  = [A-Z];                  <span class="com">// Lettres de l'alphabet majuscules</span>
-P_LOALPHA  = [a-z];                  <span class="com">// Lettres de l'alphabet minuscules</span>
+P_UPALPHA  = [A-Z];                  <span class="com">// Lettres de l'alphabet majuscule</span>
+P_LOALPHA  = [a-z];                  <span class="com">// Lettres de l'alphabet minuscule</span>
 P_ALPHA    = P_UPALPHA . P_LOALPHA;  <span class="com">// Lettres de l'alphabet minuscule et majuscule</span>
 
 P_NUM      = [0-9];                   <span class="com">// Chiffres</span>
@@ -246,189 +246,189 @@ P_DIGIT    = P_NUM;                  <span class="com">// Alias de P_NUM</span>
 
 P_ALPHANUM = P_ALPHA . P_NUM;        <span class="com">// Alphabet et chiffres</span>
 
-P_CTL      = [...];                  <span class="com">// Tout les caracteres ASCII de controle : 1 a 31 et 127</span>
+P_CTL      = [...];                  <span class="com">// Tout les caractères ASCII de controle : 1 a 31 et 127</span>
 
-P_TEXT     = [...];                  <span class="com">// Tout les caracteres ASCII de text : 32 a 126</span>
+P_TEXT     = [...];                  <span class="com">// Tout les caractères ASCII de texte : 32 a 126</span>
 
-P_CHAR     = P_CTL . P_TEXT;         <span class="com">// Tout les caracteres ASCII sauf 0</span>
+P_CHAR     = P_CTL . P_TEXT;         <span class="com">// Tout les caractères ASCII sauf 0</span>
 
-P_HEX      = "ABCDEF" . P_NUM;       <span class="com">// Caracteres hexadecimaux</span>
+P_HEX      = "ABCDEF" . P_NUM;       <span class="com">// Caracteres hexadécimaux</span>
 </pre>
 
-<h3><a name="bnfNeed" class="sharp">Optionalite, repetition et verification</a></h3>
+<h3><a name="bnfNeed" class="sharp">Optionalité, répétition et vérification</a></h3>
 
 <p>
-	Il se peux que certaines regles soient optionnelles ou repetitives.<br />
-	TzBNF permet de gerer facilement l'optionalite ou la repetition d'une regle (N represente l'infini):
+	Il se peux que certaines règles soient optionnelles ou répétitives.<br />
+	TzBNF permet de gérer facilement l'optionalité ou la répétition d'une règle (N représente l'infini):
 </p>
 
 <pre>
 <span class="com">/*
   Indicateurs simples.
 */</span>
-regle?          <span class="com">// Parse 0 a 1 fois la regle</span>
-regle*          <span class="com">// Parse 0 a N fois la regle</span>
-regle+          <span class="com">// Parse 1 a N fois la regle</span>
+regle?          <span class="com">// Parse 0 à 1 fois la règle</span>
+regle*          <span class="com">// Parse 0 à N fois la règle</span>
+regle+          <span class="com">// Parse 1 à N fois la règle</span>
 
 <span class="com">/*
-  Indicateurs avances.
-  Pour les exemples suivants, les caracteres entre les virgules et acolades sont donnes a titre
+  Indicateurs avancés.
+  Pour les exemples suivants, les caractères entre les virgules et accolades sont donnés à titre
   d'exemple
 */</span>
-regle{2}        <span class="com">// Parse 2 fois la regle</span>
-regle{+}        <span class="com">// Parse 1 a N fois la regle, equivalent a regle+</span>
-regle{+, '-'}   <span class="com">// Parse 1 a N fois la regle, separee par des '-'</span>
-regle{2, '-'}   <span class="com">// Parse 2 fois la regle, separee par des '-'</span>
-regle{,}        <span class="com">// Parse 0 a N fois la regle, equivalent a regle* : pas de min ou de max,</span>
-                <span class="com">//   equivalent a regle{0,0}</span>
-regle{2,}       <span class="com">// Parse 2 a N fois la regle, equivalent a regle{2,0}</span>
-regle{,4}       <span class="com">// Parse 0 a 4 fois la regle, equivalent a regle{0,4}</span>
-regle{2,4}      <span class="com">// Parse 2 a 4 fois la regle</span>
-regle{,,'-'}    <span class="com">// Parse 0 a N fois la regle, separee par des '-', equivalent a regle{*,'-'},</span>
-                <span class="com">//   equivalent a regle{0,0,'-'}</span>
-regle{2,,'-'}   <span class="com">// Parse 2 a N fois la regle, separee par des '-', equivalent a regle{2,0,'-'}</span>
-regle{,4,'-'}   <span class="com">// Parse 0 a 4 fois la regle, separee par des '-', equivalent a regle{0,4,'-'}</span>
-regle{2,4,'-'}  <span class="com">// Parse 2 a 4 fois la regle, separee par des '-'</span>
+regle{2}        <span class="com">// Parse 2 fois la règle</span>
+regle{+}        <span class="com">// Parse 1 à N fois la règle, équivalent à regle+</span>
+regle{+, '-'}   <span class="com">// Parse 1 à N fois la regle, separee par des '-'</span>
+regle{2, '-'}   <span class="com">// Parse 2 fois la règle, separée par des '-'</span>
+regle{,}        <span class="com">// Parse 0 à N fois la règle, équivalent à regle* : pas de min ou de max,</span>
+                <span class="com">//   équivalent à regle{0,0}</span>
+regle{2,}       <span class="com">// Parse 2 à N fois la règle, équivalent à regle{2,0}</span>
+regle{,4}       <span class="com">// Parse 0 à 4 fois la règle, équivalent à regle{0,4}</span>
+regle{2,4}      <span class="com">// Parse 2 à 4 fois la règle</span>
+regle{,,'-'}    <span class="com">// Parse 0 à N fois la règle, séparée par des '-', équivalent à regle{*,'-'},</span>
+                <span class="com">//   équivalent a regle{0,0,'-'}</span>
+regle{2,,'-'}   <span class="com">// Parse 2 à N fois la règle, séparée par des '-', équivalent à regle{2,0,'-'}</span>
+regle{,4,'-'}   <span class="com">// Parse 0 à 4 fois la règle, séparée par des '-', équivalent à regle{0,4,'-'}</span>
+regle{2,4,'-'}  <span class="com">// Parse 2 à 4 fois la règle, séparée par des '-'</span>
 </pre>
 
 <p>
-	Reprenons donc la regle affect et faisons en sorte qu'elle puisse aussi parser une affectation a la creation :
+	Reprenons donc la règle affect et faisons en sorte qu'elle puisse aussi parser une affectation à la creation :
 </p>
 
 <pre>
 <span class="com">// Parse une affectation du type "mavar = 42;" ou "int mavar = 42;"</span>
-<span class="com">// On admet que la regle type a ete cree</span>
+<span class="com">// On admet que la règle type a été créée</span>
 affect	::=
     type? Identifier '=' Integer ';'
 ;
 </pre>
 
 <p>
-	La TzBNF vous permet de verifier une regle sans la consomer.<br />
-	Si la regle est precedee du caractere =, TzParser va parser mais pas consomer la regle.<br />
-	C'est a dire que la regle echouera si elle n'est pas parsee et la regle suivante commencera au meme point que la regle verifie (non pas a sa suite).<br />
-	Si la regle est precedee par un !, TzParser va verifier que la regle N'EST PAS parsee.<br />
-	Ce comportement vous permet de verifier certains cas particuliers et d'optimiser votre parser pour verifier une regle simple generique avant d'entrer dans une regle plus complexe.
+	La TzBNF vous permet de vérifier une règle sans la consommer.<br />
+	Si la règle est précédée du caractère =, TzParser va parser mais pas consommer la règle.<br />
+	C'est à dire que la règle échouera si elle n'est pas parsée et la règle suivante commencera au même point que la règle vérifie (non pas à sa suite).<br />
+	Si la règle est précédée par un !, TzParser va vérifier que la règle N'EST PAS parsée.<br />
+	Ce comportement vous permet de vérifier certains cas particuliers et d'optimiser votre parser pour vérifier une règle simple générique avant d'entrer dans une règle plus complexe.
 </p>
 
 <pre>
-Identifier =Float      <span class="com">// Regle Test qui Parse un identifier et verifie qu'il est suivi d'un float</span>
+Identifier =Float      <span class="com">// Règle Test qui Parse un identifier et vérifie qu'il est suivi d'un float</span>
                        <span class="com">//   sans consommer le float</span>
 
-Identifier !Float{2,}  <span class="com">// Regle Test qui Parse un identifier et verifie qu'il n'est pas suivi d'au</span>
-                       <span class="com">//   moins 2 float</span>
+Identifier !Float{2,}  <span class="com">// Règle Test qui Parse un identifier et vérifie qu'il n'est pas suivi d'au</span>
+                       <span class="com">//   moins 2 floats</span>
 </pre>
 
-<h3><a name="bnfTz" class="sharp">Regles speciales (TzRule) et modificateurs (TzModif)</a></h3>
+<h3><a name="bnfTz" class="sharp">Règles spéciales (TzRule) et modificateurs (TzModif)</a></h3>
 
 <p>
-	La TzBNF inclus des regles particulieres qui peuvent prendre des arguments.<br />
-	Ces regles commencent par un #.<br />
-	Les arguments sont de type litteral (c'est a dire un 'c'aractere, une "string", une "conc"."atenation" ou le nom d'une string), booleen (+ pour true et - pour false) ou eventuellement NULL (0).
+	La TzBNF inclus des règles particulières qui peuvent prendre des arguments.<br />
+	Ces règles commencent par un #.<br />
+	Les arguments sont de type littéral (c'est à dire un 'c'aractère, une "string", une "conc"."atenation" ou le nom d'une string), booléen (+ pour true et - pour false) ou éventuellement NULL (0).
 </p>
 
 <pre>
 <span class="com">/*
-  #GetChar peux prendre 0, 1, 2 ou 3 arguments
-  arg 1 : Booleen optionnel, + si le GetChar doit etre insensible a la case, - (par default) sinon
-  arg 2 : Litteral ou NULL, caractere ou chaine de caractere representant une liste de caracteres a
+  #GetChar peut prendre 0, 1, 2 ou 3 arguments
+  arg 1 : Booléen optionnel, + si le GetChar doit être insensible à la casse, - (par défaut) sinon
+  arg 2 : Littéral ou NULL, caractère ou chaîne de caractères représentant une liste de caractères à
           parser
-  arg 3 : Litteral, caractere ou chaine de caractere representant une liste de caracteres a ne pas
+  arg 3 : Littéral, caractère ou chaîne de caractères représentant une liste de caractères à ne pas
           parser
 */</span>
-#GetChar()                 <span class="com">// equivalent a GetChar</span>
-#GetChar(P_ALPHA)          <span class="com">// Parse n'importe caractere dans P_ALPHA</span>
-#GetChar(+, P_LOWALPHA)    <span class="com">// Parse 1 a N fois l'equivalent de l'exemple precedent puisque</span>
-                           <span class="com">//   insensible a la case</span>
-#GetChar(P_NUM, '0')       <span class="com">// Parse n'importe quel caractere dans P_NUM sauf 0</span>
-#GetChar(+, P_HEX, P_NUM)  <span class="com">// Parse 1 a N fois n'importe quel caractere dans P_HEX sauf ceux dans</span>
-                           <span class="com">//   P_NUM en ne respectant pas la case (prend les majuscules ET</span>
+#GetChar()                 <span class="com">// équivalent à GetChar</span>
+#GetChar(P_ALPHA)          <span class="com">// Parse n'importe quel caractàre dans P_ALPHA</span>
+#GetChar(+, P_LOWALPHA)    <span class="com">// Parse 1 à N fois l'équivalent de l'exemple précédent puisque</span>
+                           <span class="com">//   insensible à la casse</span>
+#GetChar(P_NUM, '0')       <span class="com">// Parse n'importe quel caractère dans P_NUM sauf 0</span>
+#GetChar(+, P_HEX, P_NUM)  <span class="com">// Parse 1 à N fois n'importe quel caractère dans P_HEX sauf ceux dans</span>
+                           <span class="com">//   P_NUM en ne respectant pas la casse (prend les majuscules ET</span>
                            <span class="com">//   minuscules)</span>
-#GetChar("ABCDEFabcdef")   <span class="com">// Equivalent a l'exemple precedent</span>
-#GetChar(+, 0, P_NUM)      <span class="com">// Parse 1 a N fois n'importe quel caractere qui ne soit pas dans P_NUM</span>
+#GetChar("ABCDEFabcdef")   <span class="com">// Equivalent à l'exemple précédent</span>
+#GetChar(+, 0, P_NUM)      <span class="com">// Parse 1 à N fois n'importe quel caractère qui ne soit pas dans P_NUM</span>
 
 <span class="com">/*
-  #ReadUntil prend un litteral en argument
-  Parse jusqu'a rencontrer cette string ou echoue si rencontre la fin du fichier
+  #ReadUntil prend un littéral en argument
+  Parse jusqu'a rencontrer cette string ou échoue si rencontre la fin du fichier
 */</span>
 "/*" #ReadUntil("*/")      <span class="com">// Parse un commentaire C : parse de <span class="com">/* jusqu'au premier */</span></span>
 
 <span class="com">/*
-  #Identifier peux prendre 0 ou 1 argument booleen
-  Si l'argument est -, parsera un identifier en permettant que le premier caractere soit un
+  #Identifier peut prendre 0 ou 1 argument booléen
+  Si l'argument est -, parsera un identifier en permettant que le premier caractère soit un
   nombre
 */</span>
-#Identifier                <span class="com">// Equivalent a Identifier</span>
-#Identifier(+)             <span class="com">// Equivalent a Identifier (+ est la valeur par defautl)</span>
-#Identifier(-)             <span class="com">// Parse un identifier sans verifier le premier caractere</span>
+#Identifier                <span class="com">// Equivalent à Identifier</span>
+#Identifier(+)             <span class="com">// Equivalent à Identifier (+ est la valeur par défaut)</span>
+#Identifier(-)             <span class="com">// Parse un identifier sans vérifier le premier caractère</span>
                            <span class="com">// ATTENTION : cette instruction parse 42coucou21</span>
                            <span class="com">//             mais aussi n'importe quel entier positif comme 4221</span>
 
 <span class="com">/*
-  #Integer peux prendre 0 ou 1 argument booleen
-   S'il est definit, le premier argument definit si l'entier doit etre positif ou negatif
+  #Integer peut prendre 0 ou 1 argument booléen
+   S'il est défini, le premier argument définit si l'entier doit être positif ou négatif
 */</span>
-#Integer                   <span class="com">// Equivalent a Integer</span>
+#Integer                   <span class="com">// Equivalent à Integer</span>
 #Integer(+)                <span class="com">// Parse un entier positif comme 2142</span>
-#Integer(-)                <span class="com">// Parse un entier negatif comme -84</span>
+#Integer(-)                <span class="com">// Parse un entier négatif comme -84</span>
 
 <span class="com">/*
-  #Float peux prendre 0, 1 ou 2 argument
-  arg 1 : Booleen optionnel, comme #integer, definit si le Float doit etre positif ou negatif
-  arg 2 : Caractere optionnel, definit le caractere utilise pour la virgule, par default a '.'
+  #Float peut prendre 0, 1 ou 2 argument(s)
+  arg 1 : Booléen optionnel, comme #integer, définit si le Float doit être positif ou négatif
+  arg 2 : Caractère optionnel, définit le caractère utilisé pour la virgule, par défaut : '.'
 */</span>
-#Float                     <span class="com">// Equivalent a Float</span>
-#Float(-)                  <span class="com">// Parse un nombre a virgule flotante negatif, comme -21.42</span>
-#Float(',')                <span class="com">// Parse un nombre a virgule flotante avec ',' comme virgule</span>
+#Float                     <span class="com">// Equivalent à Float</span>
+#Float(-)                  <span class="com">// Parse un nombre à virgule flottante négatif, comme -21.42</span>
+#Float(',')                <span class="com">// Parse un nombre à virgule flottante avec ',' comme virgule</span>
                            <span class="com">//   exemple 21,42 ou -21,42</span>
-#Float(+, ',')             <span class="com">// Parse un nombre a virgule flotante positif avec ',' comme virgule</span>
+#Float(+, ',')             <span class="com">// Parse un nombre à virgule flottante positif avec ',' comme virgule</span>
                            <span class="com">//  exemple 21,42</span>
 </pre>
 
 <p>
-	La TzBNF inclus quelques modificateurs qui permettent de modifier le comportement d'une regle.
+	La TzBNF inclut quelques modificateurs qui permettent de modifier le comportement d'une règle.
 </p>
 
 <pre>
 <span class="com">/*
-  >Ignore() permet d'ignorer tout les caracteres d'une string ou tout ce qui sera parsee par une
-  certaine regle
+  >Ignore() permet d'ignorer tout les caractères d'une string ou tout ce qui sera parsé par une
+  certaine règle
 */</span>
->Ignore(LBLANKS) declaration  <span class="com">// Parse la regle declaration dans laquelle on va ignorer tout les</span>
-                              <span class="com">//   caracteres blanc lineaires</span>
->Ignore(CIgnore) declaration  <span class="com">// Parse la regle declaration dans laquelle on va ignorer tout ce qui</span>
-                              <span class="com">//   est parse par la regle CIgnore (precedemment definie)</span>
->Ignore() declaration         <span class="com">// Parse la regle declaration sans rien ignorer (annule l'ignore pour</span>
-                              <span class="com">//   cette regle s'il est definit dans une regle apelante)</span>
+>Ignore(LBLANKS) declaration  <span class="com">// Parse la règle <i>declaration</i> dans laquelle on va ignorer tout les</span>
+                              <span class="com">//   caractères blancs linéaires</span>
+>Ignore(CIgnore) declaration  <span class="com">// Parse la règle <i>declaration</i> dans laquelle on va ignorer tout ce qui</span>
+                              <span class="com">//   est parsé par la règle CIgnore (précédemment définie)</span>
+>Ignore() declaration         <span class="com">// Parse la règle <i>declaration</i> sans rien ignorer (annule l'ignore pour</span>
+                              <span class="com">//   cette regle s'il est défini dans une règle appelante)</span>
 
 <span class="com">/*
-  >NoIgnore ne vas pas parser la regle d'ignore avant la regle donnee.
-  ATTENTION : Cette regle est TRES differente de >Ignore(). Si vous voulez ne rien ignorer DANS la
-              regle, vous devez utiliser >Ignore(), tandis que si vous ne voulez pas ignorer AVANT
-              la regle, vous devez utiliser >NoIgnore 
+  >NoIgnore ne vas pas parser la règle d'ignore avant la règle donnée.
+  ATTENTION : Cette règle est TRES différente de >Ignore(). Si vous voulez ne rien ignorer DANS la
+              règle, vous devez utiliser >Ignore(), tandis que si vous ne voulez pas ignorer AVANT
+              la règle, vous devez utiliser >NoIgnore 
 */</span>
-declaration >NoIgnore ';'     <span class="com">// Parse la regle declaration suivie d'un ';' SANS ignorer quoi que</span>
-                              <span class="com">//   ce soit definit precedemment entre la declaration et le ';'</span>
+declaration >NoIgnore ';'     <span class="com">// Parse la regle <i>declaration</i> suivie d'un ';' SANS ignorer quoi que</span>
+                              <span class="com">//   ce soit defini précédemment entre la déclaration et le ';'</span>
 
 <span class="com">/*
-  >Force() oblige la regle a reussir, genere une parse error si la regle echoue.
-  Prend en parametre la string qui sera utilisee comme texte de la parse error.
+  >Force() oblige la règle à réussir, génère une parse error si la règle échoue.
+  Prend en paramètre la string qui sera utilisée comme texte de la parse error.
 */</span>
->Force("EOF !!!") EndOfFile   <span class="com">// Genere une parse error si ce n'est pas la fin du fichier</span>
+>Force("EOF !!!") EndOfFile   <span class="com">// Génère une parse error si ce n'est pas la fin du fichier</span>
 </pre>
 
 <h3><a name="bnfGroup" class="sharp">Groupes</a></h3>
 
 <p>
-	la TzBNF permet de regrouper des regles dans des groupes grace aux caracteres [].<br />
-	Ces groupes permettent egalement de parser cerataines regles OU d'autres grace au caractere |.<br />
-	Un groupe est une regle comme une autre, par consequent, on peux lui attribuer tout ce qu'on attribue aux regles.
+	La TzBNF permet de regrouper des règles dans des groupes grace aux caractères [].<br />
+	Ces groupes permettent également de parser certaines règles OU d'autres grace au caractère |.<br />
+	Un groupe est une règle comme une autre, par consequent, on peut lui attribuer tout ce qu'on attribue aux règles.
 </p>
 
 <pre>
 <span class="com">/*
-  Regle Test1 qui parse un Identifier suivi d'un nombre indefinit de ',' Identifier
-  Equivalent a Identifier{+, ','}
+  Règle Test1 qui parse un Identifier suivi d'un nombre indéfini de ',' Identifier
+  Equivalent à Identifier{+, ','}
 */</span>
 Test1	::=
     Identifier
@@ -436,9 +436,9 @@ Test1	::=
 ;
 
 <span class="com">/*
-  Regle Test2 qui parse soit un Integer soit un Float.
-  Notez que le groupe doit forcement etre dans cet ordre puique Float peux parser un Integer
-    => Un nombre a virgule flotante n'as pas necessairement de virgule
+  Règle Test2 qui parse soit un Integer soit un Float.
+  Notez que le groupe doit forcément être dans cet ordre puique Float peut parser un Integer
+    => Un nombre à virgule flottante n'a pas nécéssairement de virgule
 */</span>
 Test2	::=
     [ Float | Integer ]
@@ -448,21 +448,21 @@ Test2	::=
 <h3><a name="bnfAST" class="sharp">Sauvegarde dans l'AST</a></h3>
 
 <p>
-	Le systeme d'AST de TzParser est base sur du XML.<br />
-	Meme si vous pouvez (voir plus bas) interfacer n'importe quel systeme (XML ou non), le principe reste base sur du XML et cette documentation ne s'interessera qu'a l'AST sous forme XML.<br />
-	Dans la TzBNF, il existe 2 moyens de sauvegarder dans l'arbre : Creer un noeud enfant du precedant ou creer un attribut dans le precedent noeud.
+	Le système d'AST de TzParser est basé sur du XML.<br />
+	Meme si vous pouvez (voir plus bas) interfacer n'importe quel système (XML ou non), le principe reste basé sur du XML et cette documentation ne s'intéressera qu'à l'AST sous forme XML.<br />
+	Dans la TzBNF, il existe 2 moyens de sauvegarder dans l'arbre : Créer un noeud enfant du précédent ou créer un attribut dans le précédent noeud.
 </p>
 
 <pre>
-regle:id              <span class="com">// Parse la regle, cree un noeud id et sauve ce qui est parse dans l'attribut</span>
+regle:id              <span class="com">// Parse la règle, créé un noeud <i>id</i> et sauve ce qui est parsé dans l'attribut</span>
                       <span class="com">//   Value de ce nouveau noeud</span>
-regle:!id             <span class="com">// Parse la regle et cree un noeud id sans sauver ce qui est parse</span>
-regle:id.             <span class="com">// Parse la regle, cree un noeud id, sauve ce qui est parse et sauve la ligne</span>
+regle:!id             <span class="com">// Parse la règle et créé un noeud <i>id</i> sans sauver ce qui est parsé</span>
+regle:id.             <span class="com">// Parse la règle, créé un noeud <i>id</i>, sauve ce qui est parsé et sauve la ligne</span>
                       <span class="com">//   courante dans l'attribut Line de ce nouveau noeud</span>
-regle:!id.            <span class="com">// Parse la regle, cree un noeud id sans sauver ce qui est parse et sauve la</span>
+regle:!id.            <span class="com">// Parse la règle, créé un noeud <i>id</i> sans sauver ce qui est parsé et sauve la</span>
                       <span class="com">//   ligne courante dans l'attribut Line de ce nouveau noeud</span>
-regle:&lt;idval&gt;         <span class="com">// Parse la regle et sauve ce qui est parse dans l'attribut idval du noeud</span>
-                      <span class="com">//   precedent</span>
+regle:&lt;idval&gt;         <span class="com">// Parse la règle et sauve ce qui est parsé dans l'attribut idval du noeud</span>
+                      <span class="com">//   précédent</span>
 regle:&lt;type "id"&gt;     <span class="com">// Parse la regle et cree un attribut type avec pour valeur id dans le noeud</span>
                       <span class="com">//   precedent. Notez qu'a la place de "id", il y aurai pu avoir n'importe</span>
                       <span class="com">//   quel caractere, string, concatenation ou nom de string.</span>
@@ -492,53 +492,53 @@ Test		::=
 </pre>
 
 <p>
-	Cree une regle Test, qui parse 0 a N Prec puis 0 ou 1 Check.<br />
-	Si ce Check est parse, cree un noeud Check sans attribut Value (sachant que tout les attribut qui seront definit DANS cette regle seront sauvegarde dans cet attribut si aucun autre noueud n'a ete definit).<br />
-	Parse ensuite SOIT un n suivi d'un point, sans consomer ce point, SOIT un In, en ignorant tout les caracteres blanc lineaires.<br />
-	Notez bien l'ordre dans lequel est definit ce groupe. Si l'on avait mis le In simple en premier, on aurait jamais parse le point puisque la regle In simple aurait reussi meme si elle est ensuite suivi d'un point.<br />
-	Un noeud In est cree qui contient un attribut Value avec ce qui a ete parse dans le groupe et un attribut point qui contient '0' ou '1' en fonction de ce qui a ete parse.<br />
-	Enfin, on parse eventuellement la regle After (qui parsera le '.', s'il y est) sans rien ignorer entre le groupe et elle.
+	Créé une règle Test, qui parse 0 à N Prec puis 0 ou 1 Check.<br />
+	Si ce Check est parsé, créé un noeud Check sans attribut Value (sachant que tous les attribut qui seront définis DANS cette règle seront sauvegardés dans cet attribut si aucun autre noueud n'a ete défini).<br />
+	Parse ensuite SOIT un n suivi d'un point, sans consommer ce point, SOIT un In, en ignorant tous les caractères blancs linéaires.<br />
+	Notez bien l'ordre dans lequel est défini ce groupe. Si l'on avait mis le In simple en premier, on aurait jamais parsé le point puisque la règle In simple aurait réussi même si elle est ensuite suivie d'un point.<br />
+	Un noeud In est créé qui contient un attribut Value avec ce qui a été parsé dans le groupe et un attribut point qui contient '0' ou '1' en fonction de ce qui a été parsé.<br />
+	Enfin, on parse éventuellement la règle After (qui parsera le '.', s'il y est) sans rien ignorer entre le groupe et elle.
 </p>
 
 <h2><a name="cpp" class="sharp">Ecrire un parser en C++ avec TzParser, correspondace avec la TzBNF</a></h2>
 
-<h3><a name="cppbase" class="sharp">Syntaxe et regles de base</a></h3>
+<h3><a name="cppbase" class="sharp">Syntaxe et règles de base</a></h3>
 
 <p>
-	Un parser utilisant TzParser utilise 2 fichiers : un .h dans lequel sont declares les regles et les strings, et un .cpp dans lequel sont implementes les regles.<br />
-	Voici comment definir une regle et une string dans un .h (notez que les string sont des simples define, notez egalement que les macros CONCAT peut etre utilisee directement dans du code et qu'elles existent jusqu'au CONCAT15) :
+	Un parser utilisant TzParser utilise 2 fichiers : un .h dans lequel sont déclarés les règles et les strings, et un .cpp dans lequel sont implémentées les règles.<br />
+	Voici comment définir une règle et une string dans un .h (notez que les string sont de simples define, notez également que les macros CONCAT peuvent être utilisées directement dans du code et qu'elles existent jusqu'au CONCAT15) :
 </p>
 
 <pre>
-RULE_DECLARE_SIMPLE(Test);                 <span class="com">// Definition de la regle Test</span>
+RULE_DECLARE_SIMPLE(Test);                 <span class="com">// Définition de la règle Test</span>
 
-#define MYSTR     "coucou"                 <span class="com">// Definition de la string MYSTR</span>
-#define MYCONCAT  CONCAT3("to", "-", "ma") <span class="com">// Definition de la string MYCONCAT qui vaudras "to-ma"</span>
+#define MYSTR     "coucou"                 <span class="com">// Définition de la string MYSTR</span>
+#define MYCONCAT  CONCAT3("to", "-", "ma") <span class="com">// Définition de la string MYCONCAT qui vaudra "to-ma"</span>
 </pre>
 
 <p>
-	La sytaxe C++ du TzParser a ete etudiee pour pouvoir etre le plus facilement possible transformable en C++, ce chapitre decriras donc principalement comment passer de la TzBNF au C++, ce que fait le generateur TzParser.<br />
-	Cependant, comme souvent, la syntaxe C++ permet plus de liberte, que nous verrons en fin de chapitre avec les regles avancees.<br />
-	Voici comment implementer la regle Test declaree plus haut qui parse un Identifier suivi d'un Float :
+	La sytaxe C++ du TzParser a été étudiée pour pouvoir être le plus facilement possible transformable en C++, ce chapitre décrira donc principalement comment passer de la TzBNF au C++, ce que fait le générateur TzParser.<br />
+	Cependant, comme souvent, la syntaxe C++ permet plus de liberte, ce que nous verrons en fin de chapitre avec les règles avancées.<br />
+	Voici comment implémenter la règle Test declarée plus haut qui parse un Identifier suivi d'un Float :
 </p>
 
 <pre>
-RULE_IMPLEMENT(Test, p)       <span class="com">// arg1: nom de la regle, arg2: variable du parser (p par convention)</span>
+RULE_IMPLEMENT(Test, p)       <span class="com">// arg1: nom de la règle, arg2: variable du parser (p par convention)</span>
 {
-    p   >>  Identifier().r()  <span class="com">// Parse un Identifier. Utilise la variable definit plus haut.</span>
+    p   >>  Identifier().r()  <span class="com">// Parse un Identifier. Utilise la variable définie plus haut.</span>
         >>  Float().r()       <span class="com">// Parse un Float</span>
         ;
-    RULE_RETURN(p);           <span class="com">// Return de la regle</span>
+    RULE_RETURN(p);           <span class="com">// Return de la règle</span>
 }
 </pre>
 
 <p>
 	Notez que le .r() qui suit Identifier() et Float() n'est pas obligatoire lors d'une compilation sous Visual Studio.<br />
-	Ce .r() corrige une aberration de G++ (reference a l'instanciation) et est mis par defaut lors de la generation afin d'etre cross-compatible (tout ce que fait r() est { return *this; } ).
+	Ce .r() corrige une aberration de G++ (référence a l'instanciation) et est mis par defaut lors de la génération afin d'assurer la cross-compatibilité (tout ce que fait r() est { return *this; } ).
 </p>
 
 <p>
-	Voici les regles de bases et leurs correspondances en TzBNF (les strings etant des #define, elles sont utilisable comme en TzBNF) :
+	Voici les règles de base et leurs correspondances en TzBNF (les strings étant des #define, elles sont utilisables comme en TzBNF) :
 </p>
 
 <pre>
@@ -562,20 +562,20 @@ CStr()           <span class="com">// => CStr</span>
 EndOfFile()      <span class="com">// => EndOfFile</span>
 </pre>
 
-<h3><a name="cppTz" class="sharp">Regles speciales (TzRule)</a></h3>
+<h3><a name="cppTz" class="sharp">Règles spéciales (TzRule)</a></h3>
 
 <p>
-	Les regles dans le TzParser ont toutes un certains nombre de modificateurs (nous verrons ceux en communs plus tard).<br />
-	En plus des modificateurs en communs, les TzRule (regles commencant par un #) correspondent en C++ a des regles qui ont leur propre modificateur.<br />
-	Les modificateurs peuvent etre chaines.
+	Les règles dans le TzParser ont toutes un certain nombre de modificateurs (nous verrons ceux en commun plus tard).<br />
+	En plus des modificateurs en commun, les TzRule (règles commencant par un #) correspondent en C++ à des règles qui ont leur propre modificateur.<br />
+	Les modificateurs peuvent être chaînés.
 </p>
 
 <pre>
 <span class="com">/*
   #GetChar :
   arg 1 : Booleen : .caseInsensitive()
-  arg 2 : Litteral : .only() pour un caractere OU .in() pour une chaine de caracteres
-  arg 3 : Litteral : .but() pour un caractere OU .notIn() pour une chaine de caracteres
+  arg 2 : Litteral : .only() pour un caractère OU .in() pour une chaîne de caractères
+  arg 3 : Litteral : .but() pour un caractère OU .notIn() pour une chaîne de caractères
 */</span>
 GetChar()                                  <span class="com">// => GetChar</span>
 GetChar().in(P_LBLANKS)                    <span class="com">// => #GetChar(P_LBLANKS)</span>
@@ -615,20 +615,20 @@ Float().coma(',')                          <span class="com">// => #Float(',')</
 Float().forcePositive().coma(',')          <span class="com">// => #Float(+, ',')</span>
 </pre>
 
-<h3><a name="cppNeed" class="sharp">Optionalite, repetition, verification et modificateurs (TzModif)</a></h3>
+<h3><a name="cppNeed" class="sharp">Optionalité, répétition, vérification et modificateurs (TzModif)</a></h3>
 
 <p>
-	Dans la syntaxe TzParser, toute operation visant a modifier le comportement d'une regle utilise un modificateur.<br />
-	Les modificateurs ci-apres sont communs a toutes les regles (y compris celle definit par l'utilisateur).<br />
-	Ces modificateurs doivent imperativement etre appele APRES les eventuels modificateurs propre a une regle.<br />
+	Dans la syntaxe TzParser, toute opération visant à modifier le comportement d'une règle utilise un modificateur.<br />
+	Les modificateurs ci-après sont communs à toutes les règles (y compris celles définies par l'utilisateur).<br />
+	Ces modificateurs doivent impérativement être appelés APRES les éventuels modificateurs propres à une règle.<br />
 </p>
 
 <pre>
 <span class="com">/*
-  L'optionalite et la repetition (geres en TzBNF par les caracteres ?, * et + sont geres en C++ par
+  L'optionalité et la répétition (gérés en TzBNF par les caractères ?, * et + sont gérés en C++ par
   le modificateur .n().
-  Ce modificateur peux prendre le caractere TzBNF, un define correspondant au caractere TzBNF ou un
-  minimum et un maximum. Pour chaque appel, un eventuel caractere d'espacement peut etre specifie
+  Ce modificateur peut prendre le caractère TzBNF, un define correspondant au caractère TzBNF ou un
+  minimum et un maximum. Pour chaque appel, un éventuel caractère d'espacement peut être spécifié
   en dernier argument.
   ? (= PARSE_ZERO_OR_ONE = PARSE_ZOO), + (= PARSE_ONE_OR_MORE = PARSE_OOM) et * (= PARSE_ANY)
 */</span>
@@ -641,16 +641,16 @@ Regle().n('+', '-')            <span class="com">// => Regle{+, '-'}</span>
 Regle().n(2, 0, '-')           <span class="com">// => Regle{2,,'-'}</span>
 
 <span class="com">/*
-  La verification se fait par le modificateur .check().
-  check prend en parametre un booleen qui definit si vous voulez verifier la presence ou l'abscence
-  d'une regle.
+  La vérification se fait par le modificateur .check().
+  check prend en paramètre un booléen qui definit si vous voulez vérifier la présence ou l'abscence
+  d'une règle.
 */</span>
 Regle().check(true)            <span class="com">// => =Regle</span>
 Regle().check(false)           <span class="com">// => !Regle</span>
 
 <span class="com">/*
   Le modificateur TzBNF >Ignore() correspond au modificateur C++ ignore().
-  Attention, si ignore prend en paramettre un nom de regle, n'oubliez pas les parentheses !
+  Attention, si ignore prend en paramètre un nom de règle, n'oubliez pas les parenthèses !
 */</span>
 Regle().ignore()               <span class="com">// => >Ignore() Regle</span>
 Regle().ignore(P_LBLANKS)      <span class="com">// => >Ignore(P_LBLANKS) Regle</span>
@@ -658,15 +658,15 @@ Regle().ignore(RegleIgnore())  <span class="com">// => >Ignore(RegleIgnore) Regl
 
 <span class="com">/*
   Le modificateur TzBNF >NoIgnore correspond au modificateur C++ ignoreBefore(false).
-  Vous pouvez appeller ignoreBefore(true) si vous manipulez une regle sur laquelle
-  ignoreBefore(false) a ete (ou a pu etre) appelle afin d'annuler son effet et respecifier que la
-  regle parsera l'ignore avant d'etre parsee.
+  Vous pouvez appeler ignoreBefore(true) si vous manipulez une règle sur laquelle
+  ignoreBefore(false) a été (ou a pû être) appelé afin d'annuler son effet et respécifier que la
+  règle parsera l'ignore avant d'être parsée.
 */</span>
 Regle().ignoreBefore(false);   <span class="com">// => >NoIgnore Regle</span>
 
 <span class="com">/*
   Le modificateur TzBNF >Force() correspond au modificateur C++ force().
-  Vous pouvez appeller force() sans arguments si vous voulez annuler le force sur une regle.
+  Vous pouvez appeler force() sans argument si vous voulez annuler le force sur une règle.
 */</span>
 Regle().force("ouch !")        <span class="com">// => >Force("ouch !") Regle</span>
 </pre>
@@ -675,7 +675,7 @@ Regle().force("ouch !")        <span class="com">// => >Force("ouch !") Regle</s
 
 <p>
 	Il existe deux types de groupes : le group simple AND et le groupe conditionnel OR.<br />
-	Le groupe OR test chacun de ses membres et s'arrete au premier succes, ce qui signifie que si l'un des ses membres contient plusieurs regles, ca doit etre un groupe AND.
+	Le groupe OR test chacun de ses membres et s'arrête au premier succès, ce qui signifie que si l'un de ses membres contient plusieurs règles, ce doit être un groupe AND.
 </p>
 
 <pre>
@@ -689,7 +689,7 @@ RULE_IMPLEMENT(test1, p)
     p   >>  ( G_AND
             >>  Identifier().r()
             >>  Float().r()
-            ).n('*').r()              <span class="com">// Notez les modificateurs apres la fermeture du groupe</span>
+            ).n('*').r()              <span class="com">// Notez les modificateurs après la fermeture du groupe</span>
         ;
     RULE_RETURN(p);
 }
@@ -718,7 +718,7 @@ RULE_IMPLEMENT(test3, p)
 {
     p   >>  ( G_OR
             >>  truc().r()
-            >>  ( G_AND               <span class="com">// Notez la creation du groupe AND</span>
+            >>  ( G_AND               <span class="com">// Notez la création du groupe AND</span>
                 >>  Identifier().r()
                 >>  Float().r()
                 ).r()
@@ -732,7 +732,7 @@ RULE_IMPLEMENT(test3, p)
 <h3><a name="cppAST" class="sharp">Sauvegarde dans l'AST</a></h3>
 
 <p>
-	Comme pour le reste, la sauvegarde dans l'AST se fait egalement au moyen modificateurs.
+	Comme pour le reste, la sauvegarde dans l'AST se fait également au moyen de modificateurs.
 </p>
 
 <pre>
@@ -747,7 +747,7 @@ Regle().saveNode("noeud", false).saveLine().saveAttr("attr")  <span class="com">
 <h3><a name="cppEx" class="sharp">Exemple</a></h3>
 
 <p>
-	Reprenons l'exemple en TzBNF du chapitre precedent et transcrivons le en C++ :
+	Reprenons l'exemple en TzBNF du chapitre précédent et transcrivons le en C++ :
 </p>
 
 <pre>
@@ -783,19 +783,19 @@ RULE_IMPLEMENT(Test, p)  <span class="com">// ATTENTION : Ne pas oublier dans le
 </pre>
 
 <p>
-	Bien que plus dificile a lire, cette syntaxe est aussi simple que celle de la TzBNF.<br />
-	Elle vous sera utile lors de l'ecriture de parsers plus avances qui necessiterons du code C++ directement dans les regles ou lors de l'utilisation de fonctionnalitees avancees de TzParser (voir chapitre correspondant plus bas).
+	Bien que plus difficile à lire, cette syntaxe est aussi simple que celle de la TzBNF.<br />
+	Elle vous sera utile lors de l'écriture de parsers plus avancés qui nécessiterons du code C++ directement dans les règles ou lors de l'utilisation de fonctionnalités avancées de TzParser (voir chapitre correspondant plus bas).
 </p>
 
-<h2><a name='use' class="sharp">Utiliser un parser en C++ cree ou genere avec TzParser</a></h2>
+<h2><a name='use' class="sharp">Utiliser un parser en C++ créé ou généré avec TzParser</a></h2>
 
 <h3><a name='useBase' class="sharp">Utilisation basique</a></h3>
 
 <p>
 	Il est inutile de parser un flux, si ce n'est pour en retirer un AST.<br />
-	TzParser ne fournis pas un systeme d'AST mais une interface permettant d'interfacer n'importe quel systeme d'AST.<br />
-	TzParser est fournis avec l'adaptateur permettant d'utiliser <a href="http://www.grinninglizard.com/tinyxml/">TinyXML</a> comme librairie AST.<br />
-	Voici un exemple commente pour utiliser TzParser dans un programme C++ (on admet que Rules.h et Rules.cpp sont les fichiers des regles TzParser, et que TRACE est un define pour true ou false) :
+	TzParser ne fournit pas un système d'AST mais une interface permettant d'interfacer n'importe quel système d'AST.<br />
+	TzParser est fourni avec l'adaptateur permettant d'utiliser <a href="http://www.grinninglizard.com/tinyxml/">TinyXML</a> comme librairie AST.<br />
+	Voici un exemple commenté pour utiliser TzParser dans un programme C++ (on admet que Rules.h et Rules.cpp sont les fichiers des règles TzParser, et que TRACE est un define pour true ou false) :
 </p>
 
 <pre>
@@ -804,31 +804,31 @@ RULE_IMPLEMENT(Test, p)  <span class="com">// ATTENTION : Ne pas oublier dans le
 #include "tzParse/ASTAdapt/TzTinyXML.h"  <span class="com">// On inclus l'adaptateur de l'AST pour TinyXML</span>
                                          <span class="com">//   (qui incluera tinyXML)</span>
 
-#include "Rules.h"                       <span class="com">// On inclus le header des regles</span>
+#include "Rules.h"                       <span class="com">// On inclus le header des règles</span>
 
-using namespace tzParse;                 <span class="com">// Afin d'acceder facilement au parser</span>
+using namespace tzParse;                 <span class="com">// Afin d'accéder facilement au parser</span>
 
 int	main()
 {
     try
     {
-        Parser              p;           <span class="com">// On cree le parser</span>
-        TzTinyXMLDocument   d;           <span class="com">// On cree le document tinyXML adapte au systeme d'AST</span>
+        Parser              p;           <span class="com">// On créé le parser</span>
+        TzTinyXMLDocument   d;           <span class="com">// On créé le document tinyXML adapté au système d'AST</span>
 
-        p.setXMLDoc(&d);                 <span class="com">// On definit le document a remplir au parser</span>
+        p.setXMLDoc(&d);                 <span class="com">// On définit le document à remplir au parser</span>
 
         if (TRACE)
-            p.trace();                   <span class="com">// On trace eventuellement le parcours du parser.</span>
-                                         <span class="com">//   ATTENTION : TRES verbeux et TRES lent (bourin).</span>
+            p.trace();                   <span class="com">// On trace éventuellement le parcours du parser.</span>
+                                         <span class="com">//   ATTENTION : TRES verbeux et TRES lent (bourrin).</span>
 
-        ifstream    f("masyntaxe.txt");  <span class="com">// On ouvre le fichier qui va etre parse.</span>
+        ifstream    f("masyntaxe.txt");  <span class="com">// On ouvre le fichier qui va être parsé.</span>
 
-        p   <<  f;                       <span class="com">// On insere le flux dans le parser.</span>
+        p   <<  f;                       <span class="com">// On insère le flux dans le parser.</span>
 
-        p   >>  RegleBase().r();         <span class="com">// On parse la regle RegleBase.</span>
+        p   >>  RegleBase().r();         <span class="com">// On parse la règle RegleBase.</span>
 
         <span class="com">/*
-          Ce bloc de code est specifique a TinyXML et permet d'afficher l'arbre XML.
+          Ce bloc de code est specifique à TinyXML et permet d'afficher l'arbre XML.
         */</span>
         {
             TiXmlPrinter    printer;
@@ -838,7 +838,7 @@ int	main()
         }
     }
 
-    catch (std::exception& e)            <span class="com">// Les exceptions de TinyXML et de TzParse heritent de</span>
+    catch (std::exception& e)            <span class="com">// Les exceptions de TinyXML et de TzParse héritent de</span>
                                          <span class="com">//   std::exception</span>
     {
         cout << e.what() << endl;
@@ -848,12 +848,12 @@ int	main()
 }
 </pre>
 
-<h3><a name='useStream' class="sharp">Creer un stream pour TzParser</a></h3>
+<h3><a name='useStream' class="sharp">Créer un stream pour TzParser</a></h3>
 
 <p>
-	Notez l'instruction (dans l'exemple precedent) p << f; ou f est un ifstream.<br />
-	L'insertion d'un flux dans un TzParser peux prendre en parametre n'importe quel istream ou objet heritant de IParseData.<br />
-	Voici l'interface IParseData (definie dans IParseData.h) qui vous permet de creer vos propres flux a parser :	
+	Notez l'instruction (dans l'exemple précédent) p << f; ou f est un ifstream.<br />
+	L'insertion d'un flux dans un TzParser peut prendre en paramètre n'importe quel istream ou objet héritant de IParseData.<br />
+	Voici l'interface IParseData (définie dans IParseData.h) qui vous permet de créer vos propres flux à parser :	
 </p>
 
 <pre>
@@ -861,12 +861,12 @@ class IParseData
 {
 public:
     <span class="com">/*
-      Methode a surcharger qui renvoie le prochain caractere a lire.
+      Méthode à surcharger qui renvoie le prochain caractère à lire.
     */</span>
     virtual char    getChar(void) = 0;
 
     <span class="com">/*
-      Methode a surcharger qui renvoie true si le flux est vide, false s'il reste des caracteres a
+      Méthode à surcharger qui renvoie true si le flux est vide, false s'il reste des caractères à
       lire.
     */</span>
     virtual bool    isEndOfFile(void) = 0;
@@ -876,15 +876,15 @@ public:
 </pre>
 
 <p>
-	Attention : Les IParseData doivent se comporter comme les istream en ce qui concerne la fin du fichier, c'est a dire que isEndOfFile ne doit renvoyer true qu'apres que getChar n'ai renvoye un "caractere de fin du fichier" (habituellement -1, mais pas obligatoire) qui sera ignore par le parser.
+	Attention : Les IParseData doivent se comporter comme les istream en ce qui concerne la fin du fichier, c'est à dire que isEndOfFile ne doit renvoyer true qu'après que getChar n'aie renvoyé un "caractère de fin du fichier" (habituellement -1, mais pas obligatoirement) qui sera ignoré par le parser.
 </p>
 
 <h3><a name='useAST' class="sharp">Interfacer une librairie AST</a></h3>
 
 <p>
-	TzParser permet d'utiliser n'importe quel librairie (XML ou non) fournissant un document a remplir des elements parses.<br />
-	Cependant, meme s'il est possible d'utiliser d'autres systemes que le XML, TzParser utilisera ces librairies comme s'il s'agissait de librairie XML.<br />
-	Voici les 2 interfaces a surcharger pour interfacer une librairie pour l'AST :
+	TzParser permet d'utiliser n'importe quelle librairie (XML ou non) fournissant un document à remplir des éléments parsés.<br />
+	Cependant, même s'il est possible d'utiliser d'autres systèmes que le XML, TzParser utilisera ces librairies comme s'il s'agissait de librairies XML.<br />
+	Voici les 2 interfaces à surcharger pour interfacer une librairie pour l'AST :
 </p>
 
 <pre>
@@ -892,15 +892,15 @@ class IParseASTElement
 {
 public:
     <span class="com">/*
-      Methode a surcharger qui prend en parametre un IParseASTElement* qui est FORCEMENT de la
-      classe renvoyee par IParseASTDocument::createElement, vous pouvez donc le downcaster avec
-      dynamic_cast sans probleme.
+      Méthode à surcharger qui prend en paramètre un IParseASTElement* qui est FORCEMENT de la
+      classe renvoyée par IParseASTDocument::createElement, vous pouvez donc le downcaster avec
+      dynamic_cast sans problème.
       ATTENTION : Si vous copiez child, vous devez le supprimer (delete child);
     */</span>
     virtual void    addChild(IParseASTElement* child) = 0;
 
     <span class="com">/*
-      Ajoute un attribut a l'element
+      Ajoute un attribut a l'élement
     */</span>
     virtual void    setAttribute(const std::string& name, const std::string& value) = 0;
 
@@ -925,84 +925,84 @@ public:
 </pre>
 
 <p>
-	Pour bien comprendre la creation d'un adaptateur AST, il est conseille de consulter le fichier ASTAdapt/TzTinyXML.h qui adapte tres simplement la librairie TinyXML.
+	Pour bien comprendre la création d'un adaptateur AST, il est conseillé de consulter le fichier ASTAdapt/TzTinyXML.h qui adapte très simplement la librairie TinyXML.
 </p>
 
-<h2><a name="moreCPP" class="sharp">Creer des regles avancees en C++</a></h2>
+<h2><a name="moreCPP" class="sharp">Créer des règles avancées en C++</a></h2>
 
 <p>
-	La librairie TzParser permet de creer des regles avancees, c'est a dire des regles disposant, a l'instar de GetChar, des modificateurs propres.<br />
-	Attention : pour l'instant il n'est pas possible d'utiliser de telles regles dans dans un parser ecris en TzNBNF. A partir du moment ou vous utilises les regles avancees, vous devez (pour l'instant) ecrire tout votre parser en C++.
+	La librairie TzParser permet de créer des règles avancées, c'est à dire des règles disposant, à l'instar de GetChar, de modificateurs propres.<br />
+	ATTENTION : pour l'instant il n'est pas possible d'utiliser de telles règles dans dans un parser écrit en TzNBNF. A partir du moment où vous utilisez les règles avancées, vous devez (pour l'instant) écrire tout votre parser en C++.
 </p>
 
 <p>
-    La definition des modificateurs se fait dans le .h. A la place de RULE_DECLARE_SIMPLE, voici comment declarer une regle avancee (nommee Test) :
+    La définition des modificateurs se fait dans le .h. A la place de RULE_DECLARE_SIMPLE, voici comment déclarer une règle avancée (nommée Test) :
 </p>
 
 <pre>
 RULE_DECLARE_HEAD(Test)                          <span class="com">// Signature de la classe</span>
 {
-    RULE_HEAD(Test);                             <span class="com">// Obligatoire : implemente les constructeurs</span>
-    RULE_SIMPLE_CLONE(Test);                     <span class="com">// Obligqtoire : implemente la methode clone</span>
+    RULE_HEAD(Test);                             <span class="com">// Obligatoire : implémente les constructeurs</span>
+    RULE_SIMPLE_CLONE(Test);                     <span class="com">// Obligqtoire : implémente la méthode clone</span>
 
     RULE_NO_TRACE();                             <span class="com">// A NE METTRE QUE SI VOUS NE SOUHAITEZ PAS QUE</span>
                                                  <span class="com">//   LA REGLE S'AFFICHE DANS LE TRACE</span>
 
-    RULE_ARG(_a, bool, false);                   <span class="com">// Cree un attribut bool _a par defaut a false</span>
-    RULE_METHARG_DEF(Test, a1, _a, bool, true);  <span class="com">// Cree un modificateur a1 affecte a _a et dont</span>
-                                                 <span class="com">//   l'argument est optionnel par defaut a true</span>
-    RULE_METHARG(Test, a2, _a, bool);            <span class="com">// Cree un modificateur a2 affecte a _a</span>
+    RULE_ARG(_a, bool, false);                   <span class="com">// Créé un attribut bool _a par défaut à false</span>
+    RULE_METHARG_DEF(Test, a1, _a, bool, true);  <span class="com">// Créé un modificateur a1 affecté à _a et dont</span>
+                                                 <span class="com">//   l'argument est optionnel par défaut a true</span>
+    RULE_METHARG(Test, a2, _a, bool);            <span class="com">// Créé un modificateur a2 affecté à _a</span>
 
-    RULE_ARGNULL(_b, char*);                     <span class="com">// Cree un attribut char* _b par defaut a NULL</span>
-                                                 <span class="com">//   Attention, pour initialiser des pointeurs a</span>
+    RULE_ARGNULL(_b, char*);                     <span class="com">// Créé un attribut char* _b par défaut à NULL</span>
+                                                 <span class="com">//   Attention, pour initialiser des pointeurs à</span>
                                                  <span class="com">//   NULL, vous devez utiliser RULE_ARGNULL car</span>
                                                  <span class="com">//   RULE_ARG(_a, char*, 0) ne fonctionne pas sous</span>
                                                  <span class="com">//   G++...</span>
-    RULE_METHARG(Test, b, _b, char*);            <span class="com">// Cree un modificateur b affecte a _b</span>
+    RULE_METHARG(Test, b, _b, char*);            <span class="com">// Créé un modificateur b affecté à _b</span>
 
-    RULE_STDARG(Test, c, char, '1');             <span class="com">// Equivalent a (notez l'ajout de l'underscore) :</span>
+    RULE_STDARG(Test, c, char, '1');             <span class="com">// Equivalent à (notez l'ajout de l'underscore) :</span>
                                                  <span class="com">//   RULE_ARG(_c, char, '1');</span>
                                                  <span class="com">//   RULE_METHARG(Test, c, _c, char);</span>
 
-    RULE_STDARG_DEF(Test, d, char, '1', '2');    <span class="com">// Equivalent a (notez l'ajout de l'underscore) :</span>
+    RULE_STDARG_DEF(Test, d, char, '1', '2');    <span class="com">// Equivalent à (notez l'ajout de l'underscore) :</span>
                                                  <span class="com">//   RULE_ARG(_d, char, '1');</span>
                                                  <span class="com">//   RULE_METHARG_DEF(Test, d, _d, char, '2');</span>
 
-    RULE_STDARGNULL(Test, e, const char*);       <span class="com">// Equivalent a (notez l'ajout de l'underscore) :</span>
+    RULE_STDARGNULL(Test, e, const char*);       <span class="com">// Equivalent à (notez l'ajout de l'underscore) :</span>
                                                  <span class="com">//   RULE_ARGNULL(_e, const char*);</span>
                                                  <span class="com">//   RULE_METHARG(Test, e, _e, const char*);</span>
 
-    RULE_STDARGNULL_DEF(Test, f, char*, "abc");  <span class="com">// Equivalent a (notez l'ajout de l'underscore) :</span>
+    RULE_STDARGNULL_DEF(Test, f, char*, "abc");  <span class="com">// Equivalent à (notez l'ajout de l'underscore) :</span>
                                                  <span class="com">//   RULE_ARGNULL(_f, char*);</span>
                                                  <span class="com">//   RULE_METHARG_DEF(Test, f, _f, char*, "abc");</span>
 
-};                                               <span class="com">// Notez le ; (il s'agit d'une classe)</span>
+};                                               <span class="com">// Notez le ';' (il s'agit d'une classe)</span>
 </pre>
 
 <p>
-	Notez que RULE_ARG, RULE_ARGNULL, RULE_METHARG et RULE_METHARG_DEF sont rarement utilise au profit de RULE_STDARG, RULE_STDARG_DEF, RULE_STDARGNULL et RULE_STDARGNULL_DEF qui, en plus de declarer les attribut, implemente leur modificateurs.<br />
-	Une fois dans RULE_IMPLEMENT, il faut utiliser l'operateur * pour acceder aux arguments. Par exemple, pour acceder a la valeur char _d de l'exemple precedent, il faut faire *_d. Ceci s'explique par le fait que ce n'est pas un char qui est cree mais un AutoInit&lt;char, '1'&gt;.<br />
-	Pour bien comprendre le fonctionnement des regles avancees, vous etes invite a regarder les fichiers TzParseDefaultRules.h et TzParseDefaultRules.cpp qui contiennent les regles par defaut de TzParser (beaucoup sont des regles avancees relativement simple).
+	Notez que RULE_ARG, RULE_ARGNULL, RULE_METHARG et RULE_METHARG_DEF sont rarement utilisés, au profit de RULE_STDARG, RULE_STDARG_DEF, RULE_STDARGNULL et RULE_STDARGNULL_DEF qui, en plus de déclarer les attributs, implémentent leurs modificateurs.<br />
+	Une fois dans RULE_IMPLEMENT, il faut utiliser l'opérateur * pour accéder aux arguments. Par exemple, pour accéder à la valeur char _d de l'exemple précédent, il faut faire *_d. Ceci s'explique par le fait que ce n'est pas un char qui est créé mais un AutoInit&lt;char, '1'&gt;.<br />
+	Pour bien comprendre le fonctionnement des règles avancées, vous êtes invités à regarder les fichiers TzParseDefaultRules.h et TzParseDefaultRules.cpp qui contiennent les règles par défaut de TzParser (beaucoup sont des règles avancées relativement simples).
 </p>
 
 <h2><a name="end" class="sharp">Bug ? Contact ? Next ?</a></h2>
 
 <p>
-	En cas de Bug, merci de vous rendre sur le bugtracker du projet.
+	En cas de bug, merci de vous rendre sur le bugtracker du projet.
 </p>
 
 <p>
-	En cas d'incomprehension ou de besoin d'aide, vous etes invites a vous rendre sur le forum du projet ou j'essaierai de repondre le plus rapidement a vos questions.<br />
+	En cas d'incompréhension ou de besoin d'aide, vous êtes invités à vous rendre sur le forum du projet ou j'essaierai de répondre le plus rapidement à vos questions.<br />
 	Si vous souhaitez me contacter, n'hesitez pas a le faire (en francais ou en anglais) : salomon . brys @ gmail . com
 </p>
 
 <p>
-	Pour voir ou proposer des fonctionnalitees a venir, rendez vous sur la wishList du projet.
+	Pour voir ou proposer des fonctionnalités à venir, rendez vous sur la wishList du projet.
 </p>
 
 <p>
-	TzParser est sous licence LIBRE si votre projet est LIBRE (ce qui ne veux pas forcement dire open-source) et sous licence COMMERCIALE si votre projet est COMMERCIAL (ce qui ne veux pas forcement dire close-source).
-	A chacune des 2 licence s'applique des particularites, merci de consulter le fichier LICENCE.txt si vous utilisez TzParser dans votre projet.
+	TzParser est sous licence LIBRE si votre projet est LIBRE (ce qui ne veut pas forcément dire open-source) et sous licence COMMERCIALE si votre projet est COMMERCIAL (ce qui ne veut pas forcément dire close-source).
+	A chacune des 2 licence s'applique des particularités, merci de consulter le fichier LICENCE.txt si vous utilisez TzParser dans votre projet.
 </p>
 
 

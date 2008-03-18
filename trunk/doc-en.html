@@ -146,289 +146,288 @@
 	The TzParser software is a software which generates parsing code in C++, using the TzParser library based upon a BNF file.<br />
 </p>
 
-<h2><a name="bnf" class="sharp">Ecrire un parser en TzBNF avec TzParser</a></h2>
+<h2><a name="bnf" class="sharp">Writing a parser in TzBNF using TzParser</a></h2>
 
-<h3><a name="bnfBase" class="sharp">Syntaxe et regles de base</a></h3>
+<h3><a name="bnfBase" class="sharp">Syntax and basic rules</a></h3>
 
 <p>
-	La syntaxe de la TzBNF s'inspire beaucoup de la BNF (Bachus Naur Form).<br />
-	Elle permet de decrire de maniere declarative les regles syntaxiques d'un langage.<br />
-	Voici une regle test vide :
+	The syntax of the TzBNF is very much inspired by the BNF (Bachus Naur Form).<br />
+	It allows to describe in a declerative manner the syntaxic rules of a language.<br />
+	Here follows an empty <i>test</i> rule :
 </p>
 
 <pre>
-<span class="com">// Ici un commentaire</span>
+<span class="com">// Comment here</span>
 test	::=
 ;
-<span class="com">/* Ici un autre commentaire */</span>
+<span class="com">/* Comment here */</span>
 </pre>
 
 <p>
-	TzParser fournis un certains nombres de regles de bases permettant de creer des regles plus evoluees :
+	TzParser provides a certain number of basic rules that allow the creation of more advanced rules :
 </p>
 
 <pre>
 <span class="com">/*
-  Regles implicites
+  Implicit rules.
 */</span>
-'c'         <span class="com">// Parse le caractere c</span>
-"hello"     <span class="com">// Parse la chaine de caracteres hello</span>
+'c'         <span class="com">// Parses character c</span>
+"hello"     <span class="com">// Parses character string <i>hello</i></span>
 
 <span class="com">/*
-  Regles de base.
-  Remarquez que toutes les regles de bases de TzParser commencent par une majuscule
+  Basic rules.
+  Please note that all the Tzparser basic rules start with a capital letter.
 */</span>
-GetChar     <span class="com">// Parse n'importe quel caractere. N'echoue que si c'est la fin du fichier</span>
-Identifier  <span class="com">// Parse un identifier (suite de lettres, de chiffre ou d'underscore ne commencant pas</span>
-            <span class="com">//   par un chiffre)</span>
-Integer     <span class="com">// Parse un entier</span>
-Float       <span class="com">// Parse un nombre a virgule flotante</span>
-QuotedPair  <span class="com">// Parse le caractere \ suivi d'un simple caractere. Exemple : \n</span>
-CInChar     <span class="com">// Parse soit un simple caractere, soit un QuotedPair</span>
-CChar       <span class="com">// Parse un caractere a la norme C. Exemple : 'c', '\n'</span>
-CStr        <span class="com">// Parse une chaine de caractere a la norme C. Exemple : "Salut le \"monde\" !\n"</span>
-EndOfFile   <span class="com">// Echoue si la fin du fichier n'est pas atteinte</span>
+GetChar     <span class="com">// Parses any character. Fails only if it is the end of the file</span>
+Identifier  <span class="com">// Parse an identifier (a series of letters, digits or underscores which does start</span>
+            <span class="com">//   with a digit)</span>
+Integer     <span class="com">// Parses an integer</span>
+Float       <span class="com">// Parses a float</span>
+QuotedPair  <span class="com">// Parses the character \ followed by another simple character. For instance : \n</span>
+CInChar     <span class="com">// Parses either a simple character, or a QuotedPair</span>
+CChar       <span class="com">// Parses a character in C standards. For instance : 'c', '\n'</span>
+CStr        <span class="com">// Parses a character string in C standards. For instance : "Salut le \"monde\" !\n"</span>
+EndOfFile   <span class="com">// Fails if the end of the file is not reached</span>
 </pre>
 
 <p>
-	Creons une regle affect qui va parser une affectation tres simple d'un entier type c :
+	Let us create an <i>affect</i> rule which shall parse a very simple affectation of an integer in C standards :
 </p>
 
 <pre>
-<span class="com">// Parse une affectation du type "mavar = 42;"</span>
+<span class="com">// Parses an affectation of the following type : "mavar = 42;"</span>
 affect	::=
     Identifier '=' Integer ';'
 ;
 </pre>
 
 <p>
-	TzBNF vous permet aussi de creer des string et de concatener des string.<br />
-	De plus, TzBNF vous fournis plusieurs string deja pre-faites (inutiles maintenant, leur utilite est definite plus tard dans ce chapitre). Veuillez noter que la syntaxe [x-y] ne fait pas partie de TzBNF et est dans cet exemple par soucis de contraction.<br />
-	Par convention, les noms des string sont en majuscule.
+	TzBNF also allows you to create or to concatenate strings.<br />
+	Furthermore, TzBNF provides you with several pre-existing strings (Useless at this point, but their utility will be defined later in this chapter). Please note that the [x-y] syntax is not part of TzBNF and is present in this example only for clarity.<br />
+	By convention, the names of the strings are written in capital letters.
 </p>
 
 <pre>
 <span class="com">/*
   Creation strings
 */</span>
-NOM = "Salomon";                             <span class="com">// String simple</span>
+NOM = "Salomon";                             <span class="com">// Simple string</span>
 BONJOUR = "Bienvenue, " . NOM                <span class="com">// Concatenation</span>
-POINT = '.'                                  <span class="com">// String simple</span>
-MESSAGE = BONJOUR . POINT . ' ' . "Ca va ?"  <span class="com">//concatenation</span>
+POINT = '.'                                  <span class="com">// Simple string</span>
+MESSAGE = BONJOUR . POINT . ' ' . "Ca va ?"  <span class="com">//Concatenation</span>
 
 <span class="com">/*
-  Utilisation d'une string dans une regle
+  Using a string within a rule
 */</span>
 Test	::=
     NOM  <span class="com">// Parse "Salomon"</span>
 ;
 
 <span class="com">/*
-  String standard definit par TzBNF
+  Standard string definied by TzBNF
 */</span>
-P_HT       = '\t';                   <span class="com">// La tablulation</span>
-P_SP       = ' ';                    <span class="com">// L'espace</span>
-P_LBLANKS  = P_HT . P_SP;            <span class="com">// Caracteres blanc lineaires</span>
+P_HT       = '\t';                   <span class="com">// Tab</span>
+P_SP       = ' ';                    <span class="com">// Space</span>
+P_LBLANKS  = P_HT . P_SP;            <span class="com">// Linear blank character</span>
 
-P_CR       = '\r';                   <span class="com">// Retour chariot</span>
-P_LF       = '\n';                   <span class="com">// Nouvelle ligne unix</span>
-P_CRLF     = P_CR . P_LF;            <span class="com">// Nouvelle ligne windows</span>
-P_NL       = P_CRLF;                 <span class="com">// Alias de P_CRLF</span>
+P_CR       = '\r';                   <span class="com">// Carriage return</span>
+P_LF       = '\n';                   <span class="com">// New line under Unix</span>
+P_CRLF     = P_CR . P_LF;            <span class="com">// New line under Windows</span>
+P_NL       = P_CRLF;                 <span class="com">// P_CRLF alias</span>
 
-P_BLANKS   = P_LBLANKS . P_CRLF;     <span class="com">// Caracteres blancs</span>
+P_BLANKS   = P_LBLANKS . P_CRLF;     <span class="com">// Blank characters</span>
 
-P_UPALPHA  = [A-Z];                  <span class="com">// Lettres de l'alphabet majuscules</span>
-P_LOALPHA  = [a-z];                  <span class="com">// Lettres de l'alphabet minuscules</span>
-P_ALPHA    = P_UPALPHA . P_LOALPHA;  <span class="com">// Lettres de l'alphabet minuscule et majuscule</span>
+P_UPALPHA  = [A-Z];                  <span class="com">// Capital letters</span>
+P_LOALPHA  = [a-z];                  <span class="com">// small letters</span>
+P_ALPHA    = P_UPALPHA . P_LOALPHA;  <span class="com">// Capital and small letters</span>
 
-P_NUM      = [0-9];                   <span class="com">// Chiffres</span>
-P_DIGIT    = P_NUM;                  <span class="com">// Alias de P_NUM</span>
+P_NUM      = [0-9];                   <span class="com">// Digits</span>
+P_DIGIT    = P_NUM;                  <span class="com">// P_NUM alias</span>
 
-P_ALPHANUM = P_ALPHA . P_NUM;        <span class="com">// Alphabet et chiffres</span>
+P_ALPHANUM = P_ALPHA . P_NUM;        <span class="com">// Alphabet and digits</span>
 
-P_CTL      = [...];                  <span class="com">// Tout les caracteres ASCII de controle : 1 a 31 et 127</span>
+P_CTL      = [...];                  <span class="com">// Any control ASCII character : from 1 to 31 and 127</span>
 
-P_TEXT     = [...];                  <span class="com">// Tout les caracteres ASCII de text : 32 a 126</span>
+P_TEXT     = [...];                  <span class="com">// Any text ASCII character : from 32 to 126</span>
 
-P_CHAR     = P_CTL . P_TEXT;         <span class="com">// Tout les caracteres ASCII sauf 0</span>
+P_CHAR     = P_CTL . P_TEXT;         <span class="com">// Any ASCII character except 0</span>
 
-P_HEX      = "ABCDEF" . P_NUM;       <span class="com">// Caracteres hexadecimaux</span>
+P_HEX      = "ABCDEF" . P_NUM;       <span class="com">// Hexadecimal characters</span>
 </pre>
 
-<h3><a name="bnfNeed" class="sharp">Optionalite, repetition et verification</a></h3>
+<h3><a name="bnfNeed" class="sharp">Optionality, repetition and checking</a></h3>
 
 <p>
-	Il se peux que certaines regles soient optionnelles ou repetitives.<br />
-	TzBNF permet de gerer facilement l'optionalite ou la repetition d'une regle (N represente l'infini):
+	Certain rules can be optional or repetitive.<br />
+	TzBNF allows the easy management of Optionality or repetition of a rule (N represents the infinite) :
 </p>
 
 <pre>
 <span class="com">/*
-  Indicateurs simples.
+  Simple indicators.
 */</span>
-regle?          <span class="com">// Parse 0 a 1 fois la regle</span>
-regle*          <span class="com">// Parse 0 a N fois la regle</span>
-regle+          <span class="com">// Parse 1 a N fois la regle</span>
+regle?          <span class="com">// Parses the rule 0 or 1 time</span>
+regle*          <span class="com">// Parses the rule from 0 to N time(s)</span>
+regle+          <span class="com">// Parses the rule from 1 to N time(s)</span>
 
 <span class="com">/*
-  Indicateurs avances.
-  Pour les exemples suivants, les caracteres entre les virgules et acolades sont donnes a titre
-  d'exemple
+  Advanced indicators.
+  In the following examples, the characters in between commas and braces are given for the purpose
+  of the example.
 */</span>
-regle{2}        <span class="com">// Parse 2 fois la regle</span>
-regle{+}        <span class="com">// Parse 1 a N fois la regle, equivalent a regle+</span>
-regle{+, '-'}   <span class="com">// Parse 1 a N fois la regle, separee par des '-'</span>
-regle{2, '-'}   <span class="com">// Parse 2 fois la regle, separee par des '-'</span>
-regle{,}        <span class="com">// Parse 0 a N fois la regle, equivalent a regle* : pas de min ou de max,</span>
-                <span class="com">//   equivalent a regle{0,0}</span>
-regle{2,}       <span class="com">// Parse 2 a N fois la regle, equivalent a regle{2,0}</span>
-regle{,4}       <span class="com">// Parse 0 a 4 fois la regle, equivalent a regle{0,4}</span>
-regle{2,4}      <span class="com">// Parse 2 a 4 fois la regle</span>
-regle{,,'-'}    <span class="com">// Parse 0 a N fois la regle, separee par des '-', equivalent a regle{*,'-'},</span>
-                <span class="com">//   equivalent a regle{0,0,'-'}</span>
-regle{2,,'-'}   <span class="com">// Parse 2 a N fois la regle, separee par des '-', equivalent a regle{2,0,'-'}</span>
-regle{,4,'-'}   <span class="com">// Parse 0 a 4 fois la regle, separee par des '-', equivalent a regle{0,4,'-'}</span>
-regle{2,4,'-'}  <span class="com">// Parse 2 a 4 fois la regle, separee par des '-'</span>
+regle{2}        <span class="com">// Parses the rule twice</span>
+regle{+}        <span class="com">// Parses the rule from 1 to N time(s), the equivalent of regle+</span>
+regle{+, '-'}   <span class="com">// Parses the rule from 1 to N time(s), separated by '-' characters</span>
+regle{2, '-'}   <span class="com">// Parses the rule twice, separated by '-' characters</span>
+regle{,}        <span class="com">// Parses the rule from 0 to N time(s), the equivalent of regle* : no min or max,</span>
+                <span class="com">// the equivalent of regle{0,0}</span>
+regle{2,}       <span class="com">// Parses the rule from 2 to N time(s), the equivalent of regle{2,0}</span>
+regle{,4}       <span class="com">// Parses the rule from 0 to 4 time(s), the equivalent of regle{0,4}</span>
+regle{2,4}      <span class="com">// Parses the rule from 2 to 4 time(s)</span>
+regle{,,'-'}    <span class="com">// Parses the rule from 0 to N time(s), separated by '-' characters, the equivalent</span>
+                <span class="com">// of regle{*,'-'}, also of regle{0,0,'-'}</span>
+regle{2,,'-'}   <span class="com">// Parses the rule from 2 to N time(s), separated by '-' characters, the equivalent</span>
+                <span class="com">// of regle{2,0,'-'}
+regle{,4,'-'}   <span class="com">// Parses the rule from 0 to 4 time(s), separated by '-' characters, the equivalent</span>
+                <span class="com">// of regle{0,4,'-'}
+regle{2,4,'-'}  <span class="com">// Parses the rule from 2 to 4 time(s), separated by '-' characters</span>
 </pre>
 
 <p>
-	Reprenons donc la regle affect et faisons en sorte qu'elle puisse aussi parser une affectation a la creation :
+	Let us go back to the <i>affect</i> rule and make it so that it can also parse an affectation upon creation :
 </p>
 
 <pre>
-<span class="com">// Parse une affectation du type "mavar = 42;" ou "int mavar = 42;"</span>
-<span class="com">// On admet que la regle type a ete cree</span>
+<span class="com">// Parses an affectation of the type "mavar = 42;" or "int mavar = 42;"</span>
+<span class="com">// We admit that the rule <i>type</i> has already been created</span>
 affect	::=
     type? Identifier '=' Integer ';'
 ;
 </pre>
 
 <p>
-	La TzBNF vous permet de verifier une regle sans la consomer.<br />
-	Si la regle est precedee du caractere =, TzParser va parser mais pas consomer la regle.<br />
-	C'est a dire que la regle echouera si elle n'est pas parsee et la regle suivante commencera au meme point que la regle verifie (non pas a sa suite).<br />
-	Si la regle est precedee par un !, TzParser va verifier que la regle N'EST PAS parsee.<br />
-	Ce comportement vous permet de verifier certains cas particuliers et d'optimiser votre parser pour verifier une regle simple generique avant d'entrer dans une regle plus complexe.
+	The TzBNF allows you to check a rule without consuming it.<br />
+	If the rule is preceded by the character '=', TzParser will parse but will not consume the rule.<br />
+	That is to say that the rule will fail if it is not parsed and the following rule will start at the same point as the checked rule (and not following it).<br />
+	If the rule is preceded by the character '!', TzParser will check that the rule IS NOT parsed.<br />
+	This behaviour allows you to check for certain particular cases and to optimize your parser to check a simple generic rule before entering a more complex rule.
 </p>
 
 <pre>
-Identifier =Float      <span class="com">// Regle Test qui Parse un identifier et verifie qu'il est suivi d'un float</span>
-                       <span class="com">//   sans consommer le float</span>
+Identifier =Float      <span class="com">// <i>Test</i> rule which parses an identifier and checks if it is followed by a</span>
+                       <span class="com">// float without consuming the float</span>
 
-Identifier !Float{2,}  <span class="com">// Regle Test qui Parse un identifier et verifie qu'il n'est pas suivi d'au</span>
-                       <span class="com">//   moins 2 float</span>
+Identifier !Float{2,}  <span class="com">// <i>Test</i> rule which parses an identifier and checks that it is not followed</span>
+                       <span class="com">// by at least two floats</span>  
 </pre>
 
-<h3><a name="bnfTz" class="sharp">Regles speciales (TzRule) et modificateurs (TzModif)</a></h3>
+<h3><a name="bnfTz" class="sharp">Special rules (TzRule) and modifiers (TzModif)</a></h3>
 
 <p>
-	La TzBNF inclus des regles particulieres qui peuvent prendre des arguments.<br />
-	Ces regles commencent par un #.<br />
-	Les arguments sont de type litteral (c'est a dire un 'c'aractere, une "string", une "conc"."atenation" ou le nom d'une string), booleen (+ pour true et - pour false) ou eventuellement NULL (0).
+	The TzBNF includes a set of special rules which can take arguments.<br />
+	Those rules start with the character '#'.<br />
+	The arguments are of a litteral type (that is to say a 'c'haracter, a "string", a "conc"."atenation" or the name of a string), boolean (+ for true and - for false) or eventually NULL (0).
 </p>
 
 <pre>
 <span class="com">/*
-  #GetChar peux prendre 0, 1, 2 ou 3 arguments
-  arg 1 : Booleen optionnel, + si le GetChar doit etre insensible a la case, - (par default) sinon
-  arg 2 : Litteral ou NULL, caractere ou chaine de caractere representant une liste de caracteres a
-          parser
-  arg 3 : Litteral, caractere ou chaine de caractere representant une liste de caracteres a ne pas
-          parser
+  #GetChar can take 0, 1, 2 or 3 arguments
+  arg 1 : Optional boolean, + if the GetChar is to be insensible to case, - (default) otherwise
+  arg 2 : Litteral or NULL, character or character string representing a list of characters to be parsed
+  arg 3 : Litteral, character or character string representing a list of characters not to be parsed
 */</span>
-#GetChar()                 <span class="com">// equivalent a GetChar</span>
-#GetChar(P_ALPHA)          <span class="com">// Parse n'importe caractere dans P_ALPHA</span>
-#GetChar(+, P_LOWALPHA)    <span class="com">// Parse 1 a N fois l'equivalent de l'exemple precedent puisque</span>
-                           <span class="com">//   insensible a la case</span>
-#GetChar(P_NUM, '0')       <span class="com">// Parse n'importe quel caractere dans P_NUM sauf 0</span>
-#GetChar(+, P_HEX, P_NUM)  <span class="com">// Parse 1 a N fois n'importe quel caractere dans P_HEX sauf ceux dans</span>
-                           <span class="com">//   P_NUM en ne respectant pas la case (prend les majuscules ET</span>
-                           <span class="com">//   minuscules)</span>
-#GetChar("ABCDEFabcdef")   <span class="com">// Equivalent a l'exemple precedent</span>
-#GetChar(+, 0, P_NUM)      <span class="com">// Parse 1 a N fois n'importe quel caractere qui ne soit pas dans P_NUM</span>
+#GetChar()                 <span class="com">// The equivalent of GetChar</span>
+#GetChar(P_ALPHA)          <span class="com">// Parses any character in P_ALPHA</span>
+#GetChar(+, P_LOWALPHA)    <span class="com">// Parses from 1 to N time(s) the equivalent of the previous example because</span>
+                           <span class="com">//   it is insensible to case</span>
+#GetChar(P_NUM, '0')       <span class="com">// Parses any character in P_NUM but 0</span>
+#GetChar(+, P_HEX, P_NUM)  <span class="com">// Parses from 1 to N time(s) any character in P_HEX but for those in</span>
+                           <span class="com">//   P_NUM while not respecting case (takes into account upper AND lower case)</span>
+#GetChar("ABCDEFabcdef")   <span class="com">// The equivalent of the previous example</span>
+#GetChar(+, 0, P_NUM)      <span class="com">// Parses from 1 to N time(s) any character that is not in P_NUM</span>
 
 <span class="com">/*
-  #ReadUntil prend un litteral en argument
-  Parse jusqu'a rencontrer cette string ou echoue si rencontre la fin du fichier
+  <i>#ReadUntil</i> takes a litteral as an argument
+  Keeps on parsing until it encounters this string or it fails if the end of the file ois reached
 */</span>
-"/*" #ReadUntil("*/")      <span class="com">// Parse un commentaire C : parse de <span class="com">/* jusqu'au premier */</span></span>
+"/*" #ReadUntil("*/")      <span class="com">// Parses a C comment : parses from <span class="com">/* to the first */</span></span>
 
 <span class="com">/*
-  #Identifier peux prendre 0 ou 1 argument booleen
-  Si l'argument est -, parsera un identifier en permettant que le premier caractere soit un
-  nombre
+  <i>#Identifier</i> can take 0 or 1 boolean argument
+  If the argument is -, an identifier will be parsed while allowing the first character to be a digit
 */</span>
-#Identifier                <span class="com">// Equivalent a Identifier</span>
-#Identifier(+)             <span class="com">// Equivalent a Identifier (+ est la valeur par defautl)</span>
-#Identifier(-)             <span class="com">// Parse un identifier sans verifier le premier caractere</span>
-                           <span class="com">// ATTENTION : cette instruction parse 42coucou21</span>
-                           <span class="com">//             mais aussi n'importe quel entier positif comme 4221</span>
+#Identifier                <span class="com">// The equivalent of <i>Identifier</i></span>
+#Identifier(+)             <span class="com">// The equivalent of <i>Identifier</i> (+ is the default value)</span>
+#Identifier(-)             <span class="com">// Parses an identifier without checking the first character</span>
+                           <span class="com">// WARNING : This instruction parses 42coucou21</span>
+                           <span class="com">//             but also any positive integer such as 4221</span>
 
 <span class="com">/*
-  #Integer peux prendre 0 ou 1 argument booleen
-   S'il est definit, le premier argument definit si l'entier doit etre positif ou negatif
+  <i>#Integer</i> can take 0 or 1 boolean argument
+   If it is defined, the first argument defines if the integer is to be positive or negative.
 */</span>
-#Integer                   <span class="com">// Equivalent a Integer</span>
-#Integer(+)                <span class="com">// Parse un entier positif comme 2142</span>
-#Integer(-)                <span class="com">// Parse un entier negatif comme -84</span>
+#Integer                   <span class="com">// The equivalent of <i>Integer</i></span>
+#Integer(+)                <span class="com">// Parses a positive integer such as 2142</span>
+#Integer(-)                <span class="com">// Parses a negative integer such as -84</span>
 
 <span class="com">/*
-  #Float peux prendre 0, 1 ou 2 argument
-  arg 1 : Booleen optionnel, comme #integer, definit si le Float doit etre positif ou negatif
-  arg 2 : Caractere optionnel, definit le caractere utilise pour la virgule, par default a '.'
+  <i>#Float</i> can take 0, 1 or 2 arguments
+  arg 1 : Optional boolean, just like <i>#integer</i>, defines if the float is to be positive or negative
+  arg 2 : Optional character, defines the character used as a decimal point, default is '.'
 */</span>
-#Float                     <span class="com">// Equivalent a Float</span>
-#Float(-)                  <span class="com">// Parse un nombre a virgule flotante negatif, comme -21.42</span>
-#Float(',')                <span class="com">// Parse un nombre a virgule flotante avec ',' comme virgule</span>
-                           <span class="com">//   exemple 21,42 ou -21,42</span>
-#Float(+, ',')             <span class="com">// Parse un nombre a virgule flotante positif avec ',' comme virgule</span>
-                           <span class="com">//  exemple 21,42</span>
+#Float                     <span class="com">// The equivalent of <i>Float</i></span>
+#Float(-)                  <span class="com">// Parses a negative float, such as -21.42</span>
+#Float(',')                <span class="com">// Parses a float with ',' as a decimal point</span>
+                           <span class="com">//   For instance : 21,42 or -21,42</span>
+#Float(+, ',')             <span class="com">// Parses a positive float with ',' as a decimal point</span>
+                           <span class="com">//  For instance : 21,42</span>
 </pre>
 
 <p>
-	La TzBNF inclus quelques modificateurs qui permettent de modifier le comportement d'une regle.
+	The TzBNF includes a few modifiers which allow the modification of the behaviour of a rule.
 </p>
 
 <pre>
 <span class="com">/*
-  >Ignore() permet d'ignorer tout les caracteres d'une string ou tout ce qui sera parsee par une
-  certaine regle
+  >Ignore() allows to ignore all the characters of a string or anything that will be parsed by a
+  given rule
 */</span>
->Ignore(LBLANKS) declaration  <span class="com">// Parse la regle declaration dans laquelle on va ignorer tout les</span>
-                              <span class="com">//   caracteres blanc lineaires</span>
->Ignore(CIgnore) declaration  <span class="com">// Parse la regle declaration dans laquelle on va ignorer tout ce qui</span>
-                              <span class="com">//   est parse par la regle CIgnore (precedemment definie)</span>
->Ignore() declaration         <span class="com">// Parse la regle declaration sans rien ignorer (annule l'ignore pour</span>
-                              <span class="com">//   cette regle s'il est definit dans une regle apelante)</span>
+>Ignore(LBLANKS) declaration  <span class="com">// Parses the <i>declaration</i> rule in which all the linear blank</span>
+                              <span class="com">// characters will be ignored</span>
+>Ignore(CIgnore) declaration  <span class="com">// Parses the <i>declaration</i> rule in which all that is parsed</span>
+                              <span class="com">//    by the <i>CIgnore</i> rule (already defined) will be ignored</span>
+>Ignore() declaration         <span class="com">// Parses the <i>declaration</i> rule taking everything into account </span>
+                              <span class="com">// (overrides the <i>ignore</i> for this rule if it is defined by the caller</span>
+                              <span class="com">// rule)</span>
 
 <span class="com">/*
-  >NoIgnore ne vas pas parser la regle d'ignore avant la regle donnee.
-  ATTENTION : Cette regle est TRES differente de >Ignore(). Si vous voulez ne rien ignorer DANS la
-              regle, vous devez utiliser >Ignore(), tandis que si vous ne voulez pas ignorer AVANT
-              la regle, vous devez utiliser >NoIgnore 
+  >NoIgnore will not parse the <i>ignore</i> rule before the given rule.
+  WARNING : This rule is VERY different from >Ignore(). If you wish to take everything into account
+            WITHIN the rule, you must use >Ignore(), whereas if you wish to take everything into
+            account BEFORE the rule, you must use >NoIgnore 
 */</span>
-declaration >NoIgnore ';'     <span class="com">// Parse la regle declaration suivie d'un ';' SANS ignorer quoi que</span>
-                              <span class="com">//   ce soit definit precedemment entre la declaration et le ';'</span>
-
+declaration >NoIgnore ';'     <span class="com">// Parses the <i>declaration</i> rulefollowed by the character ';' WITHOUT</span>
+                              <span class="com">// ignoring anything defined previously in between the declaration</span>
+			      <span class="com">// and the character ';'</span>	
 <span class="com">/*
-  >Force() oblige la regle a reussir, genere une parse error si la regle echoue.
-  Prend en parametre la string qui sera utilisee comme texte de la parse error.
+  >Force() forces the rule to succeed, and it generates a parse error if the rule fails.
+  It takes as a parameter the string which will be used as the text of the parse error.
 */</span>
->Force("EOF !!!") EndOfFile   <span class="com">// Genere une parse error si ce n'est pas la fin du fichier</span>
+>Force("EOF !!!") EndOfFile   <span class="com">// Generates a parse error if it is not the end of the file</span>
 </pre>
 
-<h3><a name="bnfGroup" class="sharp">Groupes</a></h3>
+<h3><a name="bnfGroup" class="sharp">Groups</a></h3>
 
 <p>
-	la TzBNF permet de regrouper des regles dans des groupes grace aux caracteres [].<br />
-	Ces groupes permettent egalement de parser cerataines regles OU d'autres grace au caractere |.<br />
-	Un groupe est une regle comme une autre, par consequent, on peux lui attribuer tout ce qu'on attribue aux regles.
+	The TzBNF allows the regrouping of rules into groups using the characters [].<br />
+	Those groups also allow the parsing of a certain rule instead of others by using the character |.<br />
+	A group is a rule itself, just like any other, and as such, it can be assigned anything that can be assigned to other rules.
 </p>
 
 <pre>
 <span class="com">/*
-  Regle Test1 qui parse un Identifier suivi d'un nombre indefinit de ',' Identifier
-  Equivalent a Identifier{+, ','}
+  Test1 rule which parses an Identifier followed by an unknown number of ',' Identifier
+  The equivalent of Identifier{+, ','}
 */</span>
 Test1	::=
     Identifier
@@ -436,45 +435,45 @@ Test1	::=
 ;
 
 <span class="com">/*
-  Regle Test2 qui parse soit un Integer soit un Float.
-  Notez que le groupe doit forcement etre dans cet ordre puique Float peux parser un Integer
-    => Un nombre a virgule flotante n'as pas necessairement de virgule
+  Test2 rule which parses either an Integer or a Float.
+  Please note that the group MUST be in that precise order since Float has the ability
+  to parse an Integer => A float does not necessarily have a decimal point
 */</span>
 Test2	::=
     [ Float | Integer ]
 ;
 </pre>
 
-<h3><a name="bnfAST" class="sharp">Sauvegarde dans l'AST</a></h3>
+<h3><a name="bnfAST" class="sharp">Saving into the AST</a></h3>
 
 <p>
-	Le systeme d'AST de TzParser est base sur du XML.<br />
-	Meme si vous pouvez (voir plus bas) interfacer n'importe quel systeme (XML ou non), le principe reste base sur du XML et cette documentation ne s'interessera qu'a l'AST sous forme XML.<br />
-	Dans la TzBNF, il existe 2 moyens de sauvegarder dans l'arbre : Creer un noeud enfant du precedant ou creer un attribut dans le precedent noeud.
+	Tzparser's ASt system is based upon XML.<br />
+	Even though you can (see lower down) interface any system (XML or not), the principle is still based upon XML and this documentation is only concerned with the AST in XML form.<br />
+	In the TzBNF, there are two possible ways of saving into the tree : Creating a node child of the previous one or creating an attribute within the previous node.
 </p>
 
 <pre>
-regle:id              <span class="com">// Parse la regle, cree un noeud id et sauve ce qui est parse dans l'attribut</span>
-                      <span class="com">//   Value de ce nouveau noeud</span>
-regle:!id             <span class="com">// Parse la regle et cree un noeud id sans sauver ce qui est parse</span>
-regle:id.             <span class="com">// Parse la regle, cree un noeud id, sauve ce qui est parse et sauve la ligne</span>
-                      <span class="com">//   courante dans l'attribut Line de ce nouveau noeud</span>
-regle:!id.            <span class="com">// Parse la regle, cree un noeud id sans sauver ce qui est parse et sauve la</span>
-                      <span class="com">//   ligne courante dans l'attribut Line de ce nouveau noeud</span>
-regle:&lt;idval&gt;         <span class="com">// Parse la regle et sauve ce qui est parse dans l'attribut idval du noeud</span>
-                      <span class="com">//   precedent</span>
-regle:&lt;type "id"&gt;     <span class="com">// Parse la regle et cree un attribut type avec pour valeur id dans le noeud</span>
-                      <span class="com">//   precedent. Notez qu'a la place de "id", il y aurai pu avoir n'importe</span>
-                      <span class="com">//   quel caractere, string, concatenation ou nom de string.</span>
-regle:id:&lt;type "id"&gt;  <span class="com">// Parse la regle, cree un attribut type avec pour valeur id dans le noeud</span>
-                      <span class="com">//   precedent, cree un nouveau noeud id sauve ce qui est parse dans ce</span>
-                      <span class="com">//   nouveau noeud.</span>
+regle:id            <span class="com">// Parses the rule, creates an <i>id</i> node and saves what has been parsed</span>
+                    <span class="com">// into the <i>value</i> attribute of the newly created node</span>
+regle:!id           <span class="com">// Parses the rule and creates an <i>id</i> node without saving what has been parsed</span>
+regle:id.           <span class="com">// Parses the rule, creates an <i>id</i> node, saves what has been parsed and saves</span>
+                    <span class="com">// the current line into the <i>Line</i> attribute of the newly created node</span>
+regle:!id.          <span class="com">// Parses the rule, creates an <i>id</i> node without saving what has been parsed and</span>
+                    <span class="com">// saves the current line in the <i>Line</i> attribute of the newly created node</span>
+regle:&lt;idval&gt;       <span class="com">// Parses the rule and saves what has been parsed into the <i>idval</i> attribute of</span>
+                    <span class="com">// the previous node</span>
+regle:&lt;type "id"&gt;   <span class="com">// Parses the rule and creates a <i>type</i> attribute with <i>id</i> as a value in the</span>
+                    <span class="com">// previous node. Please note that any character, string, concatenation, or name</span>
+                    <span class="com">// of a string could have been used instead of "id".</span>
+regle:id:&lt;type "id"&gt;<span class="com">// Parses the rule, creates a <i>type</i> attribute with <i>id</i> as a value in the previous</span>
+                    <span class="com">// node, then creates a new <i>id</i> node, saves what has been parsed in the newly</span>
+                    <span class="com">// created node.</span>
 </pre>
 
-<h3><a name="bnfEx" class="sharp">Exemple</a></h3>
+<h3><a name="bnfEx" class="sharp">Example</a></h3>
 
 <p>
-	Voici un exemple qui reprend toutes les notions vues :
+	Here comes an example using all the afore-mentionned notions :
 </p>
 
 <pre>
@@ -492,12 +491,12 @@ Test		::=
 </pre>
 
 <p>
-	Cree une regle Test, qui parse 0 a N Prec puis 0 ou 1 Check.<br />
-	Si ce Check est parse, cree un noeud Check sans attribut Value (sachant que tout les attribut qui seront definit DANS cette regle seront sauvegarde dans cet attribut si aucun autre noueud n'a ete definit).<br />
-	Parse ensuite SOIT un n suivi d'un point, sans consomer ce point, SOIT un In, en ignorant tout les caracteres blanc lineaires.<br />
-	Notez bien l'ordre dans lequel est definit ce groupe. Si l'on avait mis le In simple en premier, on aurait jamais parse le point puisque la regle In simple aurait reussi meme si elle est ensuite suivi d'un point.<br />
-	Un noeud In est cree qui contient un attribut Value avec ce qui a ete parse dans le groupe et un attribut point qui contient '0' ou '1' en fonction de ce qui a ete parse.<br />
-	Enfin, on parse eventuellement la regle After (qui parsera le '.', s'il y est) sans rien ignorer entre le groupe et elle.
+	Creates a <i>Test</i> rule, which parses from 0 to N <i>Prec</i> then 0 or 1 <i>Check</i>.<br />
+	If this <i>Check</i> is parsed, a <i>Check</i> node is created without a <i>value</i> attribute (knowing that all the attributes that will be defined WITHIN this rule will be saved in this attribute if no other node has been defined).<br />
+	Then it parses EITHER a n followed by a dot, without consuming this dot, OR an In, while ignoring all the linear blank characters.<br />
+	Please pay close attention to the order in which the group is defined. If the simple In had been put first, the dot would never had been parsed since the simple In rule would have succeeded even if it was still followed by a dot.<br />
+	An In node is created, which contains a <i>value</i> attribute, itself containing what has been parsed in the group, and a <i>point</i> attribute which contains either '0' or '1' depending on what has been parsed.<br />
+	Finally, the <i>After</i> may be parsed (which will parse the character '.', if it is present) without ignoring anything between the group and the itself.
 </p>
 
 <h2><a name="cpp" class="sharp">Ecrire un parser en C++ avec TzParser, correspondace avec la TzBNF</a></h2>
