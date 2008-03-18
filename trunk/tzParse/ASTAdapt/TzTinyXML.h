@@ -31,8 +31,8 @@ class TzTinyXMLDocument : public TiXmlDocument, public tzParse::IParseASTDocumen
 public:
 	virtual	~TzTinyXMLDocument() {}
 
-	virtual	void				addChild(IParseASTElement* node) { this->InsertEndChild( *(dynamic_cast<TzTinyXMLElement*>(node)) ); delete node; }
-	virtual IParseASTElement*	createElement(const std::string& name) { return new TzTinyXMLElement(name); }
+	virtual	void				addChild(tzParse::IParseASTElement* node) { this->InsertEndChild( *(dynamic_cast<TzTinyXMLElement*>(node)) ); delete node; }
+	virtual tzParse::IParseASTElement*	createElement(const std::string& name) { return new TzTinyXMLElement(name); }
 };
 
 #endif	// !TZ_TINY_XML_H__
