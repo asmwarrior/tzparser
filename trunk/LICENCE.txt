@@ -15,3 +15,8 @@ signaler au pret de l'auteur original : salomon . brys @ gmail . com
 En cas de volonte d'utilisation commerciale ou de modification non partagée de
 ces fichiers, contactez l'auteur afin de negocier avec lui les droits et
 conditions d'utilisation comerciale.
+
+
+All of the files provided are under a triple licence MPL / LPGL / GPL ONLY if
+they are used for non-commercial and non-lucrative purposes.
+
