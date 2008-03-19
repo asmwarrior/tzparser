@@ -3,20 +3,32 @@ Tous les fichiers fournis sont sous triple license MPL / LGPL / GPL A CONDITION
 de les utiliser pour un usage non-commercial et non-lucratif.
 Basiquement, VOUS N'ETES PAS AUTORISE A GAGNER DE L'ARGENT en utilisant ce code
 source mais vous pouvez l'inclure dans une application close-source libre.
-Lors de l'utilisation, vous devez choisir une licence a apliquer au code entre
+Lors de l'utilisation, vous devez choisir une licence à apliquer au code entre
 la MPL, la LGPL et la GPL.
 IL EST TRES FORTEMENT RECOMMANDE D'UTILISER LA MPL et l'auteur ne recommande
 la LGPL et la GPL que dans le cas d'incompatibilité avec d'autres composants
 logiciels.
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-De plus, tout les utilisateurs de ces fichiers, meme modifies, DOIVENT se
-signaler au pret de l'auteur original : salomon . brys @ gmail . com
+De plus, tout les utilisateurs de ces fichiers, même modifiés, DOIVENT se
+signaler au près de l'auteur original : salomon . brys @ gmail . com
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-En cas de volonte d'utilisation commerciale ou de modification non partagée de
-ces fichiers, contactez l'auteur afin de negocier avec lui les droits et
-conditions d'utilisation comerciale.
+En cas de volonté d'utilisation commerciale ou de modification non partagée de
+ces fichiers, contactez l'auteur afin de négocier avec lui les droits et
+conditions d'utilisation commerciale.
 
 
 All of the files provided are under a triple licence MPL / LPGL / GPL ONLY if
 they are used for non-commercial and non-lucrative purposes.
-
+Basically, you ARE NOT ALLOWED TO MAKE ANY MONEY using this source code but
+you are free to include it in an free close-source application.
+When using it, you must choose the code's licence : either MPL, LGPL or GPL.
+IT IS STONGLY RECOMMENDED TO USE THE MPL licence, and the author only
+recommends the LGPL or GPL licences in the case of a lack of compatibility with
+other software components.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Furthermore, anybody using these files, even modified versions of them, MUST
+get in contact with the original author : salomon . brys @ gmail . com
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+In case you wish to use this source code for commercial purposes, or to perform
+unshared modifications of the files, please contact the author to negotiate
+with him the potential rights and the conditions of the commercial use.
