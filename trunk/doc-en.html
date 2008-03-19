@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
 <head>
-	<title>TzParser : Documentation FR</title>
+	<title>TzParser : Documentation EN</title>
 
 	<style type="text/css">
 		*
@@ -109,7 +109,7 @@
 		</ul>
 	</li>
 	<li>
-		<a href='#use'>Using a parser in C++ created or generated with TzParser</a>
+		<a href='#use'>Using a parser in C++ created or generated through TzParser</a>
 		<ul>
 			<li><a href='#useBase'>Basic use</a></li>
 			<li><a href='#useStream'>Creating a stream for TzParser</a></li>
@@ -519,39 +519,39 @@ RULE_DECLARE_SIMPLE(Test);                 <span class="com">// Definition of th
 </pre>
 
 <p>
-	The syntax of the TzParser in C++ was created to in oreder to make it as easy as possible its transformation into C++, ce chapitre decriras donc principalement comment passer de la TzBNF au C++, ce que fait le generateur TzParser.<br />
-	Cependant, comme souvent, la syntaxe C++ permet plus de liberte, que nous verrons en fin de chapitre avec les regles avancees.<br />
-	Voici comment implementer la regle Test declaree plus haut qui parse un Identifier suivi d'un Float :
+	The syntax of the TzParser in C++ was created to ressemble as much as possible that of the TzBNF, so that it would be easily transcribable, so this chapter will focus on how to go from TzBNF to C++, which is what the TzParser generator does.<br />
+	However, as is often the case, the syntax of C++ allows more freedom, which we shall see at the end of the chapter, in the advanced rules section.<br />
+	See below for how to implement the <i>Test</i> rule declared higher up, which parses an Identifier followed by a Float :
 </p>
 
 <pre>
-RULE_IMPLEMENT(Test, p)       <span class="com">// arg1: nom de la regle, arg2: variable du parser (p par convention)</span>
+RULE_IMPLEMENT(Test, p)       <span class="com">// arg1: Name of the rule, arg2: parser variable (p par convention)</span>
 {
-    p   >>  Identifier().r()  <span class="com">// Parse un Identifier. Utilise la variable definit plus haut.</span>
-        >>  Float().r()       <span class="com">// Parse un Float</span>
+    p   >>  Identifier().r()  <span class="com">// Parses an Identifier. Uses the variable defined higher up.</span>
+        >>  Float().r()       <span class="com">// Parses a Float</span>
         ;
-    RULE_RETURN(p);           <span class="com">// Return de la regle</span>
+    RULE_RETURN(p);           <span class="com">// Return of the rule</span>
 }
 </pre>
 
 <p>
-	Notez que le .r() qui suit Identifier() et Float() n'est pas obligatoire lors d'une compilation sous Visual Studio.<br />
-	Ce .r() corrige une aberration de G++ (reference a l'instanciation) et est mis par defaut lors de la generation afin d'etre cross-compatible (tout ce que fait r() est { return *this; } ).
+	Please note that the .r() which follows Identifier() and Float() is not mandatory when compiling with Visual Studio.<br />
+	This .r() corrects a G++ aberration (reference to the instantiation) and it is written by default upon generation to insure cross-compatibility (r() only does { return *this; } ).
 </p>
 
 <p>
-	Voici les regles de bases et leurs correspondances en TzBNF (les strings etant des #define, elles sont utilisable comme en TzBNF) :
+	Here follow the basic rules and their equivalents in TzBNF (strings being #define, they can be used just as in TzBNF) :
 </p>
 
 <pre>
 <span class="com">/*
-  Regles implicites
+  Implicit rules
 */</span>
 GetChar().only('c')  <span class="com">// => 'c'</span>
 Read().str("hello")  <span class="com">// => "hello"</span>
 
 <span class="com">/*
-  Regles de base.
+  Basic rules
 */</span>
 GetChar()        <span class="com">// => GetChar</span>
 Identifier()     <span class="com">// => Identifier</span>
@@ -564,20 +564,20 @@ CStr()           <span class="com">// => CStr</span>
 EndOfFile()      <span class="com">// => EndOfFile</span>
 </pre>
 
-<h3><a name="cppTz" class="sharp">Regles speciales (TzRule)</a></h3>
+<h3><a name="cppTz" class="sharp">Special rules (TzRule)</a></h3>
 
 <p>
-	Les regles dans le TzParser ont toutes un certains nombre de modificateurs (nous verrons ceux en communs plus tard).<br />
-	En plus des modificateurs en communs, les TzRule (regles commencant par un #) correspondent en C++ a des regles qui ont leur propre modificateur.<br />
-	Les modificateurs peuvent etre chaines.
+	All the rules in the TzParser have a few modifiers (We will see the common ones later on).<br />
+	In addition to the common modifiers, the TzRule (rules which names begin with a #) correspond in C++ to rules which have their own modifiers.<br />
+	The modifiers can be chained.
 </p>
 
 <pre>
 <span class="com">/*
   #GetChar :
-  arg 1 : Booleen : .caseInsensitive()
-  arg 2 : Litteral : .only() pour un caractere OU .in() pour une chaine de caracteres
-  arg 3 : Litteral : .but() pour un caractere OU .notIn() pour une chaine de caracteres
+  arg 1 : Boolean : .caseInsensitive()
+  arg 2 : Literal : .only() for a character OR .in() for a character string
+  arg 3 : Literal : .but() for a character OR .notIn() for a character string
 */</span>
 GetChar()                                  <span class="com">// => GetChar</span>
 GetChar().in(P_LBLANKS)                    <span class="com">// => #GetChar(P_LBLANKS)</span>
@@ -617,22 +617,22 @@ Float().coma(',')                          <span class="com">// => #Float(',')</
 Float().forcePositive().coma(',')          <span class="com">// => #Float(+, ',')</span>
 </pre>
 
-<h3><a name="cppNeed" class="sharp">Optionalite, repetition, verification et modificateurs (TzModif)</a></h3>
+<h3><a name="cppNeed" class="sharp">Optionality, repetition, checking and modifiers (TzModif)</a></h3>
 
 <p>
-	Dans la syntaxe TzParser, toute operation visant a modifier le comportement d'une regle utilise un modificateur.<br />
-	Les modificateurs ci-apres sont communs a toutes les regles (y compris celle definit par l'utilisateur).<br />
-	Ces modificateurs doivent imperativement etre appele APRES les eventuels modificateurs propre a une regle.<br />
+	In the TzParser syntax, any operation with the aim of modifying the behaviour of a rule uses a modifier.<br />
+	The following modifiers are common to all the rules (including user-defined ones).<br />
+	These modifiers MUST be called AFTER the potential rule-specific modifiers.<br />
 </p>
 
 <pre>
 <span class="com">/*
-  L'optionalite et la repetition (geres en TzBNF par les caracteres ?, * et + sont geres en C++ par
-  le modificateur .n().
-  Ce modificateur peux prendre le caractere TzBNF, un define correspondant au caractere TzBNF ou un
-  minimum et un maximum. Pour chaque appel, un eventuel caractere d'espacement peut etre specifie
-  en dernier argument.
-  ? (= PARSE_ZERO_OR_ONE = PARSE_ZOO), + (= PARSE_ONE_OR_MORE = PARSE_OOM) et * (= PARSE_ANY)
+  The optionality and the repetition (handled by the characters '?', '*' and '+' in TzBNF, are
+  handled by the modifier .n() in C++.
+  This modifier can use the TzBNF character, a <i>define</i> corresponding to the TzBNF character,
+  or a minimum and a maximum. For each call, a potential space character can be specified as the
+  last argument.
+  ? (= PARSE_ZERO_OR_ONE = PARSE_ZOO), + (= PARSE_ONE_OR_MORE = PARSE_OOM) and * (= PARSE_ANY)
 */</span>
 Regle().n('+')                 <span class="com">// => Regle+</span>
 Regle().n(PARSE_OOM)           <span class="com">// => Regle+</span>
@@ -643,41 +643,41 @@ Regle().n('+', '-')            <span class="com">// => Regle{+, '-'}</span>
 Regle().n(2, 0, '-')           <span class="com">// => Regle{2,,'-'}</span>
 
 <span class="com">/*
-  La verification se fait par le modificateur .check().
-  check prend en parametre un booleen qui definit si vous voulez verifier la presence ou l'abscence
-  d'une regle.
+  The checking is done using the modifier <i>.check()</i>.
+  <i>check</i> takes a boolean as a parameter, which defines whether you wish to check for the presence or
+  the absence of a rule.
 */</span>
 Regle().check(true)            <span class="com">// => =Regle</span>
 Regle().check(false)           <span class="com">// => !Regle</span>
 
 <span class="com">/*
-  Le modificateur TzBNF >Ignore() correspond au modificateur C++ ignore().
-  Attention, si ignore prend en paramettre un nom de regle, n'oubliez pas les parentheses !
+  The TzBNF modifier <i>>Ignore()</i> corresponds to the C++ modifier <i>ignore()</i>.
+  WARNING : If <i>ignore</i> has the name of a rule as a parameter, do not forget the brackets !
 */</span>
 Regle().ignore()               <span class="com">// => >Ignore() Regle</span>
 Regle().ignore(P_LBLANKS)      <span class="com">// => >Ignore(P_LBLANKS) Regle</span>
 Regle().ignore(RegleIgnore())  <span class="com">// => >Ignore(RegleIgnore) Regle</span>
 
 <span class="com">/*
-  Le modificateur TzBNF >NoIgnore correspond au modificateur C++ ignoreBefore(false).
-  Vous pouvez appeller ignoreBefore(true) si vous manipulez une regle sur laquelle
-  ignoreBefore(false) a ete (ou a pu etre) appelle afin d'annuler son effet et respecifier que la
-  regle parsera l'ignore avant d'etre parsee.
+  The TzBNF modifier <i>>NoIgnore</i> corresponds to the C++ modifier <i>ignoreBefore(false)</i>.
+  You can call <i>ignoreBefore(true)</i> if you are handling a rule on which <i>ignoreBefore(false)</i>
+  has been (or could be) called so as to cancel its effect and restate that the rule will parse the
+  <i>ignore</i> before it is parsed.
 */</span>
 Regle().ignoreBefore(false);   <span class="com">// => >NoIgnore Regle</span>
 
 <span class="com">/*
-  Le modificateur TzBNF >Force() correspond au modificateur C++ force().
-  Vous pouvez appeller force() sans arguments si vous voulez annuler le force sur une regle.
+  The TzBNF modifier <i>>Force()</i> corresponds to the C++ modifier <i>force()</i>.
+  <i>force()</i> can be called without any argument if you want to cancel the <i>force</i> on a rule.
 */</span>
 Regle().force("ouch !")        <span class="com">// => >Force("ouch !") Regle</span>
 </pre>
 
-<h3><a name="cppGroup" class="sharp">Groupes</a></h3>
+<h3><a name="cppGroup" class="sharp">Groups</a></h3>
 
 <p>
-	Il existe deux types de groupes : le group simple AND et le groupe conditionnel OR.<br />
-	Le groupe OR test chacun de ses membres et s'arrete au premier succes, ce qui signifie que si l'un des ses membres contient plusieurs regles, ca doit etre un groupe AND.
+	There are two types of groups : the simple group AND and the conditionnal group OR.<br />
+	The OR group tests each of its members and stops at the first success, which means that if one member contains more than one rule, the type of group used should be AND.
 </p>
 
 <pre>
@@ -691,7 +691,7 @@ RULE_IMPLEMENT(test1, p)
     p   >>  ( G_AND
             >>  Identifier().r()
             >>  Float().r()
-            ).n('*').r()              <span class="com">// Notez les modificateurs apres la fermeture du groupe</span>
+            ).n('*').r()              <span class="com">// Please notice the modifiers after the closing of the group</span>
         ;
     RULE_RETURN(p);
 }
@@ -720,7 +720,7 @@ RULE_IMPLEMENT(test3, p)
 {
     p   >>  ( G_OR
             >>  truc().r()
-            >>  ( G_AND               <span class="com">// Notez la creation du groupe AND</span>
+            >>  ( G_AND               <span class="com">// Please notice the creation of the AND group</span>
                 >>  Identifier().r()
                 >>  Float().r()
                 ).r()
@@ -731,10 +731,10 @@ RULE_IMPLEMENT(test3, p)
 }
 </pre>
 
-<h3><a name="cppAST" class="sharp">Sauvegarde dans l'AST</a></h3>
+<h3><a name="cppAST" class="sharp">Saving into the AST</a></h3>
 
 <p>
-	Comme pour le reste, la sauvegarde dans l'AST se fait egalement au moyen modificateurs.
+	As for the rest, saving into the ASt is also done using modifiers.
 </p>
 
 <pre>
@@ -746,10 +746,10 @@ Regle().saveAttr("attr", "val")                               <span class="com">
 Regle().saveNode("noeud", false).saveLine().saveAttr("attr")  <span class="com">// => Regle:!noeud.:&lt;attr&gt;</span>
 </pre>
 
-<h3><a name="cppEx" class="sharp">Exemple</a></h3>
+<h3><a name="cppEx" class="sharp">Example</a></h3>
 
 <p>
-	Reprenons l'exemple en TzBNF du chapitre precedent et transcrivons le en C++ :
+	Let us reconsider the TzBNF example of the previous chapter and transcribe it into C++ :
 </p>
 
 <pre>
@@ -767,7 +767,7 @@ Regle().saveNode("noeud", false).saveLine().saveAttr("attr")  <span class="com">
   ;
 */</span>
 
-RULE_IMPLEMENT(Test, p)  <span class="com">// ATTENTION : Ne pas oublier dans le .h RULE_DECLARE_SIMPLE(Test);</span>
+RULE_IMPLEMENT(Test, p)  <span class="com">// WARNING : Do not forget <i>RULE_DECLARE_SIMPLE(Test);</i> in the .h file</span>
 {
     p   >>  Prec().n('*').r()
         >>  Check().n('?').saveNode("Check", false).r()
@@ -785,52 +785,54 @@ RULE_IMPLEMENT(Test, p)  <span class="com">// ATTENTION : Ne pas oublier dans le
 </pre>
 
 <p>
-	Bien que plus dificile a lire, cette syntaxe est aussi simple que celle de la TzBNF.<br />
-	Elle vous sera utile lors de l'ecriture de parsers plus avances qui necessiterons du code C++ directement dans les regles ou lors de l'utilisation de fonctionnalitees avancees de TzParser (voir chapitre correspondant plus bas).
+	Even though it is hard to decypher, this syntax is just as simple as that of the TzBNF.<br />
+	It will come in handy when writing more advanced parsers which will need C++ code directly when using advanced functionalities of TzParser (See the dedicated chapter lower down).
 </p>
 
-<h2><a name='use' class="sharp">Utiliser un parser en C++ cree ou genere avec TzParser</a></h2>
+<h2><a name='use' class="sharp">Using a parser in C++ created or generated through TzParser</a></h2>
 
-<h3><a name='useBase' class="sharp">Utilisation basique</a></h3>
+<h3><a name='useBase' class="sharp">Basic use</a></h3>
 
 <p>
-	Il est inutile de parser un flux, si ce n'est pour en retirer un AST.<br />
-	TzParser ne fournis pas un systeme d'AST mais une interface permettant d'interfacer n'importe quel systeme d'AST.<br />
-	TzParser est fournis avec l'adaptateur permettant d'utiliser <a href="http://www.grinninglizard.com/tinyxml/">TinyXML</a> comme librairie AST.<br />
-	Voici un exemple commente pour utiliser TzParser dans un programme C++ (on admet que Rules.h et Rules.cpp sont les fichiers des regles TzParser, et que TRACE est un define pour true ou false) :
+	It is useless to parse a flux if not to obtain an AST.<br />
+	TzParser does not provide an AST system but an interface which allows the interfacing of just any ASt system.<br />
+	TzParser comes with the adapter which allows the use of <a href="http://www.grinninglizard.com/tinyxml/">TinyXML</a> as an AST library.<br />
+	Here follows an example (with comments) on how to use TzParser in a C++ program (We assume that Rules.h and Rules.cpp are the files of the TzParser rules, and that TRACE is a <i>define</i> for true or false) :
 </p>
 
 <pre>
-#include "tzParse/tzParse.h"             <span class="com">// On inclus la librairie tzParse</span>
+#include "tzParse/tzParse.h"             <span class="com">// We include the tzParse library</span>
 
-#include "tzParse/ASTAdapt/TzTinyXML.h"  <span class="com">// On inclus l'adaptateur de l'AST pour TinyXML</span>
-                                         <span class="com">//   (qui incluera tinyXML)</span>
+#include "tzParse/ASTAdapt/TzTinyXML.h"  <span class="com">// We include the AST adapter for TinyXML</span>
+                                         <span class="com">// (which does include TinyXML)</span>
 
-#include "Rules.h"                       <span class="com">// On inclus le header des regles</span>
+#include "Rules.h"                       <span class="com">// We include the header for the rules</span>
 
-using namespace tzParse;                 <span class="com">// Afin d'acceder facilement au parser</span>
+using namespace tzParse;                 <span class="com">// Allows easy access to the parser</span>
 
 int	main()
 {
     try
     {
-        Parser              p;           <span class="com">// On cree le parser</span>
-        TzTinyXMLDocument   d;           <span class="com">// On cree le document tinyXML adapte au systeme d'AST</span>
+        Parser              p;           <span class="com">// The parser is created</span>
+        TzTinyXMLDocument   d;           <span class="com">// The TinyXML document, adapted to the AST system,</span>
+					 <span class="com">// is created</span>
 
-        p.setXMLDoc(&d);                 <span class="com">// On definit le document a remplir au parser</span>
+        p.setXMLDoc(&d);                 <span class="com">// The document to be filled-in is defined to the parser</span>
 
         if (TRACE)
-            p.trace();                   <span class="com">// On trace eventuellement le parcours du parser.</span>
-                                         <span class="com">//   ATTENTION : TRES verbeux et TRES lent (bourin).</span>
+            p.trace();                   <span class="com">// The route of the parser is potentially traced</span>
+                                         <span class="com">// WARNING : VERY wordy and VERY slow (the HARD way)</span>
 
-        ifstream    f("masyntaxe.txt");  <span class="com">// On ouvre le fichier qui va etre parse.</span>
+        ifstream    f("masyntaxe.txt");  <span class="com">// The file to be parsed is opened</span>
 
-        p   <<  f;                       <span class="com">// On insere le flux dans le parser.</span>
+        p   <<  f;                       <span class="com">// The flux is inserted in the parser</span>
 
-        p   >>  RegleBase().r();         <span class="com">// On parse la regle RegleBase.</span>
+        p   >>  RegleBase().r();         <span class="com">// The <i>RegleBase</i> rule is parsed</span>
 
         <span class="com">/*
-          Ce bloc de code est specifique a TinyXML et permet d'afficher l'arbre XML.
+          The next few lines of code are specific to TinyXML and allow the displaying
+          of the XML tree.
         */</span>
         {
             TiXmlPrinter    printer;
@@ -840,8 +842,8 @@ int	main()
         }
     }
 
-    catch (std::exception& e)            <span class="com">// Les exceptions de TinyXML et de TzParse heritent de</span>
-                                         <span class="com">//   std::exception</span>
+    catch (std::exception& e)            <span class="com">// The TinyXML and TzParse exceptions inherit the</span>
+                                         <span class="com">// std::exception</span>
     {
         cout << e.what() << endl;
     }
@@ -850,12 +852,12 @@ int	main()
 }
 </pre>
 
-<h3><a name='useStream' class="sharp">Creer un stream pour TzParser</a></h3>
+<h3><a name='useStream' class="sharp">Creating a stream for TzParser</a></h3>
 
 <p>
-	Notez l'instruction (dans l'exemple precedent) p << f; ou f est un ifstream.<br />
-	L'insertion d'un flux dans un TzParser peux prendre en parametre n'importe quel istream ou objet heritant de IParseData.<br />
-	Voici l'interface IParseData (definie dans IParseData.h) qui vous permet de creer vos propres flux a parser :	
+	Please notice the instruction (in the previous example) p << f; in which f is an ifstream.<br />
+	The insertion of a flux in a TzParser can take any istream as a parameter, or any object inherited from IParseData.<br />
+	See below the IParseData interface (defined in IParseData.h) which allows you to create your own flux to be parsed :	
 </p>
 
 <pre>
@@ -930,82 +932,92 @@ public:
 	Pour bien comprendre la creation d'un adaptateur AST, il est conseille de consulter le fichier ASTAdapt/TzTinyXML.h qui adapte tres simplement la librairie TinyXML.
 </p>
 
-<h2><a name="moreCPP" class="sharp">Creer des regles avancees en C++</a></h2>
+<h2><a name="moreCPP" class="sharp">How to create advanced rules in C++</a></h2>
 
 <p>
-	La librairie TzParser permet de creer des regles avancees, c'est a dire des regles disposant, a l'instar de GetChar, des modificateurs propres.<br />
-	Attention : pour l'instant il n'est pas possible d'utiliser de telles regles dans dans un parser ecris en TzNBNF. A partir du moment ou vous utilises les regles avancees, vous devez (pour l'instant) ecrire tout votre parser en C++.
+	The TzParser library allows the creation of advanced rules, that is to say rules, just like GetChar, with specific modifiers.<br />
+	WARNING : For the moment it is not possible to use such rules in a parser written in TzNBNF. If you decide to use advanced rules, you must (for the moment) write your whole parser in C++.
 </p>
 
 <p>
-    La definition des modificateurs se fait dans le .h. A la place de RULE_DECLARE_SIMPLE, voici comment declarer une regle avancee (nommee Test) :
+    The definition ofthe modifiers is done in the .h file. Instead of RULE_DECLARE_SIMPLE, see below how to declare an advanced rule (named <i>Test</i>) :
 </p>
 
 <pre>
-RULE_DECLARE_HEAD(Test)                          <span class="com">// Signature de la classe</span>
+RULE_DECLARE_HEAD(Test)                          <span class="com">// Class signature</span>
 {
-    RULE_HEAD(Test);                             <span class="com">// Obligatoire : implemente les constructeurs</span>
-    RULE_SIMPLE_CLONE(Test);                     <span class="com">// Obligqtoire : implemente la methode clone</span>
+    RULE_HEAD(Test);                             <span class="com">// Mandatory : implements the builders</span>
+    RULE_SIMPLE_CLONE(Test);                     <span class="com">// Mandatory : implements the clone method</span>
 
-    RULE_NO_TRACE();                             <span class="com">// A NE METTRE QUE SI VOUS NE SOUHAITEZ PAS QUE</span>
-                                                 <span class="com">//   LA REGLE S'AFFICHE DANS LE TRACE</span>
+    RULE_NO_TRACE();                             <span class="com">// WRITE THIS ONLY IF YOU DO NOT WISH THE RULE TO</span>
+                                                 <span class="com">// DISPLAY IN THE TRACE</span>
 
-    RULE_ARG(_a, bool, false);                   <span class="com">// Cree un attribut bool _a par defaut a false</span>
-    RULE_METHARG_DEF(Test, a1, _a, bool, true);  <span class="com">// Cree un modificateur a1 affecte a _a et dont</span>
-                                                 <span class="com">//   l'argument est optionnel par defaut a true</span>
-    RULE_METHARG(Test, a2, _a, bool);            <span class="com">// Cree un modificateur a2 affecte a _a</span>
+    RULE_ARG(_a, bool, false);                   <span class="com">// Creates a bool _a attribute (set by default to</span>
+						 <span class="com">// false)</span>
+    RULE_METHARG_DEF(Test, a1, _a, bool, true);  <span class="com">// Creates a modifier a1 set to _a and which</span>
+                                                 <span class="com">// argument is optional (set by default to true)</span>
+    RULE_METHARG(Test, a2, _a, bool);            <span class="com">// Creates a modifier a2 set to _a</span>
 
-    RULE_ARGNULL(_b, char*);                     <span class="com">// Cree un attribut char* _b par defaut a NULL</span>
-                                                 <span class="com">//   Attention, pour initialiser des pointeurs a</span>
-                                                 <span class="com">//   NULL, vous devez utiliser RULE_ARGNULL car</span>
-                                                 <span class="com">//   RULE_ARG(_a, char*, 0) ne fonctionne pas sous</span>
-                                                 <span class="com">//   G++...</span>
-    RULE_METHARG(Test, b, _b, char*);            <span class="com">// Cree un modificateur b affecte a _b</span>
+    RULE_ARGNULL(_b, char*);                     <span class="com">// Creates a char* _b attribute (set by default to</span>
+						 <span class="com">// NULL)</span>
+                                                 <span class="com">// WARNING : To format pointers to NULL, you must</span>
+                                                 <span class="com">// use RULE_ARGNULL because RULE_ARG(_a, char*, 0)</span>
+                                                 <span class="com">// does not work under G++...</span>
+    RULE_METHARG(Test, b, _b, char*);            <span class="com">// Creates a modifier b set to _b</span>
 
-    RULE_STDARG(Test, c, char, '1');             <span class="com">// Equivalent a (notez l'ajout de l'underscore) :</span>
+    RULE_STDARG(Test, c, char, '1');             <span class="com">// The equivalent of (Please note the added</span>
+						 <span class="com">//  underscore) :</span>
                                                  <span class="com">//   RULE_ARG(_c, char, '1');</span>
                                                  <span class="com">//   RULE_METHARG(Test, c, _c, char);</span>
 
-    RULE_STDARG_DEF(Test, d, char, '1', '2');    <span class="com">// Equivalent a (notez l'ajout de l'underscore) :</span>
+    RULE_STDARG_DEF(Test, d, char, '1', '2');    <span class="com">// The equivalent of (Please note the added</span>
+						 <span class="com">//  underscore) :</span>
                                                  <span class="com">//   RULE_ARG(_d, char, '1');</span>
                                                  <span class="com">//   RULE_METHARG_DEF(Test, d, _d, char, '2');</span>
 
-    RULE_STDARGNULL(Test, e, const char*);       <span class="com">// Equivalent a (notez l'ajout de l'underscore) :</span>
+    RULE_STDARGNULL(Test, e, const char*);       <span class="com">// The equivalent of (Please note the added</span>
+						 <span class="com">//  underscore) :</span>
                                                  <span class="com">//   RULE_ARGNULL(_e, const char*);</span>
                                                  <span class="com">//   RULE_METHARG(Test, e, _e, const char*);</span>
 
-    RULE_STDARGNULL_DEF(Test, f, char*, "abc");  <span class="com">// Equivalent a (notez l'ajout de l'underscore) :</span>
+    RULE_STDARGNULL_DEF(Test, f, char*, "abc");  <span class="com">// The equivalent of (Please note the added</span>
+						 <span class="com">//  underscore) :</span>
                                                  <span class="com">//   RULE_ARGNULL(_f, char*);</span>
                                                  <span class="com">//   RULE_METHARG_DEF(Test, f, _f, char*, "abc");</span>
 
-};                                               <span class="com">// Notez le ; (il s'agit d'une classe)</span>
+};                                               <span class="com">// Please note the ';' (It is a class)</span>
 </pre>
 
 <p>
-	Notez que RULE_ARG, RULE_ARGNULL, RULE_METHARG et RULE_METHARG_DEF sont rarement utilise au profit de RULE_STDARG, RULE_STDARG_DEF, RULE_STDARGNULL et RULE_STDARGNULL_DEF qui, en plus de declarer les attribut, implemente leur modificateurs.<br />
-	Une fois dans RULE_IMPLEMENT, il faut utiliser l'operateur * pour acceder aux arguments. Par exemple, pour acceder a la valeur char _d de l'exemple precedent, il faut faire *_d. Ceci s'explique par le fait que ce n'est pas un char qui est cree mais un AutoInit&lt;char, '1'&gt;.<br />
-	Pour bien comprendre le fonctionnement des regles avancees, vous etes invite a regarder les fichiers TzParseDefaultRules.h et TzParseDefaultRules.cpp qui contiennent les regles par defaut de TzParser (beaucoup sont des regles avancees relativement simple).
+	Please note that RULE_ARG, RULE_ARGNULL, RULE_METHARG and RULE_METHARG_DEF are rarely used, RULE_STDARG, RULE_STDARG_DEF, RULE_STDARGNULL et RULE_STDARGNULL_DEF being used instead. Those, in addition to declaring the attributes, implements their modifiers.<br/>
+	Once inside RULE_IMPLEMENT, the operator * must be used to access the arguments. For instance, to access the char _d value of the previous example, *_d must be used. This is explained by the fact that it is not a char which is created but an AutoInit&lt;char, '1'&gt;.<br/>
+	To understand fully the way the advanced rules work, please take a look at the TzParseDefaultRules.h and TzParseDefaultRules.cpp files containing the default rules of TzParser (many are relatively simple advanced rules).
 </p>
 
-<h2><a name="end" class="sharp">Bug ? Contact ? Next ?</a></h2>
+<h2><a name="end" class="sharp">Bugs ? Contact ? Next ?</a></h2>
 
 <p>
-	En cas de Bug, merci de vous rendre sur le bugtracker du projet.
-</p>
-
-<p>
-	En cas d'incomprehension ou de besoin d'aide, vous etes invites a vous rendre sur le forum du projet ou j'essaierai de repondre le plus rapidement a vos questions.<br />
-	Si vous souhaitez me contacter, n'hesitez pas a le faire (en francais ou en anglais) : salomon . brys @ gmail . com
+	In case you would find a bug, please go to the project bugtracker.
 </p>
 
 <p>
-	Pour voir ou proposer des fonctionnalitees a venir, rendez vous sur la wishList du projet.
+	In case you would have trouble understanding something or need help, you are invited to go to the project forum where I will try to answer your questions ASAP.<br />
+	If you wish to contact me, please do not hesitate to do so (in French or in English) : salomon . brys @ gmail . com
 </p>
 
 <p>
-	TzParser est sous licence LIBRE si votre projet est LIBRE (ce qui ne veux pas forcement dire open-source) et sous licence COMMERCIALE si votre projet est COMMERCIAL (ce qui ne veux pas forcement dire close-source).
-	A chacune des 2 licence s'applique des particularites, merci de consulter le fichier LICENCE.txt si vous utilisez TzParser dans votre projet.
+	To see or propose any coming functionality, please go to the project's wishList.
 </p>
+
+<p>
+	TzParser is under a FREE licence if your project is FREE (which does not necessarily mean open-source) and under a COMMERCIAL licence if your project is COMMERCIAL (which does not necessarily mean close-source).
+	Each of the 2 licences have particularities, so please consult the LICENCE.txt file if you wish to use TzParser in your project.
+</p>
+
+<p></p>
+<p></p>
+
+<p><FONT face="Times New Roman" size=4><center<u>Translated from French by Brice Damien (<a href="mailto:brice.damien@tele2.fr">brice.damien@tele2.fr</a>)</u></p>
 
 
 </body>

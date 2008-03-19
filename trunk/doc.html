@@ -517,7 +517,7 @@ RULE_DECLARE_SIMPLE(Test);                 <span class="com">// Définition de la
 </pre>
 
 <p>
-	La sytaxe C++ du TzParser a été étudiée pour pouvoir être le plus facilement possible transformable en C++, ce chapitre décrira donc principalement comment passer de la TzBNF au C++, ce que fait le générateur TzParser.<br />
+	La sytaxe C++ du TzParser a été étudiée pour pouvoir être la plus proche possible de la TzBNF et donc facilement transcriptible, ce chapitre décrira donc principalement comment passer de la TzBNF au C++, ce que fait le générateur TzParser.<br />
 	Cependant, comme souvent, la syntaxe C++ permet plus de liberte, ce que nous verrons en fin de chapitre avec les règles avancées.<br />
 	Voici comment implémenter la règle Test declarée plus haut qui parse un Identifier suivi d'un Float :
 </p>
@@ -851,7 +851,7 @@ int	main()
 <h3><a name='useStream' class="sharp">Créer un stream pour TzParser</a></h3>
 
 <p>
-	Notez l'instruction (dans l'exemple précédent) p << f; ou f est un ifstream.<br />
+	Notez l'instruction (dans l'exemple précédent) p << f; où f est un ifstream.<br />
 	L'insertion d'un flux dans un TzParser peut prendre en paramètre n'importe quel istream ou objet héritant de IParseData.<br />
 	Voici l'interface IParseData (définie dans IParseData.h) qui vous permet de créer vos propres flux à parser :	
 </p>
@@ -943,7 +943,7 @@ public:
 RULE_DECLARE_HEAD(Test)                          <span class="com">// Signature de la classe</span>
 {
     RULE_HEAD(Test);                             <span class="com">// Obligatoire : implémente les constructeurs</span>
-    RULE_SIMPLE_CLONE(Test);                     <span class="com">// Obligqtoire : implémente la méthode clone</span>
+    RULE_SIMPLE_CLONE(Test);                     <span class="com">// Obligatoire : implémente la méthode clone</span>
 
     RULE_NO_TRACE();                             <span class="com">// A NE METTRE QUE SI VOUS NE SOUHAITEZ PAS QUE</span>
                                                  <span class="com">//   LA REGLE S'AFFICHE DANS LE TRACE</span>
