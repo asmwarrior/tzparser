@@ -314,11 +314,11 @@ affect	::=
 </p>
 
 <pre>
-Identifier =Float      <span class="com">// Tests the rule which parses an identifier and checks if it is followed by a</span>
-                       <span class="com">// float without consuming the float</span>
+Identifier =Float      <span class="com">// Tests the rule which parses an identifier and checks if it is followed by</span>
+                       <span class="com">// a float without consuming the float</span>
 
-Identifier !Float{2,}  <span class="com">// Tests the rule which parses an identifier and checks that it is not followed</span>
-                       <span class="com">// by at least two floats</span>  
+Identifier !Float{2,}  <span class="com">// Tests the rule which parses an identifier and checks that it is not</span>
+                       <span class="com">// followed by at least two floats</span>  
 </pre>
 
 <h3><a name="bnfTz" class="sharp">Special rules (TzRule) and modifiers (TzModif)</a></h3>
@@ -865,30 +865,30 @@ class IParseData
 {
 public:
     <span class="com">/*
-      Methode a surcharger qui renvoie le prochain caractere a lire.
+      Method to be overloaded, which returns the next character to be read.
     */</span>
     virtual char    getChar(void) = 0;
 
     <span class="com">/*
-      Methode a surcharger qui renvoie true si le flux est vide, false s'il reste des caracteres a
-      lire.
+      Method to be overloaded, which returns true if the flux is empty, or false if there are still
+      characters to be read.
     */</span>
     virtual bool    isEndOfFile(void) = 0;
 
-    virtual ~IParseData() {};  <span class="com">// Destructeur virtuel</span>
+    virtual ~IParseData() {};  <span class="com">// Virtual Destroyer</span>
 };
 </pre>
 
 <p>
-	Attention : Les IParseData doivent se comporter comme les istream en ce qui concerne la fin du fichier, c'est a dire que isEndOfFile ne doit renvoyer true qu'apres que getChar n'ai renvoye un "caractere de fin du fichier" (habituellement -1, mais pas obligatoire) qui sera ignore par le parser.
+	WARNING : The IParseData must behave like the <i>istream</i> as far as the end of the file is concerned, that is to say that isEndOfFile must return true only after getChar returned an "end of file character" (usually -1, but not necessarily) which will be ignored by the parser.
 </p>
 
-<h3><a name='useAST' class="sharp">Interfacer une librairie AST</a></h3>
+<h3><a name='useAST' class="sharp">Interfacing an AST library</a></h3>
 
 <p>
-	TzParser permet d'utiliser n'importe quel librairie (XML ou non) fournissant un document a remplir des elements parses.<br />
-	Cependant, meme s'il est possible d'utiliser d'autres systemes que le XML, TzParser utilisera ces librairies comme s'il s'agissait de librairie XML.<br />
-	Voici les 2 interfaces a surcharger pour interfacer une librairie pour l'AST :
+	TzParser allows the use of just any library (XML or not) which, once it has been properly interfaced, provides a document that can be filled with what has been parsed by Tzparser.<br />
+	However, even though it is possible to use systems other than XML, TzParser will use those libraries as though they were XML libraries.<br />
+	See below the 2 interfaces to be overloaded in order to interface a library for the AST :
 </p>
 
 <pre>
@@ -896,40 +896,41 @@ class IParseASTElement
 {
 public:
     <span class="com">/*
-      Methode a surcharger qui prend en parametre un IParseASTElement* qui est FORCEMENT de la
-      classe renvoyee par IParseASTDocument::createElement, vous pouvez donc le downcaster avec
-      dynamic_cast sans probleme.
-      ATTENTION : Si vous copiez child, vous devez le supprimer (delete child);
+      Method to be overloaded which takes an IParseASTElement* as a parameter. This parameter
+      MUST come from the class returned by IParseASTDocument::createElement, so you can easily
+      downcast it using dynamic_cast.
+      ATTENTION : If you copy <i>child</i>, then you must delete it <i>(delete child)</i>;
     */</span>
     virtual void    addChild(IParseASTElement* child) = 0;
 
     <span class="com">/*
-      Ajoute un attribut a l'element
+      Adds an argument to the element
     */</span>
     virtual void    setAttribute(const std::string& name, const std::string& value) = 0;
 
-    virtual ~TzTinyXMLElement() {}  <span class="com">// Destructeur virtuel</span>
+    virtual ~TzTinyXMLElement() {}  <span class="com">// Virtual Destroyer</span>
 };
 
 class IParseASTDocument
 {
 public:
     <span class="com">/*
-      Meme methode que IParseASTElement::addChild.
+      Same method as IParseASTElement::addChild.
     */</span>
     virtual void                addChild(IParseASTElement*) = 0;
 
     <span class="com">/*
-      Cree un element qui pourra etre ajoute au document ou a un element via addChild.
+      Creates an element which can be added to the document or to another element through the use
+      of <i>addChild</i>.
     */</span>
     virtual IParseASTElement*   createElement(const std::string& name) = 0;
 
-    virtual ~TzTinyXMLDocument() {}  <span class="com">// Destructeur virtuel</span>
+    virtual ~TzTinyXMLDocument() {}  <span class="com">// Virtual Destroyer</span>
 };
 </pre>
 
 <p>
-	Pour bien comprendre la creation d'un adaptateur AST, il est conseille de consulter le fichier ASTAdapt/TzTinyXML.h qui adapte tres simplement la librairie TinyXML.
+	In order to understand fully the process of creation of an ASt adapter, we strongly advise that you take a look at the file ASTAdapt/TzTinyXML.h which adapts the TinyXML library very easily.
 </p>
 
 <h2><a name="moreCPP" class="sharp">How to create advanced rules in C++</a></h2>
@@ -1017,7 +1018,7 @@ RULE_DECLARE_HEAD(Test)                          <span class="com">// Class sign
 <p></p>
 <p></p>
 
-<p><FONT face="Times New Roman" size=4><center<u>Translated from French by Brice Damien (<a href="mailto:brice.damien@tele2.fr">brice.damien@tele2.fr</a>)</u></p>
+<p><FONT face="Times New Roman" size=3><center<u>Translated from French by Brice Damien (<a href="mailto:brice.damien@tele2.fr">brice.damien@tele2.fr</a>), 2008</u></p>
 
 
 </body>
