@@ -52,10 +52,10 @@ namespace tzParse
 		Parser() : ruleFail(false), line(1), _trace(-1), _noTrace(0), inIgnore(0), stopIgnore(false), precCtx(0), xmldoc(0), curElement(0), _idebug(0) {}
 		virtual ~Parser() {}
 
- 		Parser&			operator << (APIParseData i) { ipdStack.push(i); return *this; }
-		Parser&			operator << (IParseData& i) { ipdStack.push(i); return *this; }
- 		Parser&			operator << (std::istream& i) { ipdStack.push(new ParseDataIStream(i)); return *this; }
-		Parser&			operator << (std::string i) { ipdStack.push(new ParseDataIStream(new std::istringstream(i))); return *this; }
+ 		Parser&			operator << (APIParseData i) {  setEmptyToRead(); ipdStack.push(i); return *this; }
+		Parser&			operator << (IParseData& i) {   setEmptyToRead(); ipdStack.push(i); return *this; }
+ 		Parser&			operator << (std::istream& i) { setEmptyToRead(); ipdStack.push(new ParseDataIStream(i)); return *this; }
+		Parser&			operator << (std::string i) {   setEmptyToRead(); ipdStack.push(new ParseDataIStream(new std::istringstream(i))); return *this; }
  		Parser&			operator << (char& c) { str.putback(c); return *this; }
 
 		Parser&			operator >> (AParseRule&);
@@ -80,6 +80,8 @@ namespace tzParse
 		void			setXMLDoc(IParseASTDocument* doc) { xmldoc = doc; }
 
 	private:
+		void			setEmptyToRead() { if (str.avail()) *this << str.emptyToRead(); }
+
 		bool				ruleFail;
 		int					line;
 

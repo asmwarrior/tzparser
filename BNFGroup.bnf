@@ -1,0 +1,27 @@
+
+BNFGroup		::=
+	'['	
+	[
+		BNFGroupOR:<Type "OR">
+	|
+		BNFGroupAND:<Type "AND">
+	]:!Group
+	>Force("Expecting ']' to end group")
+	']'
+;
+
+BNFGroupAND		::=
+	BNFRuleCall+:!RuleCall
+;
+
+BNFGroupOR		::=
+	BNFGroupInOR{2,,'|'}
+;
+
+BNFGroupInOR	::=
+	[
+		BNFRuleCall !BNFRuleCall
+	|
+		[ BNFGroupAND:<Type "AND"> ]:!Group:<Type "Group">
+	]:!RuleCall
+;

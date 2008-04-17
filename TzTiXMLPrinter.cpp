@@ -12,6 +12,12 @@ PERMISSION OF IT'S AUTHOR.
 #include <string>
 #include <sstream>
 #include <algorithm>
+#include <fstream>
+
+#include "tzParse/tzParse.h"
+#include "tzParse/ASTAdapt/TzTinyXML.h"
+
+#include "BNFRules.h"
 
 #include "TzTiXMLPrinter.h"
 
@@ -72,24 +78,33 @@ namespace tzParse
 		rules.push_back("CStr");
 		rules.push_back("EndOfParse");
 
-		for (TiXmlElement* node = doc->FirstChildElement("Rule"); node; node = node->NextSiblingElement("Rule"))
+		for (TiXmlElement* node = doc->FirstChildElement(); node; node = node->NextSiblingElement())
 		{
 			code << endl;
-			istringstream	comment(node->Attribute("Value"));
-			string line;
-			while (getline(comment, line))
-				code << "//\t" << line << endl;
+			if (string("Rule") == node->Value())
+			{
+				istringstream	comment(node->Attribute("Value"));
+				string line;
+				while (getline(comment, line))
+					code << "//\t" << line << endl;
 
-			code	<< "RULE_IMPLEMENT(" << node->Attribute("Name") << ", p)" << endl
-					<< '{' << endl
-					<< "\tp";
+				code	<< "RULE_IMPLEMENT(" << node->Attribute("Name") << ", p)" << endl
+						<< '{' << endl
+						<< "\tp";
 
-			for (TiXmlElement* rc = node->FirstChildElement("RuleCall"); rc; rc = rc->NextSiblingElement("RuleCall"))
-				code	<< "\t>>\t" << makeRuleCall(rc) << endl << '\t';
+				for (TiXmlElement* rc = node->FirstChildElement("RuleCall"); rc; rc = rc->NextSiblingElement("RuleCall"))
+					code	<< "\t>>\t" << makeRuleCall(rc) << endl << '\t';
 
-			code	<< "\t;" << endl
-					<< "\tRULE_RETURN(p);" << endl
-					<< '}' << endl;
+				code	<< "\t;" << endl
+						<< "\tRULE_RETURN(p);" << endl
+						<< '}' << endl;
+			}
+/*
+			else if (string("Instruction") == node->Value())
+			{
+				makeInstruction(node);
+			}
+*/
 		}
 	}
 
@@ -404,5 +419,4 @@ namespace tzParse
 
 		return ret.str();
 	}
-
 }

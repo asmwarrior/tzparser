@@ -48,9 +48,19 @@ private:
 	mutable ifstream*	ifs;
 };
 
-void	exec(IParseData& f, std::string outFile, bool traceXML = false, bool trace = false)
+void	mkParse(IParseData& f, TzTinyXMLDocument& d, bool trace)
 {
 	Parser			p;
+
+	p.setXMLDoc(&d);
+	if (trace)
+		p.trace();
+	p	<<	f;
+	p	>>	BNF().r();
+}
+
+void	exec(IParseData& f, std::string outFile, bool traceXML = false, bool trace = false)
+{
 	stringstream	disclaimer;
 
 	disclaimer	<<	"/*"																	<< endl
@@ -63,12 +73,35 @@ void	exec(IParseData& f, std::string outFile, bool traceXML = false, bool trace 
 				<<	"*/"																	<< endl
 				<<	endl;
 
+	cout << "=== Parsing main stream ===" << endl;
 	TzTinyXMLDocument	d;
-	p.setXMLDoc(&d);
-	if (trace)
-		p.trace();
-	p	<<	f;
-	p	>>	BNF().r();
+	mkParse(f, d, trace);
+
+	for (TiXmlElement* node = d.FirstChildElement("Instruction"); node; node = node->NextSiblingElement("Instruction"))
+	{
+		string	instr = node->Attribute("Name");
+		if (instr == "Import")
+		{
+			TiXmlElement* lit = node->FirstChildElement("Litteral");
+			if (!lit || string("CStr") != lit->Attribute("Type"))
+				throw PrinterException("@Import must take a CStr litteral argument", atoi(lit->Attribute("Line")));
+			string fname = lit->Attribute("Value");
+
+			ParseDataIStream	ipd(new ifstream(fname.c_str()));
+			if (ipd.getIStream()->fail())
+				throw PrinterException((fname + ": Could not open file").c_str(), atoi(lit->Attribute("Line")));
+			
+			cout << "=== Parsing " << fname << " ===" << endl;
+			TzTinyXMLDocument	dIn;
+			mkParse(ipd, dIn, trace);
+
+			TiXmlNode*	after = node;
+			for (TiXmlElement* toIns = dIn.FirstChildElement(); toIns; toIns = toIns->NextSiblingElement())
+				after = node->Parent()->InsertAfterChild(after, *toIns);
+		}
+		else
+			throw PrinterException((instr + ": Unknown instruction").c_str(), atoi(node->Attribute("Line")));
+	}
 
 	if (traceXML)
 	{
@@ -78,6 +111,9 @@ void	exec(IParseData& f, std::string outFile, bool traceXML = false, bool trace 
 		cout << printer.CStr();
 	}
 
+
+	TzTiXMLPrinter	tzPrinter(&d);
+
 	ofstream	outputCPP((outFile + ".cpp").c_str());
 	ofstream	outputH((outFile + ".h").c_str());
 
@@ -85,8 +121,6 @@ void	exec(IParseData& f, std::string outFile, bool traceXML = false, bool trace 
 		throw ArgParseException(string("Could not open ") + outFile + ".cpp", "outFile");
 	else if (outputH.fail())
 		throw ArgParseException(string("Could not open ") + outFile + ".h", "outFile");
-
-	TzTiXMLPrinter	tzPrinter(&d);
 
 	string	define;
 	for (register unsigned int i = 0; i < outFile.length(); ++i)
@@ -122,10 +156,10 @@ int	main(int argc, char*argv[])
 		UnlabeledValueArg<string> fileArg("inputFile", "Input BNF file. Will listen on the standard input if not defined.", false, "", &ifnCst);
 		cmd.add(fileArg);
 
-		SwitchArg xmlSwitch("x", "xml", "show the XML tree", false);
+		SwitchArg xmlSwitch("x", "xml", "Shows the XML tree", false);
 		cmd.add(xmlSwitch);
 
-		SwitchArg traceSwitch("t", "trace", "Trace the parsing. ATTENTION : very slow !", false);
+		SwitchArg traceSwitch("t", "trace", "Traces the parsing. ATTENTION : very slow !", false);
 		cmd.add(traceSwitch);
 
 		ValueArg<string> outFile("o", "outFile", "Name of the outfile (without .cpp or .h). Default to 'out' (=> out.cpp & out.h)", false, "out", "OutFileNameBody");

@@ -39,6 +39,8 @@ namespace tzParse
 		std::string	makeTzModif(TiXmlElement* el);
 		std::string	makeTzRule(TiXmlElement* el);
 
+//		void		makeInstruction(TiXmlElement* el);
+
 		stringList	rules;
 		stringList	strings;
 

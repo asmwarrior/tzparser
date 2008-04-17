@@ -1,0 +1,35 @@
+
+BNFTzInstruction	::=
+	'@'
+	Identifier:<Name>
+	BNFTzArgs
+	';'
+;
+
+BNFTzRule		::=
+	[
+		'#'
+		>NoIgnore Identifier:<Name>
+		BNFTzArgs?
+	]:!TzRule.
+;
+
+BNFTzModifPrec	::=
+	[
+		'>'
+		>NoIgnore Identifier:<Name>
+		BNFTzArgs?
+	]:!TzModif.
+;
+
+BNFTzArgs		::=
+	'('
+	[
+		BNFLitteral
+	|
+		[ '+':<Value "true"> | '-':<Value "false"> ]:!Bool
+	|
+		'0':!Null
+	]{*, ','}
+	')'
+;
