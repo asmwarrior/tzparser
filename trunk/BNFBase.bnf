@@ -1,4 +1,11 @@
 
+BNFRule			::=
+	Identifier:<Name>
+	"::="
+	BNFRuleCall+:!RuleCall
+	>Force("Expected ';' to end rule definition") ';'
+;
+
 BNFRuleCall		::=
 	BNFTzModifPrec*
 	BNFRuleCheck?:!Check

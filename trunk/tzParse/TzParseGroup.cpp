@@ -52,6 +52,6 @@ namespace tzParse
 		else if (ruleList.size() >= 1)
 			return ruleList.front()->getIgnoreBefore();
 
-		return false;
+		return _ignoreBefore;
 	}
 }

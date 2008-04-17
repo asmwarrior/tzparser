@@ -70,6 +70,22 @@ RULE_IMPLEMENT(BNFIgnCom, p)
 }
 
 
+//	BNFRule			::=
+//		Identifier:<Name>
+//		"::="
+//		BNFRuleCall+:!RuleCall
+//		>Force("Expected ';' to end rule definition") ';'
+//	;
+RULE_IMPLEMENT(BNFRule, p)
+{
+	p	>>	Identifier().saveAttr("Name").r()
+		>>	Read().str("::=").r()
+		>>	BNFRuleCall().n('+').saveNode("RuleCall", false).r()
+		>>	GetChar().only(';').force("Expected ';' to end rule definition").r()
+		;
+	RULE_RETURN(p);
+}
+
 //	BNFRuleCall		::=
 //		BNFTzModifPrec*
 //		BNFRuleCheck?:!Check
@@ -387,11 +403,11 @@ RULE_IMPLEMENT(BNFRepeatCple, p)
 
 //	BNFTreeSave		::=
 //		':'
+//		>Ignore(BNFLIgnore)
+//		>NoIgnore
 //		[
 //			BNFTreeSaveNode:<Type "Node">
 //		|
-//			>Ignore(BNFLIgnore)
-//			>NoIgnore
 //			BNFTreeSaveAttr:<Type "Attr">
 //		]
 //	;
@@ -400,20 +416,20 @@ RULE_IMPLEMENT(BNFTreeSave, p)
 	p	>>	GetChar().only(':').r()
 		>>	( G_OR
 			>>	BNFTreeSaveNode().saveAttr("Type", "Node").r()
-			>>	BNFTreeSaveAttr().ignore(BNFLIgnore().r()).ignoreBefore(false).saveAttr("Type", "Attr").r()
-			).r()
+			>>	BNFTreeSaveAttr().saveAttr("Type", "Attr").r()
+			).ignore(BNFLIgnore().r()).ignoreBefore(false).r()
 		;
 	RULE_RETURN(p);
 }
 
 //	BNFTreeSaveNode	::=
-//		>NoIgnore '!'?:<NoValue '1'>
+//		'!'?:<NoValue '1'>
 //		>NoIgnore Identifier:<Name>
 //		>NoIgnore '.'?:<WithLine '1'>
 //	;
 RULE_IMPLEMENT(BNFTreeSaveNode, p)
 {
-	p	>>	GetChar().only('!').ignoreBefore(false).n('?').saveAttr("NoValue", "1").r()
+	p	>>	GetChar().only('!').n('?').saveAttr("NoValue", "1").r()
 		>>	Identifier().ignoreBefore(false).saveAttr("Name").r()
 		>>	GetChar().only('.').ignoreBefore(false).n('?').saveAttr("WithLine", "1").r()
 		;
@@ -424,6 +440,7 @@ RULE_IMPLEMENT(BNFTreeSaveNode, p)
 //		'<'
 //		Identifier:<Name>
 //		BNFLitteral?:<WithValue '1'>
+//		>NoIgnore
 //		>Force("Expecting '>' to end Attr definition") '>'
 //	;
 RULE_IMPLEMENT(BNFTreeSaveAttr, p)
@@ -431,7 +448,7 @@ RULE_IMPLEMENT(BNFTreeSaveAttr, p)
 	p	>>	GetChar().only('<').r()
 		>>	Identifier().saveAttr("Name").r()
 		>>	BNFLitteral().n('?').saveAttr("WithValue", "1").r()
-		>>	GetChar().only('>').force("Expecting '>' to end Attr definition").r()
+		>>	GetChar().only('>').ignoreBefore(false).force("Expecting '>' to end Attr definition").r()
 		;
 	RULE_RETURN(p);
 }
@@ -525,22 +542,6 @@ RULE_IMPLEMENT(BNF, p)
 				).n('*').r()
 			>>	EndOfParse().force("Expected end of file").r()
 			).ignore(BNFIgnore().r()).force("Could not parse rules").r()
-		;
-	RULE_RETURN(p);
-}
-
-//	BNFRule			::=
-//		Identifier: <Name>
-//		"::="
-//		BNFRuleCall+:!RuleCall
-//		>Force("Expected ';' to end rule definition") ';'
-//	;
-RULE_IMPLEMENT(BNFRule, p)
-{
-	p	>>	Identifier().saveAttr("Name").r()
-		>>	Read().str("::=").r()
-		>>	BNFRuleCall().n('+').saveNode("RuleCall", false).r()
-		>>	GetChar().only(';').force("Expected ';' to end rule definition").r()
 		;
 	RULE_RETURN(p);
 }

@@ -43,7 +43,7 @@ namespace tzParse
 		ParseGroup&		operator >> (AParseRule& r) { return (*this << r); }
 
 		virtual bool			execute(Parser& p);
-		virtual const char*		getRuleName(void) const { return "ParseGroup"; }
+		virtual const char*		getRuleName(void) const { return ((_type == GT_AND) ? "ParseGroup_AND" : "ParseGroup_OR"); }
 		virtual AParseRule*		clone(void)	const { ParseGroup* ptr = new ParseGroup(); *ptr = *this; return ptr; }
 
 		RULE_OVL_GENERIC(ParseGroup);
