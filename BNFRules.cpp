@@ -531,7 +531,7 @@ RULE_IMPLEMENT(BNF, p)
 }
 
 //	BNFRule			::=
-//		Identifier:<Name>
+//		Identifier: <Name>
 //		"::="
 //		BNFRuleCall+:!RuleCall
 //		>Force("Expected ';' to end rule definition") ';'

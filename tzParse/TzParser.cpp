@@ -35,7 +35,7 @@ namespace tzParse
 		if (_trace >= 0 && inIgnore == 0)
 		{
 			if (r.traceRule() && _noTrace == 0)
-				cout << setw(_trace++ * 2) << setfill(' ') << "" << "IN : " << r.getRuleName() << "(l." << line << ')' << endl;
+				cout << setw(_trace++ * 2) << setfill(' ') << "" << "IN : " << r.getRuleName() << "(l." << line << ')' << " [" << this->str.getPos() << "] " << endl;
 			else
 				++_noTrace;
 		}
@@ -72,6 +72,9 @@ namespace tzParse
 		bool	ignoreDone = false;
 		if (r.getIgnoreBefore() && !ignore.isEmpty() && !stopIgnore)
 		{
+			if (_trace >= 0)
+				cout << setw(_trace * 2) << setfill(' ') << "" << "[IGNORE]" << endl;
+
 			Ignore tmpIgn = ignore;
 			ignore = Ignore();
 
