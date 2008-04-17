@@ -1,0 +1,28 @@
+
+BNFLitteral		::=
+	[
+		[ BNFConcat:<Type "Concat"> ]:!Litteral.
+	|
+		[
+			Identifier:<Type "Identifier">
+		|
+			CStr:<Type "CStr">
+		|
+			CChar:<Type "CChar">
+		]:Litteral.
+	]
+;
+
+BNFConcat		::=
+	BNFInConcat{2,,'.'}
+;
+
+BNFInConcat		::=
+	[
+		Identifier:Identifier.
+	|
+		CStr:CStr.
+	|
+		CChar:CChar.
+	]
+;

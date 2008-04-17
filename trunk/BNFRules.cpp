@@ -1,12 +1,15 @@
 /*
-File created by Salomon BRYS : salomon . brys @ gmail . com
-This file is under TzLicence which is a MPL / LGPL / GPL Licence
-with some simple restrictions.
-YOU MUST NOT USE THIS FILE FOR ANY COMERCIAL USE WITHOUT THE
-PERMISSION OF IT'S AUTHOR.
+  This file was generated using TzParser,
+  which was created by salomon . brys @gmail . com
+  This file is under TzLicence which is a MPL / LGPL / GPL Licence
+  with some simple restrictions.
+  YOU MUST NOT USE THIS FILE FOR ANY COMERCIAL USE WITHOUT THE
+  PERMISSION OF IT'S GENERATOR AUTHOR.
 */
 
 #include "BNFRules.h"
+
+
 
 
 //	BNFIgnore		::=
@@ -19,9 +22,9 @@ PERMISSION OF IT'S AUTHOR.
 RULE_IMPLEMENT(BNFIgnore, p)
 {
 	p	>>	( G_OR
-		>>	GetChar().in(P_BLANKS).r()
-		>>	BNFIgnCom().r()
-		).r()
+			>>	GetChar().in(P_BLANKS).r()
+			>>	BNFIgnCom().r()
+			).r()
 		;
 	RULE_RETURN(p);
 }
@@ -36,9 +39,9 @@ RULE_IMPLEMENT(BNFIgnore, p)
 RULE_IMPLEMENT(BNFLIgnore, p)
 {
 	p	>>	( G_OR
-		>>	GetChar().in(P_LBLANKS).r()
-		>>	BNFIgnCom().r()
-		).r()
+			>>	GetChar().in(P_LBLANKS).r()
+			>>	BNFIgnCom().r()
+			).r()
 		;
 	RULE_RETURN(p);
 }
@@ -53,58 +56,19 @@ RULE_IMPLEMENT(BNFLIgnore, p)
 RULE_IMPLEMENT(BNFIgnCom, p)
 {
 	p	>>	( G_OR
-		>>	( G_AND
-		>>	Read().str("//").r()
-		>>	Read().until("\n").r()
-		).r()
-		>>	( G_AND
-		>>	Read().str("/*").r()
-		>>	Read().until("*/").r()
-		).r()
-		).r()
+			>>	( G_AND
+				>>	Read().str("//").r()
+				>>	Read().until("\n").r()
+				).r()
+			>>	( G_AND
+				>>	Read().str("/*").r()
+				>>	Read().until("*/").r()
+				).r()
+			).r()
 		;
 	RULE_RETURN(p);
 }
 
-//	BNF				::=
-//		>Ignore(BNFIgnore)
-//		[
-//			[
-//				BNFRule:Rule.
-//			|
-//				BNFString:!String.
-//			]+
-//			>Force("Expected end of file") EndOfParse
-//		]
-//	;
-RULE_IMPLEMENT(BNF, p)
-{
-	p	>>	( G_AND
-		>>	( G_OR
-		>>	BNFRule().saveNode("Rule").saveLine().r()
-		>>	BNFString().saveNode("String", false).saveLine().r()
-		).n('+').r()
-		>>	EndOfParse().force("Expected end of file").r()
-		).ignore(BNFIgnore().r()).r()
-		;
-	RULE_RETURN(p);
-}
-
-//	BNFRule			::=
-//		Identifier:<Name>
-//		"::="
-//		BNFRuleCall+:!RuleCall
-//		>Force("Expected ';' to end rule definition") ';'
-//	;
-RULE_IMPLEMENT(BNFRule, p)
-{
-	p	>>	Identifier().saveAttr("Name").r()
-		>>	Read().str("::=").r()
-		>>	BNFRuleCall().n('+').saveNode("RuleCall", false).r()
-		>>	GetChar().only(';').force("Expected ';' to end rule definition").r()
-		;
-	RULE_RETURN(p);
-}
 
 //	BNFRuleCall		::=
 //		BNFTzModifPrec*
@@ -122,13 +86,13 @@ RULE_IMPLEMENT(BNFRuleCall, p)
 	p	>>	BNFTzModifPrec().n('*').r()
 		>>	BNFRuleCheck().n('?').saveNode("Check", false).r()
 		>>	( G_OR
-		>>	( G_AND
-		>>	GetChar().only('[').r()
-		>>	BNFRuleCallIn().r()
-		>>	GetChar().only(']').r()
-		).r()
-		>>	BNFRuleCallIn().r()
-		).r()
+			>>	( G_AND
+				>>	GetChar().only('[').r()
+				>>	BNFRuleCallIn().r()
+				>>	GetChar().only(']').r()
+				).r()
+			>>	BNFRuleCallIn().r()
+			).r()
 		>>	BNFRepeat().ignoreBefore(false).n('?').r()
 		>>	BNFTreeSave().n('*').saveNode("TreeSave", false).r()
 		;
@@ -147,10 +111,27 @@ RULE_IMPLEMENT(BNFRuleCall, p)
 RULE_IMPLEMENT(BNFRuleCallIn, p)
 {
 	p	>>	( G_OR
-		>>	BNFLitteral().saveAttr("Type", "Litteral").r()
-		>>	BNFTzRule().saveAttr("Type", "TzRule").r()
-		>>	BNFGroup().saveAttr("Type", "Group").r()
-		).r()
+			>>	BNFLitteral().saveAttr("Type", "Litteral").r()
+			>>	BNFTzRule().saveAttr("Type", "TzRule").r()
+			>>	BNFGroup().saveAttr("Type", "Group").r()
+			).r()
+		;
+	RULE_RETURN(p);
+}
+
+//	BNFRuleCheck	::=
+//		[
+//			'=':<Verif "true">
+//		|
+//			'!':<Verif "false">
+//		]
+//	;
+RULE_IMPLEMENT(BNFRuleCheck, p)
+{
+	p	>>	( G_OR
+			>>	GetChar().only('=').saveAttr("Verif", "true").r()
+			>>	GetChar().only('!').saveAttr("Verif", "false").r()
+			).r()
 		;
 	RULE_RETURN(p);
 }
@@ -171,6 +152,87 @@ RULE_IMPLEMENT(BNFString, p)
 	RULE_RETURN(p);
 }
 
+
+//	BNFTzInstruction	::=
+//		'@'
+//		Identifier:<Name>
+//		BNFTzArgs
+//		';'
+//	;
+RULE_IMPLEMENT(BNFTzInstruction, p)
+{
+	p	>>	GetChar().only('@').r()
+		>>	Identifier().saveAttr("Name").r()
+		>>	BNFTzArgs().r()
+		>>	GetChar().only(';').r()
+		;
+	RULE_RETURN(p);
+}
+
+//	BNFTzRule		::=
+//		[
+//			'#'
+//			>NoIgnore Identifier:<Name>
+//			BNFTzArgs?
+//		]:!TzRule.
+//	;
+RULE_IMPLEMENT(BNFTzRule, p)
+{
+	p	>>	( G_AND
+			>>	GetChar().only('#').r()
+			>>	Identifier().ignoreBefore(false).saveAttr("Name").r()
+			>>	BNFTzArgs().n('?').r()
+			).saveNode("TzRule", false).saveLine().r()
+		;
+	RULE_RETURN(p);
+}
+
+//	BNFTzModifPrec	::=
+//		[
+//			'>'
+//			>NoIgnore Identifier:<Name>
+//			BNFTzArgs?
+//		]:!TzModif.
+//	;
+RULE_IMPLEMENT(BNFTzModifPrec, p)
+{
+	p	>>	( G_AND
+			>>	GetChar().only('>').r()
+			>>	Identifier().ignoreBefore(false).saveAttr("Name").r()
+			>>	BNFTzArgs().n('?').r()
+			).saveNode("TzModif", false).saveLine().r()
+		;
+	RULE_RETURN(p);
+}
+
+//	BNFTzArgs		::=
+//		'('
+//		[
+//			BNFLitteral
+//		|
+//			[ '+':<Value "true"> | '-':<Value "false"> ]:!Bool
+//		|
+//			'0':!Null
+//		]{*, ','}
+//		')'
+//	;
+RULE_IMPLEMENT(BNFTzArgs, p)
+{
+	p	>>	GetChar().only('(').r()
+		>>	( G_OR
+			>>	BNFLitteral().r()
+			>>	( G_OR
+				>>	GetChar().only('+').saveAttr("Value", "true").r()
+				>>	GetChar().only('-').saveAttr("Value", "false").r()
+				).saveNode("Bool", false).r()
+			>>	GetChar().only('0').saveNode("Null", false).r()
+			).n('*', ',').r()
+		>>	GetChar().only(')').r()
+		;
+	RULE_RETURN(p);
+}
+
+
 //	BNFLitteral		::=
 //		[
 //			[ BNFConcat:<Type "Concat"> ]:!Litteral.
@@ -187,15 +249,15 @@ RULE_IMPLEMENT(BNFString, p)
 RULE_IMPLEMENT(BNFLitteral, p)
 {
 	p	>>	( G_OR
-		>>	( G_AND
-		>>	BNFConcat().saveAttr("Type", "Concat").r()
-		).saveNode("Litteral", false).saveLine().r()
-		>>	( G_OR
-		>>	Identifier().saveAttr("Type", "Identifier").r()
-		>>	CStr().saveAttr("Type", "CStr").r()
-		>>	CChar().saveAttr("Type", "CChar").r()
-		).saveNode("Litteral").saveLine().r()
-		).r()
+			>>	( G_AND
+				>>	BNFConcat().saveAttr("Type", "Concat").r()
+				).saveNode("Litteral", false).saveLine().r()
+			>>	( G_OR
+				>>	Identifier().saveAttr("Type", "Identifier").r()
+				>>	CStr().saveAttr("Type", "CStr").r()
+				>>	CChar().saveAttr("Type", "CChar").r()
+				).saveNode("Litteral").saveLine().r()
+			).r()
 		;
 	RULE_RETURN(p);
 }
@@ -222,93 +284,14 @@ RULE_IMPLEMENT(BNFConcat, p)
 RULE_IMPLEMENT(BNFInConcat, p)
 {
 	p	>>	( G_OR
-		>>	Identifier().saveNode("Identifier").saveLine().r()
-		>>	CStr().saveNode("CStr").saveLine().r()
-		>>	CChar().saveNode("CChar").saveLine().r()
-		).r()
+			>>	Identifier().saveNode("Identifier").saveLine().r()
+			>>	CStr().saveNode("CStr").saveLine().r()
+			>>	CChar().saveNode("CChar").saveLine().r()
+			).r()
 		;
 	RULE_RETURN(p);
 }
 
-//	BNFTzRule		::=
-//		[
-//			'#'
-//			>NoIgnore Identifier:<Name>
-//			BNFTzArgs?
-//		]:!TzRule.
-//	;
-RULE_IMPLEMENT(BNFTzRule, p)
-{
-	p	>>	( G_AND
-		>>	GetChar().only('#').r()
-		>>	Identifier().ignoreBefore(false).saveAttr("Name").r()
-		>>	BNFTzArgs().n('?').r()
-		).saveNode("TzRule", false).saveLine().r()
-		;
-	RULE_RETURN(p);
-}
-
-//	BNFTzModifPrec	::=
-//		[
-//			'>'
-//			>NoIgnore Identifier:<Name>
-//			BNFTzArgs?
-//		]:!TzModif.
-//	;
-RULE_IMPLEMENT(BNFTzModifPrec, p)
-{
-	p	>>	( G_AND
-		>>	GetChar().only('>').r()
-		>>	Identifier().ignoreBefore(false).saveAttr("Name").r()
-		>>	BNFTzArgs().n('?').r()
-		).saveNode("TzModif", false).saveLine().r()
-		;
-	RULE_RETURN(p);
-}
-
-//	BNFTzArgs		::=
-//		'('
-//		[
-//			BNFLitteral
-//		|
-//			[ '+':<Value "true"> | '-':<Value "false"> ]:!Bool
-//		|
-//			'0':!Null
-//		]{*, ','}
-//		')'
-//	;
-RULE_IMPLEMENT(BNFTzArgs, p)
-{
-	p	>>	GetChar().only('(').r()
-		>>	( G_OR
-		>>	BNFLitteral().r()
-		>>	( G_OR
-		>>	GetChar().only('+').saveAttr("Value", "true").r()
-		>>	GetChar().only('-').saveAttr("Value", "false").r()
-		).saveNode("Bool", false).r()
-		>>	GetChar().only('0').saveNode("Null", false).r()
-		).n('*', ',').r()
-		>>	GetChar().only(')').r()
-		;
-	RULE_RETURN(p);
-}
-
-//	BNFRuleCheck	::=
-//		[
-//			'=':<Verif "true">
-//		|
-//			'!':<Verif "false">
-//		]
-//	;
-RULE_IMPLEMENT(BNFRuleCheck, p)
-{
-	p	>>	( G_OR
-		>>	GetChar().only('=').saveAttr("Verif", "true").r()
-		>>	GetChar().only('!').saveAttr("Verif", "false").r()
-		).r()
-		;
-	RULE_RETURN(p);
-}
 
 //	BNFRepeat		::=
 //		[
@@ -320,9 +303,9 @@ RULE_IMPLEMENT(BNFRuleCheck, p)
 RULE_IMPLEMENT(BNFRepeat, p)
 {
 	p	>>	( G_OR
-		>>	GetChar().in(BNFREPEATCHARS).saveAttr("Simple").r()
-		>>	BNFFullRepeat().r()
-		).saveNode("Need", false).r()
+			>>	GetChar().in(BNFREPEATCHARS).saveAttr("Simple").r()
+			>>	BNFFullRepeat().r()
+			).saveNode("Need", false).r()
 		;
 	RULE_RETURN(p);
 }
@@ -346,26 +329,26 @@ RULE_IMPLEMENT(BNFRepeat, p)
 RULE_IMPLEMENT(BNFFullRepeat, p)
 {
 	p	>>	( G_AND
-		>>	GetChar().only('{').r()
-		>>	( G_OR
-		>>	( G_AND
-		>>	BNFRepeatCple().r()
-		>>	( G_AND
-		>>	GetChar().only(',').r()
-		>>	CChar().saveAttr("Sep").r()
-		).n('?').r()
-		>>	GetChar().only('}').r()
-		).r()
-		>>	( G_AND
-		>>	BNFRepeatSple().r()
-		>>	( G_AND
-		>>	GetChar().only(',').r()
-		>>	CChar().saveAttr("Sep").r()
-		).n('?').r()
-		>>	GetChar().only('}').r()
-		).r()
-		).force("Incomprehensive repeat values").r()
-		).ignore(BNFLIgnore().r()).r()
+			>>	GetChar().only('{').r()
+			>>	( G_OR
+				>>	( G_AND
+					>>	BNFRepeatCple().r()
+					>>	( G_AND
+						>>	GetChar().only(',').r()
+						>>	CChar().saveAttr("Sep").r()
+						).n('?').r()
+					>>	GetChar().only('}').r()
+					).r()
+				>>	( G_AND
+					>>	BNFRepeatSple().r()
+					>>	( G_AND
+						>>	GetChar().only(',').r()
+						>>	CChar().saveAttr("Sep").r()
+						).n('?').r()
+					>>	GetChar().only('}').r()
+					).r()
+				).force("Incomprehensive repeat values").r()
+			).ignore(BNFLIgnore().r()).r()
 		;
 	RULE_RETURN(p);
 }
@@ -380,9 +363,9 @@ RULE_IMPLEMENT(BNFFullRepeat, p)
 RULE_IMPLEMENT(BNFRepeatSple, p)
 {
 	p	>>	( G_OR
-		>>	GetChar().in(BNFREPEATCHARS).saveAttr("Simple").r()
-		>>	Integer().forcePositive().saveAttr("FixNum").r()
-		).r()
+			>>	GetChar().in(BNFREPEATCHARS).saveAttr("Simple").r()
+			>>	Integer().forcePositive().saveAttr("FixNum").r()
+			).r()
 		;
 	RULE_RETURN(p);
 }
@@ -401,6 +384,60 @@ RULE_IMPLEMENT(BNFRepeatCple, p)
 	RULE_RETURN(p);
 }
 
+
+//	BNFTreeSave		::=
+//		':'
+//		>Ignore(BNFLIgnore)
+//		>NoIgnore
+//		[
+//			BNFTreeSaveNode:<Type "Node">
+//		|
+//			BNFTreeSaveAttr:<Type "Attr">
+//		]
+//	;
+RULE_IMPLEMENT(BNFTreeSave, p)
+{
+	p	>>	GetChar().only(':').r()
+		>>	( G_OR
+			>>	BNFTreeSaveNode().saveAttr("Type", "Node").r()
+			>>	BNFTreeSaveAttr().saveAttr("Type", "Attr").r()
+			).ignore(BNFLIgnore().r()).ignoreBefore(false).r()
+		;
+	RULE_RETURN(p);
+}
+
+//	BNFTreeSaveNode	::=
+//		'!'?:<NoValue '1'>
+//		>NoIgnore Identifier:<Name>
+//		>NoIgnore '.'?:<WithLine '1'>
+//	;
+RULE_IMPLEMENT(BNFTreeSaveNode, p)
+{
+	p	>>	GetChar().only('!').n('?').saveAttr("NoValue", "1").r()
+		>>	Identifier().ignoreBefore(false).saveAttr("Name").r()
+		>>	GetChar().only('.').ignoreBefore(false).n('?').saveAttr("WithLine", "1").r()
+		;
+	RULE_RETURN(p);
+}
+
+//	BNFTreeSaveAttr	::=
+//		'<'
+//		Identifier:<Name>
+//		BNFLitteral?:<WithValue '1'>
+//		>NoIgnore
+//		>Force("Expecting '>' to end Attr definition") '>'
+//	;
+RULE_IMPLEMENT(BNFTreeSaveAttr, p)
+{
+	p	>>	GetChar().only('<').r()
+		>>	Identifier().saveAttr("Name").r()
+		>>	BNFLitteral().n('?').saveAttr("WithValue", "1").r()
+		>>	GetChar().only('>').ignoreBefore(false).force("Expecting '>' to end Attr definition").r()
+		;
+	RULE_RETURN(p);
+}
+
+
 //	BNFGroup		::=
 //		'['	
 //		[
@@ -415,9 +452,9 @@ RULE_IMPLEMENT(BNFGroup, p)
 {
 	p	>>	GetChar().only('[').r()
 		>>	( G_OR
-		>>	BNFGroupOR().saveAttr("Type", "OR").r()
-		>>	BNFGroupAND().saveAttr("Type", "AND").r()
-		).saveNode("Group", false).r()
+			>>	BNFGroupOR().saveAttr("Type", "OR").r()
+			>>	BNFGroupAND().saveAttr("Type", "AND").r()
+			).saveNode("Group", false).r()
 		>>	GetChar().only(']').force("Expecting ']' to end group").r()
 		;
 	RULE_RETURN(p);
@@ -453,52 +490,58 @@ RULE_IMPLEMENT(BNFGroupOR, p)
 RULE_IMPLEMENT(BNFGroupInOR, p)
 {
 	p	>>	( G_OR
-		>>	( G_AND
-		>>	BNFRuleCall().r()
-		>>	BNFRuleCall().check(false).r()
-		).r()
-		>>	( G_AND
-		>>	BNFGroupAND().saveAttr("Type", "AND").r()
-		).saveNode("Group", false).saveAttr("Type", "Group").r()
-		).saveNode("RuleCall", false).r()
+			>>	( G_AND
+				>>	BNFRuleCall().r()
+				>>	BNFRuleCall().check(false).r()
+				).r()
+			>>	( G_AND
+				>>	BNFGroupAND().saveAttr("Type", "AND").r()
+				).saveNode("Group", false).saveAttr("Type", "Group").r()
+			).saveNode("RuleCall", false).r()
 		;
 	RULE_RETURN(p);
 }
 
-//	BNFTreeSave		::=
-//		':'
+//	BNF				::=
+//		>Ignore(BNFIgnore)
+//		>Force("Could not parse rules")
 //		[
 //			[
-//				>NoIgnore '!'?:<NoValue '1'>
-//				>NoIgnore Identifier:<Name>
-//				>NoIgnore '.'?:<WithLine '1'>
-//			]:<Type "Node">
-//		|
-//			>Ignore(BNFLIgnore)
-//			[
-//				>NoIgnore '<'
-//				Identifier:<Name>
-//				BNFLitteral?:<WithValue '1'>
-//				>Force("Expecting '>' to end Attr definition") '>'
-//			]:<Type "Attr">
+//				BNFRule:Rule.
+//			|
+//				BNFString:!String.
+//			|
+//				BNFTzInstruction:!Instruction.
+//			]*
+//			>Force("Expected end of file") EndOfParse
 //		]
 //	;
-RULE_IMPLEMENT(BNFTreeSave, p)
+RULE_IMPLEMENT(BNF, p)
 {
-	p	>>	GetChar().only(':').r()
-		>>	( G_OR
-		>>	( G_AND
-		>>	GetChar().only('!').ignoreBefore(false).n('?').saveAttr("NoValue", "1").r()
-		>>	Identifier().ignoreBefore(false).saveAttr("Name").r()
-		>>	GetChar().only('.').ignoreBefore(false).n('?').saveAttr("WithLine", "1").r()
-		).saveAttr("Type", "Node").r()
-		>>	( G_AND
-		>>	GetChar().only('<').ignoreBefore(false).r()
-		>>	Identifier().saveAttr("Name").r()
-		>>	BNFLitteral().n('?').saveAttr("WithValue", "1").r()
-		>>	GetChar().only('>').force("Expecting '>' to end Attr definition").r()
-		).ignore(BNFLIgnore().r()).saveAttr("Type", "Attr").r()
-		).r()
+	p	>>	( G_AND
+			>>	( G_OR
+				>>	BNFRule().saveNode("Rule").saveLine().r()
+				>>	BNFString().saveNode("String", false).saveLine().r()
+				>>	BNFTzInstruction().saveNode("Instruction", false).saveLine().r()
+				).n('*').r()
+			>>	EndOfParse().force("Expected end of file").r()
+			).ignore(BNFIgnore().r()).force("Could not parse rules").r()
+		;
+	RULE_RETURN(p);
+}
+
+//	BNFRule			::=
+//		Identifier:<Name>
+//		"::="
+//		BNFRuleCall+:!RuleCall
+//		>Force("Expected ';' to end rule definition") ';'
+//	;
+RULE_IMPLEMENT(BNFRule, p)
+{
+	p	>>	Identifier().saveAttr("Name").r()
+		>>	Read().str("::=").r()
+		>>	BNFRuleCall().n('+').saveNode("RuleCall", false).r()
+		>>	GetChar().only(';').force("Expected ';' to end rule definition").r()
 		;
 	RULE_RETURN(p);
 }

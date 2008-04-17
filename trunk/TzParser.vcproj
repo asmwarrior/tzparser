@@ -468,7 +468,31 @@
 					>
 				</File>
 				<File
-					RelativePath=".\test.bnf"
+					RelativePath=".\BNFBase.bnf"
+					>
+				</File>
+				<File
+					RelativePath=".\BNFGroup.bnf"
+					>
+				</File>
+				<File
+					RelativePath=".\BNFIgnore.bnf"
+					>
+				</File>
+				<File
+					RelativePath=".\BNFLitteral.bnf"
+					>
+				</File>
+				<File
+					RelativePath=".\BNFRepeat.bnf"
+					>
+				</File>
+				<File
+					RelativePath=".\BNFTreeSave.bnf"
+					>
+				</File>
+				<File
+					RelativePath=".\BNFTzBase.bnf"
 					>
 				</File>
 			</Filter>

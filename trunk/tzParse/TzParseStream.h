@@ -39,6 +39,13 @@ namespace tzParse
 		unsigned int	getPos(void) { return pos; }
 		void			setPos(unsigned int p) { pos = p; }
 
+		std::string		emptyToRead(void)
+		{
+			std::string ret = str.substr(pos);
+			str = str.substr(0, pos);
+			return ret;
+		}
+
 	private:
 		std::string		str;
 		unsigned int	pos;

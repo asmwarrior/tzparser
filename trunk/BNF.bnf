@@ -4,39 +4,27 @@
   YOU MUST NOT USE THIS FILE FOR ANY COMERCIAL USE WITHOUT THE PERMISSION OF IT'S AUTHOR.
 */
 
-BNFIgnore		::=
-	[
-		#GetChar(P_BLANKS)
-	|
-		BNFIgnCom
-	]
-;
+BNFREPEATCHARS	= "?+*";
 
-BNFLIgnore		::=
-	[
-		#GetChar(P_LBLANKS)
-	|
-		BNFIgnCom
-	]
-;
-
-BNFIgnCom		::=
-	[
-		"//" #ReadUntil('\n')
-	|
-		"/*" #ReadUntil("*/")
-	]
-;
-
+@Import("BNFIgnore.bnf");
+@Import("BNFBase.bnf");
+@Import("BNFTzBase.bnf");
+@Import("BNFLitteral.bnf");
+@Import("BNFRepeat.bnf");
+@Import("BNFTreeSave.bnf");
+@Import("BNFGroup.bnf");
 
 BNF				::=
 	>Ignore(BNFIgnore)
+	>Force("Could not parse rules")
 	[
 		[
 			BNFRule:Rule.
 		|
 			BNFString:!String.
-		]+
+		|
+			BNFTzInstruction:!Instruction.
+		]*
 		>Force("Expected end of file") EndOfParse
 	]
 ;
@@ -48,182 +36,3 @@ BNFRule			::=
 	>Force("Expected ';' to end rule definition") ';'
 ;
 
-BNFRuleCall		::=
-	BNFTzModifPrec*
-	BNFRuleCheck?:!Check
-	[
-		'[' BNFRuleCallIn ']'
-	|
-		BNFRuleCallIn
-	]
-	>NoIgnore BNFRepeat?
-	BNFTreeSave*:!TreeSave
-;
-
-BNFRuleCallIn	::=
-	[
-		BNFLitteral:<Type "Litteral">
-	|
-		BNFTzRule:<Type "TzRule">
-	|
-		BNFGroup:<Type "Group">
-	]
-;
-
-BNFString		::=
-	Identifier:<Name>
-	'='
-	BNFLitteral
-	';'
-;
-
-BNFLitteral		::=
-	[
-		[ BNFConcat:<Type "Concat"> ]:!Litteral.
-	|
-		[
-			Identifier:<Type "Identifier">
-		|
-			CStr:<Type "CStr">
-		|
-			CChar:<Type "CChar">
-		]:Litteral.
-	]
-;
-
-BNFConcat		::=
-	BNFInConcat{2,,'.'}
-;
-
-BNFInConcat		::=
-	[
-		Identifier:Identifier.
-	|
-		CStr:CStr.
-	|
-		CChar:CChar.
-	]
-;
-
-BNFTzRule		::=
-	[
-		'#'
-		>NoIgnore Identifier:<Name>
-		BNFTzArgs?
-	]:!TzRule.
-;
-
-BNFTzModifPrec	::=
-	[
-		'>'
-		>NoIgnore Identifier:<Name>
-		BNFTzArgs?
-	]:!TzModif.
-;
-
-BNFTzArgs		::=
-	'('
-	[
-		BNFLitteral
-	|
-		[ '+':<Value "true"> | '-':<Value "false"> ]:!Bool
-	|
-		'0':!Null
-	]{*, ','}
-	')'
-;
-
-BNFRuleCheck	::=
-	[
-		'=':<Verif "true">
-	|
-		'!':<Verif "false">
-	]
-;
-
-BNFREPEATCHARS	= "?+*";
-
-BNFRepeat		::=
-	[
-		#GetChar(BNFREPEATCHARS):<Simple>
-	|
-		BNFFullRepeat
-	]:!Need
-;
-
-BNFFullRepeat	::=
-	>Ignore(BNFLIgnore)
-	[
-		'{'
-		>Force("Incomprehensive repeat values")
-		[
-			BNFRepeatCple
-			[ ',' CChar:<Sep> ]?
-			'}'
-		|
-			BNFRepeatSple
-			[ ',' CChar:<Sep> ]?
-			'}'
-		]
-	]
-;
-
-BNFRepeatSple	::=
-	[
-		#GetChar(BNFREPEATCHARS):<Simple>
-	|
-		#Integer(+):<FixNum>
-	]
-;
-
-BNFRepeatCple	::=
-	#Integer(+)?:<Min>
-	','
-	#Integer(+)?:<Max>
-;
-
-BNFGroup		::=
-	'['	
-	[
-		BNFGroupOR:<Type "OR">
-	|
-		BNFGroupAND:<Type "AND">
-	]:!Group
-	>Force("Expecting ']' to end group")
-	']'
-;
-
-BNFGroupAND		::=
-	BNFRuleCall+:!RuleCall
-;
-
-BNFGroupOR		::=
-	BNFGroupInOR{2,,'|'}
-;
-
-BNFGroupInOR	::=
-	[
-		BNFRuleCall !BNFRuleCall
-	|
-		[ BNFGroupAND:<Type "AND"> ]:!Group:<Type "Group">
-	]:!RuleCall
-;
-
-BNFTreeSave		::=
-	':'
-	[
-		[
-			>NoIgnore '!'?:<NoValue '1'>
-			>NoIgnore Identifier:<Name>
-			>NoIgnore '.'?:<WithLine '1'>
-		]:<Type "Node">
-	|
-		>Ignore(BNFLIgnore)
-		[
-			>NoIgnore '<'
-			Identifier:<Name>
-			BNFLitteral?:<WithValue '1'>
-			>Force("Expecting '>' to end Attr definition") '>'
-		]:<Type "Attr">
-	]
-;

@@ -1,0 +1,24 @@
+
+BNFIgnore		::=
+	[
+		#GetChar(P_BLANKS)
+	|
+		BNFIgnCom
+	]
+;
+
+BNFLIgnore		::=
+	[
+		#GetChar(P_LBLANKS)
+	|
+		BNFIgnCom
+	]
+;
+
+BNFIgnCom		::=
+	[
+		"//" #ReadUntil('\n')
+	|
+		"/*" #ReadUntil("*/")
+	]
+;

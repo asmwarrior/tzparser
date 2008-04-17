@@ -1,0 +1,37 @@
+
+BNFRuleCall		::=
+	BNFTzModifPrec*
+	BNFRuleCheck?:!Check
+	[
+		'[' BNFRuleCallIn ']'
+	|
+		BNFRuleCallIn
+	]
+	>NoIgnore BNFRepeat?
+	BNFTreeSave*:!TreeSave
+;
+
+BNFRuleCallIn	::=
+	[
+		BNFLitteral:<Type "Litteral">
+	|
+		BNFTzRule:<Type "TzRule">
+	|
+		BNFGroup:<Type "Group">
+	]
+;
+
+BNFRuleCheck	::=
+	[
+		'=':<Verif "true">
+	|
+		'!':<Verif "false">
+	]
+;
+
+BNFString		::=
+	Identifier:<Name>
+	'='
+	BNFLitteral
+	';'
+;

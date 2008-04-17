@@ -27,6 +27,7 @@ public:
 	virtual char	getChar(void) { char c; stream->get(c); if (print) std::cout << c; return c; }
 	virtual bool	isEndOfFile(void) { return stream->eof(); }
 	int	debug() { return (int)this; }
+	std::istream*	getIStream(void) { return stream; }
 
 private:
 	APistream	stream;
