@@ -47,11 +47,14 @@ namespace tzParse
 
 	bool	ParseGroup::getIgnoreBefore(void) const
 	{
+		return _ignoreBefore;
+/*
 		if (!_ignoreBefore)
 			return false;
 		else if (ruleList.size() >= 1)
 			return ruleList.front()->getIgnoreBefore();
 
 		return _ignoreBefore;
+*/
 	}
 }
