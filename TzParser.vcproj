@@ -541,6 +541,10 @@
 				</File>
 			</Filter>
 		</Filter>
+		<File
+			RelativePath=".\Diagramme.cd"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>

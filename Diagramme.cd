@@ -1,0 +1,347 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="IParseData">
+    <Position X="8" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tzParse\IParseData.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tzParse::IParseType">
+    <Position X="20.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tzParse\TzParseValue.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tzParse::ParseType&lt;T&gt;">
+    <Position X="19.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAEAAAgAACAAAAAAAAAAAAAAAIAAAAAAAgAAA=</HashCode>
+      <FileName>tzParse\TzParseValue.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tzParse::ParseChar">
+    <Position X="21.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tzParse\TzParseValue.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tzParse::ParseInt">
+    <Position X="16.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tzParse\TzParseValue.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tzParse::ParseFloat">
+    <Position X="19.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tzParse\TzParseValue.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tzParse::ParseDouble">
+    <Position X="23.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>tzParse\TzParseValue.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tzParse::ParseString">
+    <Position X="18" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>tzParse\TzParseValue.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tzParse::ParseValue">
+    <Position X="21.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAQAAAAAAAAAAAAAAAAAAgAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>tzParse\TzParseValue.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ParseDataIStream">
+    <Position X="8" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQQAIAAAAEAAAAAIAACAAABAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>tzParse\ParseDataIStream.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tzParse::IParseASTNode">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>tzParse\TzParseAST.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tzParse::IParseASTElement">
+    <Position X="1.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAIABAAAAAAA=</HashCode>
+      <FileName>tzParse\TzParseAST.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tzParse::IParseASTDocument">
+    <Position X="4.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tzParse\TzParseAST.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tzParse::Identifier">
+    <Position X="8.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEAABCAAABAAAAAAAAUABAAAA=</HashCode>
+      <FileName>tzParse\TzParseDefaultRules.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tzParse::Integer">
+    <Position X="12" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAgIAAAAAAAAEAABAAACAAgAAAAAAEAAAAAA=</HashCode>
+      <FileName>tzParse\TzParseDefaultRules.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tzParse::Float">
+    <Position X="1.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAIAAAAAAAAEAEBAAAKAAABAAAAAEAAgAAA=</HashCode>
+      <FileName>tzParse\TzParseDefaultRules.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tzParse::QuotedPair">
+    <Position X="3.25" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAEAAAEAABAAAAIAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>tzParse\TzParseDefaultRules.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tzParse::CInChar">
+    <Position X="10.25" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAkAABAAAAIAAAAAAACEAAAAAI=</HashCode>
+      <FileName>tzParse\TzParseDefaultRules.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tzParse::CChar">
+    <Position X="5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAgEAABAAAAAAAAAAABAEAAAAAA=</HashCode>
+      <FileName>tzParse\TzParseDefaultRules.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tzParse::CStr">
+    <Position X="13.75" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEAABAAAAAAAAAAAAAEAQACAA=</HashCode>
+      <FileName>tzParse\TzParseDefaultRules.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tzParse::ParseException">
+    <Position X="8" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAGAAAAIAAAAACAACACAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>tzParse\TzParseException.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tzParse::ParseGroup">
+    <Position X="6.75" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAgAIBAwAAAIMAABACAAIAAgAFgQAEACACAQ=</HashCode>
+      <FileName>tzParse\TzParseGroup.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tzParse::Parser">
+    <Position X="11.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEgAAEQBAEAIAgKAAAIAIUAsAAKACAAAgAAAgAgJBA=</HashCode>
+      <FileName>tzParse\TzParser.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tzParse::Ignore">
+    <Position X="11.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAACAAAAAAAAAAQAQAAAEAAAACAAAAAAAAAQAA=</HashCode>
+      <FileName>tzParse\TzParserIgnore.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tzParse::AParseRule">
+    <Position X="13.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EZkABIAQAIQIACiAASAECwhACEAIAAkZFABBEACACCc=</HashCode>
+      <FileName>tzParse\TzParseRule.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tzParse::GetChar">
+    <Position X="15.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAIAAiAAgACACAAABEAABAAAAIAAAAAABCEAAAgCA=</HashCode>
+      <FileName>tzParse\TzParseRule.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tzParse::Read">
+    <Position X="17.25" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAQDAAAAAAEAABgAAAAACAAAAAAEAAAgCA=</HashCode>
+      <FileName>tzParse\TzParseRule.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tzParse::EndOfParse">
+    <Position X="19" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAEBABAAAAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>tzParse\TzParseRule.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tzParse::Checker">
+    <Position X="4" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tzParse\TzParserUtils.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tzParse::CheckRuleOK">
+    <Position X="5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tzParse\TzParserUtils.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tzParse::CheckRuleFailed">
+    <Position X="3.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tzParse\TzParserUtils.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tzParse::TzParseStream">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAKAeAAAAAAAABAAACQIAAAAAICCAAAAAAAAAAAAA=</HashCode>
+      <FileName>tzParse\TzParseStream.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="tzParse::TzParseASTTmpEl">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAoAAAAABAQAAAABAAAAAAAAAAAAAAAAEBAAAAAQA=</HashCode>
+      <FileName>tzParse\TzParseTempAST.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TzTinyXMLElement">
+    <Position X="2.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAgAAAg=</HashCode>
+      <FileName>tzParse\ASTAdapt\TzTinyXML.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TzTinyXMLDocument">
+    <Position X="4.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAABAAAAAAAAAAAAAAAACAAAAAAAA=</HashCode>
+      <FileName>tzParse\ASTAdapt\TzTinyXML.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="tzParse::ParserContext">
+    <Position X="9.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAABAAAAAAAAAAAIAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tzParse\TzParser.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Typedef Name="tzParse::APIParseType" Collapsed="true">
+    <Position X="11.5" Y="16" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tzParse\TzParseValue.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="APistream" Collapsed="true">
+    <Position X="14.5" Y="16.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tzParse\ParseDataIStream.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="tzParse::APIParseData" Collapsed="true">
+    <Position X="8" Y="16" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tzParse\TzParser.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="tzParse::APIParseDataStack" Collapsed="true">
+    <Position X="8" Y="16.75" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tzParse\TzParser.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="tzParse::APParseValue" Collapsed="true">
+    <Position X="14.5" Y="16" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tzParse\TzParseRule.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="tzParse::APIgnore" Collapsed="true">
+    <Position X="11.5" Y="16.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tzParse\TzParseRule.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="tzParse::stringPair" Collapsed="true">
+    <Position X="4.5" Y="16" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tzParse\TzParseTempAST.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="tzParse::stringPairQueue" Collapsed="true">
+    <Position X="4.5" Y="16.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tzParse\TzParseTempAST.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="tzParse::PTPATEQueue" Collapsed="true">
+    <Position X="17.5" Y="16" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tzParse\TzParseTempAST.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="tzParse::APAParseRule" Collapsed="true">
+    <Position X="1" Y="16" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tzParse\TzParserIgnore.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="tzParse::APAParseRuleList" Collapsed="true">
+    <Position X="1" Y="16.75" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>tzParse\TzParseGroup.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Enum Name="tzParse::groupType">
+    <Position X="8.5" Y="14.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA0AAAAAA=</HashCode>
+      <FileName>tzParse\TzParseGroup.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="tzParse::ParseNeed">
+    <Position X="15" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAAAAAAAAAEEAAABYAAAAAAAAAAAA=</HashCode>
+      <FileName>tzParse\TzParseNeed.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

@@ -17,11 +17,25 @@ PERMISSION OF IT'S AUTHOR.
 
 namespace tzParse
 {
-	class CheckRuleOK {};
-	inline bool	operator >> (const Parser& p, const CheckRuleOK&) { return !p.ruleFailed(); }
+	class Checker
+	{
+	public:
+		virtual bool	check(const Parser& p) const = 0;
+	};
 
-	class CheckRuleFailed {};
-	inline bool	operator >> (const Parser& p, const CheckRuleFailed&) { return p.ruleFailed(); }
+	class CheckRuleOK : public Checker
+	{
+	public:
+		bool	check(const Parser& p) const { return !p.ruleFailed(); }
+	};
+
+	class CheckRuleFailed : public Checker
+	{
+	public:
+		bool	check(const Parser& p) const { return p.ruleFailed(); }
+	};
+
+	inline bool	operator >> (const Parser& p, const Checker& c) { return c.check(p); }
 }
 
 #endif	// !TZ_PARSER_UTILS_H__
