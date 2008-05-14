@@ -28,10 +28,10 @@
 #include <iostream>
 #include <algorithm>
 
-#include "tclap/CmdLineInterface.h"
-#include "tclap/CmdLineOutput.h"
-#include "tclap/XorHandler.h"
-#include "tclap/Arg.h"
+#include <tclap/CmdLineInterface.h>
+#include <tclap/CmdLineOutput.h>
+#include <tclap/XorHandler.h>
+#include <tclap/Arg.h>
 
 namespace TCLAP {
 
@@ -237,8 +237,7 @@ inline void StdOutput::spacePrint( std::ostream& os,
 		while ( start < len )
 		{
 			// find the substring length
-//			int stringLen = std::min( len - start, allowedLen );
-			int stringLen = (len - start < allowedLen) ? (len - start) : allowedLen;
+			int stringLen = std::min( len - start, allowedLen );
 
 			// trim the length so it doesn't end in middle of a word
 			if ( stringLen == allowedLen )
