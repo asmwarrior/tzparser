@@ -10,7 +10,7 @@ PERMISSION OF IT'S AUTHOR.
 #ifndef	P_STRING_H__
 #define	P_STRING_H__
 
-#include "crtdbg.h"
+#include "generic/win32_crtdbg.h"
 
 #define	P_CONCAT2(a, b)												a b
 #define	P_CONCAT3(a, b, c)											a b c

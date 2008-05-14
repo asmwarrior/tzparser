@@ -10,7 +10,7 @@ PERMISSION OF IT'S AUTHOR.
 #ifndef	TZ_PARSE_STREAM_H__
 #define	TZ_PARSE_STREAM_H__
 
-#include "crtdbg.h"
+#include "generic/win32_crtdbg.h"
 
 namespace tzParse
 {

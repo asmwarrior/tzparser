@@ -10,7 +10,7 @@
 #ifndef	BNFRULES_H__
 #define	BNFRULES_H__
 
-#include "tzParse/tzParse.h"
+#include <tzParse/tzParse.h>
 
 using namespace tzParse;
 

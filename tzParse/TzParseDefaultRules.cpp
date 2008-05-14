@@ -14,7 +14,7 @@ PERMISSION OF IT'S AUTHOR.
 #include "TzParserUtils.h"
 #include "TzParseString.h"
 
-#include "crtdbg.h"
+#include "generic/win32_crtdbg.h"
 
 using namespace std;
 

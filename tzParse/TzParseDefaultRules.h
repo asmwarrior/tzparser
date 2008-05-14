@@ -12,7 +12,7 @@ PERMISSION OF IT'S AUTHOR.
 
 #include "TzParseRule.h"
 
-#include "crtdbg.h"
+#include "generic/win32_crtdbg.h"
 
 namespace tzParse
 {

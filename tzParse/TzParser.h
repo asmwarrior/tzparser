@@ -19,14 +19,14 @@ PERMISSION OF IT'S AUTHOR.
 
 #include "IParseData.h"
 #include "ParseDataIStream.h"
-#include "AutoPtr.h"
+#include "generic/AutoPtr.h"
 #include "TzParserIgnore.h"
 #include "TzParseException.h"
 #include "TzParseAST.h"
 #include "TzParseStream.h"
 #include "TzParseGroup.h"
 
-#include "crtdbg.h"
+#include "generic/win32_crtdbg.h"
 
 namespace tzParse
 {

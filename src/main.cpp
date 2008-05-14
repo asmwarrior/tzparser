@@ -9,15 +9,15 @@
 #include <fstream>
 #include <iostream>
 
-#include "tzParse/tzParse.h"
+#include <tzParse/tzParse.h>
 #include "BNFRules.h"
 
 #include "tzParse/ASTAdapt/TzTinyXML.h"
 #include "TzTiXMLPrinter.h"
 
-#include "tclap/CmdLine.h"
+#include <tclap/CmdLine.h>
 
-#include "crtdbg.h"
+#include <tzParse/generic/win32_crtdbg.h>
 
 using namespace tzParse;
 using namespace TCLAP;
