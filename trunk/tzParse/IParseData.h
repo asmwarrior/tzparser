@@ -10,7 +10,7 @@ PERMISSION OF IT'S AUTHOR.
 #ifndef IPARSEDATA_H_
 #define IPARSEDATA_H_
 
-#include "crtdbg.h"
+#include "generic/win32_crtdbg.h"
 
 class IParseData
 {

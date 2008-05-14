@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include <iostream>
 
-#include "crtdbg.h"
+#include "win32_crtdbg.h"
 
 template<typename T>
 class AutoPtr

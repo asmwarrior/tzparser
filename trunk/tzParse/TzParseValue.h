@@ -13,10 +13,10 @@ PERMISSION OF IT'S AUTHOR.
 #include <string>
 #include <iostream>
 
-#include "AutoPtr.h"
+#include "generic/AutoPtr.h"
 #include "TzParseNeed.h"
 
-#include "crtdbg.h"
+#include "generic/win32_crtdbg.h"
 
 #define	PARSETYPEDECLARE(typeName, type)	class typeName : public ParseType<type>						\
 											{															\

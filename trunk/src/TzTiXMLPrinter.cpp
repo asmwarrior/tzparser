@@ -21,7 +21,7 @@ PERMISSION OF IT'S AUTHOR.
 
 #include "TzTiXMLPrinter.h"
 
-#include "crtdbg.h"
+#include <tzParse/generic/win32_crtdbg.h>
 
 using namespace std;
 

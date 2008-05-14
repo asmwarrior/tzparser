@@ -12,9 +12,9 @@ PERMISSION OF IT'S AUTHOR.
 #include <iostream>
 
 #include "IParseData.h"
-#include "AutoPtr.h"
+#include "generic/AutoPtr.h"
 
-#include "crtdbg.h"
+#include "generic/win32_crtdbg.h"
 
 typedef	AutoPtr<std::istream>	APistream;
 

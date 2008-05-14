@@ -17,7 +17,7 @@ PERMISSION OF IT'S AUTHOR.
 
 #include "TzParseTempAST.h"
 
-#include "crtdbg.h"
+#include "generic/win32_crtdbg.h"
 
 #define	TRACE_BOOL	(_trace >= 0 && inIgnore == 0 && r.traceRule() && _noTrace == 0)
 
