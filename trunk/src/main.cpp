@@ -150,7 +150,7 @@ int	main(int argc, char*argv[])
 
 	try
 	{
-		CmdLine	cmd("TzParser generator by Salomon BRYS : salomon . brys @ gmail . com", ' ', "0.1");
+		CmdLine	cmd("TzParser generator by Salomon BRYS : salomon . brys @ gmail . com", ' ', "0.2");
 
 		InFileName	ifnCst;
 		UnlabeledValueArg<string> fileArg("inputFile", "Input BNF file. Will listen on the standard input if not defined.", false, "", &ifnCst);
