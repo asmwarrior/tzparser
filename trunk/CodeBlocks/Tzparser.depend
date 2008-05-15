@@ -1,0 +1,357 @@
+# depslib dependency file v1.0
+1210756959 source:/home/salomon/SVNs/work/TzParser/src/BNFRules.cpp
+	"BNFRules.h"
+
+1210766073 /home/salomon/SVNs/work/TzParser/src/BNFRules.h
+	<tzParse/tzParse.h>
+
+1209502768 /home/salomon/SVNs/work/TzParser/tzParse/tzParse.h
+	"tzParse/TzParser.h"
+	"tzParse/TzParserUtils.h"
+	"tzParse/TzParseRule.h"
+	"tzParse/TzParseDefaultRules.h"
+	"tzParse/TzParseGroup.h"
+	"tzParse/TzParseString.h"
+	"tzParse/TzParseException.h"
+
+1210766075 /home/salomon/SVNs/work/TzParser/tzParse/TzParser.h
+	<sstream>
+	<string>
+	<stack>
+	<list>
+	<iostream>
+	"IParseData.h"
+	"ParseDataIStream.h"
+	"generic/AutoPtr.h"
+	"TzParserIgnore.h"
+	"TzParseException.h"
+	"TzParseAST.h"
+	"TzParseStream.h"
+	"TzParseGroup.h"
+	"generic/win32_crtdbg.h"
+
+1210766075 /home/salomon/SVNs/work/TzParser/tzParse/IParseData.h
+	"generic/win32_crtdbg.h"
+
+1210766075 /home/salomon/SVNs/work/TzParser/tzParse/generic/win32_crtdbg.h
+	<crtdbg.h>
+
+1210766075 /home/salomon/SVNs/work/TzParser/tzParse/ParseDataIStream.h
+	<iostream>
+	"IParseData.h"
+	"generic/AutoPtr.h"
+	"generic/win32_crtdbg.h"
+
+1210766075 /home/salomon/SVNs/work/TzParser/tzParse/generic/AutoPtr.h
+	<iostream>
+	"win32_crtdbg.h"
+
+1210766075 /home/salomon/SVNs/work/TzParser/tzParse/TzParserIgnore.h
+	<string>
+	"generic/AutoPtr.h"
+	"generic/win32_crtdbg.h"
+
+1210768896 /home/salomon/SVNs/work/TzParser/tzParse/TzParseException.h
+	<string>
+	<sstream>
+	<exception>
+	"generic/win32_crtdbg.h"
+
+1210766075 /home/salomon/SVNs/work/TzParser/tzParse/TzParseAST.h
+	<string>
+	"generic/win32_crtdbg.h"
+
+1210766075 /home/salomon/SVNs/work/TzParser/tzParse/TzParseStream.h
+	"generic/win32_crtdbg.h"
+
+1210766075 /home/salomon/SVNs/work/TzParser/tzParse/TzParseGroup.h
+	"TzParseRule.h"
+	"generic/win32_crtdbg.h"
+
+1210766075 /home/salomon/SVNs/work/TzParser/tzParse/TzParseRule.h
+	<list>
+	<string>
+	"TzParseValue.h"
+	"TzParseNeed.h"
+	"TzParserIgnore.h"
+	"generic/win32_crtdbg.h"
+
+1210768989 /home/salomon/SVNs/work/TzParser/tzParse/TzParseValue.h
+	<string>
+	<iostream>
+	"generic/AutoPtr.h"
+	"TzParseNeed.h"
+	"generic/win32_crtdbg.h"
+
+1210766075 /home/salomon/SVNs/work/TzParser/tzParse/TzParseNeed.h
+	"generic/win32_crtdbg.h"
+
+1210766075 /home/salomon/SVNs/work/TzParser/tzParse/TzParserUtils.h
+	<iostream>
+	"TzParser.h"
+	"generic/win32_crtdbg.h"
+
+1210766075 /home/salomon/SVNs/work/TzParser/tzParse/TzParseDefaultRules.h
+	"TzParseRule.h"
+	"generic/win32_crtdbg.h"
+
+1210766075 /home/salomon/SVNs/work/TzParser/tzParse/TzParseString.h
+	"generic/win32_crtdbg.h"
+
+1210766073 source:/home/salomon/SVNs/work/TzParser/src/TzTiXMLPrinter.cpp
+	<iostream>
+	<iomanip>
+	<string>
+	<sstream>
+	<algorithm>
+	<fstream>
+	"tzParse/tzParse.h"
+	"tzParse/ASTAdapt/TzTinyXML.h"
+	"BNFRules.h"
+	"TzTiXMLPrinter.h"
+	<tzParse/generic/win32_crtdbg.h>
+
+1209502767 /home/salomon/SVNs/work/TzParser/tzParse/ASTAdapt/TzTinyXML.h
+	"tinyxml/tinyxml.h"
+	"tzParse/TzParseAST.h"
+	<string>
+	<queue>
+
+1210756867 /home/salomon/SVNs/work/TzParser/src/tinyxml/tinyxml.h
+	<ctype.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	<string>
+	<iostream>
+	<sstream>
+	"tinystr.h"
+
+1210756867 /home/salomon/SVNs/work/TzParser/src/tinyxml/tinystr.h
+	<assert.h>
+	<string.h>
+
+1210768947 /home/salomon/SVNs/work/TzParser/src/TzTiXMLPrinter.h
+	<string>
+	<sstream>
+	<list>
+	<map>
+	"tinyxml/tinyxml.h"
+
+1210766073 source:/home/salomon/SVNs/work/TzParser/src/main.cpp
+	<fstream>
+	<iostream>
+	<tzParse/tzParse.h>
+	"BNFRules.h"
+	"tzParse/ASTAdapt/TzTinyXML.h"
+	"TzTiXMLPrinter.h"
+	<tclap/CmdLine.h>
+	<tzParse/generic/win32_crtdbg.h>
+
+1147653396 /home/salomon/SVNs/work/TzParser/src/tclap/CmdLine.h
+	<tclap/SwitchArg.h>
+	<tclap/MultiSwitchArg.h>
+	<tclap/UnlabeledValueArg.h>
+	<tclap/UnlabeledMultiArg.h>
+	<tclap/XorHandler.h>
+	<tclap/HelpVisitor.h>
+	<tclap/VersionVisitor.h>
+	<tclap/IgnoreRestVisitor.h>
+	<tclap/CmdLineOutput.h>
+	<tclap/StdOutput.h>
+	<tclap/Constraint.h>
+	<tclap/ValuesConstraint.h>
+	<string>
+	<vector>
+	<list>
+	<iostream>
+	<iomanip>
+	<algorithm>
+
+1147636274 /home/salomon/SVNs/work/TzParser/src/tclap/SwitchArg.h
+	<string>
+	<vector>
+	<tclap/Arg.h>
+
+1126394743 /home/salomon/SVNs/work/TzParser/src/tclap/Arg.h
+	<string>
+	<vector>
+	<list>
+	<iostream>
+	<tclap/ArgException.h>
+	<tclap/Visitor.h>
+	<tclap/CmdLineInterface.h>
+
+1144305866 /home/salomon/SVNs/work/TzParser/src/tclap/ArgException.h
+	<string>
+	<exception>
+
+1142709395 /home/salomon/SVNs/work/TzParser/src/tclap/Visitor.h
+
+1106526401 /home/salomon/SVNs/work/TzParser/src/tclap/CmdLineInterface.h
+	<string>
+	<vector>
+	<list>
+	<iostream>
+	<algorithm>
+
+1106519613 /home/salomon/SVNs/work/TzParser/src/tclap/MultiSwitchArg.h
+	<string>
+	<vector>
+	<tclap/SwitchArg.h>
+
+1126394743 /home/salomon/SVNs/work/TzParser/src/tclap/UnlabeledValueArg.h
+	<string>
+	<vector>
+	<tclap/ValueArg.h>
+	<tclap/OptionalUnlabeledTracker.h>
+
+1126394743 /home/salomon/SVNs/work/TzParser/src/tclap/ValueArg.h
+	<string>
+	<vector>
+	<tclap/Arg.h>
+	<tclap/Constraint.h>
+	<config.h>
+	<sstream>
+	<strstream>
+
+1140519915 /home/salomon/SVNs/work/TzParser/src/tclap/Constraint.h
+	<string>
+	<vector>
+	<list>
+	<iostream>
+	<iomanip>
+	<algorithm>
+
+1117766110 /home/salomon/SVNs/work/TzParser/src/tclap/OptionalUnlabeledTracker.h
+	<string>
+
+1126394743 /home/salomon/SVNs/work/TzParser/src/tclap/UnlabeledMultiArg.h
+	<string>
+	<vector>
+	<tclap/MultiArg.h>
+	<tclap/OptionalUnlabeledTracker.h>
+
+1126394743 /home/salomon/SVNs/work/TzParser/src/tclap/MultiArg.h
+	<string>
+	<vector>
+	<tclap/Arg.h>
+	<tclap/Constraint.h>
+	<config.h>
+	<sstream>
+	<strstream>
+
+1126394743 /home/salomon/SVNs/work/TzParser/src/tclap/XorHandler.h
+	<tclap/Arg.h>
+	<string>
+	<vector>
+	<algorithm>
+	<iostream>
+
+1104949336 /home/salomon/SVNs/work/TzParser/src/tclap/HelpVisitor.h
+	<tclap/CmdLineInterface.h>
+	<tclap/CmdLineOutput.h>
+	<tclap/Visitor.h>
+
+1142709395 /home/salomon/SVNs/work/TzParser/src/tclap/CmdLineOutput.h
+	<string>
+	<vector>
+	<list>
+	<iostream>
+	<iomanip>
+	<algorithm>
+
+1104949336 /home/salomon/SVNs/work/TzParser/src/tclap/VersionVisitor.h
+	<tclap/CmdLineInterface.h>
+	<tclap/CmdLineOutput.h>
+	<tclap/Visitor.h>
+
+1095526461 /home/salomon/SVNs/work/TzParser/src/tclap/IgnoreRestVisitor.h
+	<tclap/Visitor.h>
+	<tclap/Arg.h>
+
+1126394743 /home/salomon/SVNs/work/TzParser/src/tclap/StdOutput.h
+	<string>
+	<vector>
+	<list>
+	<iostream>
+	<algorithm>
+	<tclap/CmdLineInterface.h>
+	<tclap/CmdLineOutput.h>
+	<tclap/XorHandler.h>
+	<tclap/Arg.h>
+
+1107446898 /home/salomon/SVNs/work/TzParser/src/tclap/ValuesConstraint.h
+	<string>
+	<vector>
+	<tclap/Constraint.h>
+	<config.h>
+	<sstream>
+	<strstream>
+
+1210756867 source:/home/salomon/SVNs/work/TzParser/src/tinyxml/tinystr.cpp
+	"tinystr.h"
+
+1210756867 source:/home/salomon/SVNs/work/TzParser/src/tinyxml/tinyxml.cpp
+	<ctype.h>
+	<sstream>
+	<iostream>
+	"tinyxml.h"
+
+1210756867 source:/home/salomon/SVNs/work/TzParser/src/tinyxml/tinyxmlerror.cpp
+	"tinyxml.h"
+
+1210756867 source:/home/salomon/SVNs/work/TzParser/src/tinyxml/tinyxmlparser.cpp
+	<ctype.h>
+	<stddef.h>
+	"tinyxml.h"
+	<windows.h>
+
+1210766075 source:/home/salomon/SVNs/work/TzParser/tzParse/TzParseDefaultRules.cpp
+	<iostream>
+	"TzParseDefaultRules.h"
+	"TzParseGroup.h"
+	"TzParserUtils.h"
+	"TzParseString.h"
+	"generic/win32_crtdbg.h"
+
+1210766075 source:/home/salomon/SVNs/work/TzParser/tzParse/TzParseGroup.cpp
+	"TzParseGroup.h"
+	"TzParser.h"
+	"TzParserUtils.h"
+	"generic/win32_crtdbg.h"
+
+1210766075 source:/home/salomon/SVNs/work/TzParser/tzParse/TzParseRule.cpp
+	<string>
+	<iostream>
+	"TzParseRule.h"
+	"TzParser.h"
+	"TzParserUtils.h"
+	"generic/win32_crtdbg.h"
+
+1210766075 source:/home/salomon/SVNs/work/TzParser/tzParse/TzParseValue.cpp
+	<iostream>
+	"TzParseValue.h"
+	"generic/win32_crtdbg.h"
+
+1210766075 source:/home/salomon/SVNs/work/TzParser/tzParse/TzParser.cpp
+	<iostream>
+	<iomanip>
+	<cstring>
+	"TzParser.h"
+	"TzParseRule.h"
+	"TzParserUtils.h"
+	"TzParseTempAST.h"
+	"generic/win32_crtdbg.h"
+
+1210766075 /home/salomon/SVNs/work/TzParser/tzParse/TzParseTempAST.h
+	<queue>
+	"TzParseAST.h"
+	"generic/win32_crtdbg.h"
+
+1210766075 source:/home/salomon/SVNs/work/TzParser/tzParse/TzParserIgnore.cpp
+	"TzParserIgnore.h"
+	"TzParseRule.h"
+	"generic/win32_crtdbg.h"
+
