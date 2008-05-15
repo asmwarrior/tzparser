@@ -23,7 +23,7 @@ namespace tzParse
 	{
 	public:
 		ParseException(const char* e, int l = -1);
-		ParseException(const ParseException& e) : line(e.line), err(e.err), mess(e.mess) {}
+		ParseException(const ParseException& e) : line(e.line), err(e.err), mess(e.mess), std::exception() {}
 		virtual ~ParseException() throw() {}
 		const char*				getError(void) const { return err.c_str();  }
 		int						getLine(void) const  { return line; }

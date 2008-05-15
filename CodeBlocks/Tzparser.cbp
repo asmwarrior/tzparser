@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Tzparser" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug Unix">
+				<Option output="Tzparser" prefix_auto="1" extension_auto="1" />
+				<Option object_output="Debug Unix" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-W" />
+					<Add option="-g" />
+					<Add option="-O0" />
+					<Add directory="/home/salomon/SVNs/work/TzParser/CodeBlocks/.." />
+					<Add directory="/home/salomon/SVNs/work/TzParser/CodeBlocks/../src" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="/home/salomon/SVNs/work/TzParser/CodeBlocks/.." />
+					<Add directory="/home/salomon/SVNs/work/TzParser/CodeBlocks/../src" />
+				</ResourceCompiler>
+			</Target>
+			<Target title="Release Unix">
+				<Option output="Tzparser" prefix_auto="1" extension_auto="1" />
+				<Option object_output="Release Unix" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-W" />
+					<Add option="-O2" />
+					<Add directory="/home/salomon/SVNs/work/TzParser/CodeBlocks/.." />
+					<Add directory="/home/salomon/SVNs/work/TzParser/CodeBlocks/../src" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="/home/salomon/SVNs/work/TzParser/CodeBlocks/.." />
+					<Add directory="/home/salomon/SVNs/work/TzParser/CodeBlocks/../src" />
+				</ResourceCompiler>
+			</Target>
+		</Build>
+		<Unit filename="../src/BNFRules.cpp" />
+		<Unit filename="../src/main.cpp" />
+		<Unit filename="../src/TzTiXMLPrinter.cpp" />
+		<Unit filename="../src/tinyxml/tinystr.cpp" />
+		<Unit filename="../src/tinyxml/tinyxml.cpp" />
+		<Unit filename="../src/tinyxml/tinyxmlerror.cpp" />
+		<Unit filename="../src/tinyxml/tinyxmlparser.cpp" />
+		<Unit filename="../tzParse/TzParseDefaultRules.cpp" />
+		<Unit filename="../tzParse/TzParseGroup.cpp" />
+		<Unit filename="../tzParse/TzParser.cpp" />
+		<Unit filename="../tzParse/TzParserIgnore.cpp" />
+		<Unit filename="../tzParse/TzParseRule.cpp" />
+		<Unit filename="../tzParse/TzParseValue.cpp" />
+		<Unit filename="../src/BNFRules.h" />
+		<Unit filename="../src/TzTiXMLPrinter.h" />
+		<Unit filename="../tzParse/IParseData.h" />
+		<Unit filename="../tzParse/ParseDataIStream.h" />
+		<Unit filename="../tzParse/tzParse.h" />
+		<Unit filename="../tzParse/TzParseAST.h" />
+		<Unit filename="../tzParse/TzParseDefaultRules.h" />
+		<Unit filename="../tzParse/TzParseException.h" />
+		<Unit filename="../tzParse/TzParseGroup.h" />
+		<Unit filename="../tzParse/TzParseNeed.h" />
+		<Unit filename="../tzParse/TzParser.h" />
+		<Unit filename="../tzParse/TzParserIgnore.h" />
+		<Unit filename="../tzParse/TzParseRule.h" />
+		<Unit filename="../tzParse/TzParserUtils.h" />
+		<Unit filename="../tzParse/TzParseStream.h" />
+		<Unit filename="../tzParse/TzParseString.h" />
+		<Unit filename="../tzParse/TzParseTempAST.h" />
+		<Unit filename="../tzParse/TzParseValue.h" />
+		<Unit filename="../tzParse/generic/AutoPtr.h" />
+		<Unit filename="../tzParse/generic/win32_crtdbg.h" />
+		<Unit filename="../src/bnf/BNF.bnf" />
+		<Unit filename="../src/bnf/BNFBase.bnf" />
+		<Unit filename="../src/bnf/BNFGroup.bnf" />
+		<Unit filename="../src/bnf/BNFIgnore.bnf" />
+		<Unit filename="../src/bnf/BNFLitteral.bnf" />
+		<Unit filename="../src/bnf/BNFRepeat.bnf" />
+		<Unit filename="../src/bnf/BNFTreeSave.bnf" />
+		<Unit filename="../src/bnf/BNFTzBase.bnf" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

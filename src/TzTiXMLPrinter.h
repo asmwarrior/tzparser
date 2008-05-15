@@ -55,7 +55,7 @@ namespace tzParse
 	{
 	public:
 		PrinterException(const char* e, int l = -1);
-		PrinterException(const PrinterException& e) : line(e.line), err(e.err), mess(e.mess) {}
+		PrinterException(const PrinterException& e) : line(e.line), err(e.err), mess(e.mess), std::exception() {}
 		virtual ~PrinterException() throw() {}
 		const char*				getError(void) const { return err.c_str();  }
 		int						getLine(void) const  { return line; }

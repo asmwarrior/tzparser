@@ -90,7 +90,7 @@ void	exec(IParseData& f, std::string outFile, bool traceXML = false, bool trace 
 			ParseDataIStream	ipd(new ifstream(fname.c_str()));
 			if (ipd.getIStream()->fail())
 				throw PrinterException((fname + ": Could not open file").c_str(), atoi(lit->Attribute("Line")));
-			
+
 			cout << "=== Parsing " << fname << " ===" << endl;
 			TzTinyXMLDocument	dIn;
 			mkParse(ipd, dIn, trace);
@@ -190,7 +190,9 @@ int	main(int argc, char*argv[])
 		cout << "Unknown error" << endl;
 	}
 
+#ifdef WIN32
 	_CrtDumpMemoryLeaks();
+#endif
 
 	return 0;
 }
