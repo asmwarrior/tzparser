@@ -49,7 +49,7 @@ namespace tzParse
 	class Parser
 	{
 	public:
-		Parser() : ruleFail(false), line(1), _trace(-1), _noTrace(0), inIgnore(0), stopIgnore(false), precCtx(0), xmldoc(0), curElement(0), _idebug(0) {}
+		Parser() : ruleFail(false), line(1), stopIgnore(false), inIgnore(0), _trace(-1), _noTrace(0), precCtx(0), xmldoc(0), curElement(0), _idebug(0) {}
 		virtual ~Parser() {}
 
  		Parser&			operator << (APIParseData i) {  setEmptyToRead(); ipdStack.push(i); return *this; }
@@ -90,10 +90,10 @@ namespace tzParse
 
 		Ignore				ignore;
 		bool				stopIgnore;
+		int					inIgnore;
 
 		int					_trace;
 		int					_noTrace;
-		int					inIgnore;
 
 		ParserContext*		precCtx;
 
