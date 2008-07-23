@@ -91,8 +91,8 @@ namespace tzParse
 	class AParseRule
 	{
 	public:
-		AParseRule(void) :											_ignoreBefore(true), _force(0), _min(1), _max(1), _comaSep(0), _check(false), _checkType(true), node(0), nodeWithVal(true), attr(0), attrVal(0), svLine(false)	{}
-		AParseRule(const ParseValue &v) :	val(new ParseValue(v)),	_ignoreBefore(true), _force(0), _min(1), _max(1), _comaSep(0), _check(false), _checkType(true), node(0), nodeWithVal(true), attr(0), attrVal(0), svLine(false)	{}
+		AParseRule(void) :					_ignoreBefore(true), _force(0), _min(1), _max(1), _comaSep(0), _check(false), _checkType(true), node(0), nodeWithVal(true), attr(0), attrVal(0), svLine(false) {}
+		AParseRule(const ParseValue &v) :	_ignoreBefore(true), _force(0), _min(1), _max(1), _comaSep(0), _check(false), _checkType(true), node(0), nodeWithVal(true), attr(0), attrVal(0), svLine(false), val(new ParseValue(v)) {}
 		virtual ~AParseRule();// {}
 
 		void						setVal(const std::string& s) { if (val.getPtr()) val->setVal(s); }
@@ -157,12 +157,12 @@ namespace tzParse
 		bool			_checkType;
 
 	private:
-		APParseValue	val;
 		const char*		node;
 		bool			nodeWithVal;
 		const char*		attr;
 		const char*		attrVal;
 		bool			svLine;
+		APParseValue	val;
 	};
 
 	RULE_DECLARE_HEAD(GetChar)

@@ -63,7 +63,7 @@ namespace tzParse
 	{
 	public:
 		ParseValue(IParseType& i) : parseType(i) {}
-		ParseValue(const ParseValue& pv) : parseType(pv.parseType), IParseType() {}
+		ParseValue(const ParseValue& pv) : IParseType(), parseType(pv.parseType) {}
 		virtual void	setVal(const std::string& str) { parseType->setVal(str); }
 		virtual ~ParseValue() {}
 
