@@ -165,6 +165,10 @@
 				RelativePath=".\main.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\preRules.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -177,6 +181,10 @@
 			</File>
 			<File
 				RelativePath=".\charRules.h"
+				>
+			</File>
+			<File
+				RelativePath=".\preRules.h"
 				>
 			</File>
 			<File
@@ -193,6 +201,10 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
+			<File
+				RelativePath="..\Documents\OpcodeExamples.txt"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>

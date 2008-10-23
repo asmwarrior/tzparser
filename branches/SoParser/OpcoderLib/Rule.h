@@ -5,11 +5,6 @@ namespace SoParse
 {
 	class RuleGroup;
 
-	class	Opcode
-	{
-		const char*	
-	};
-
 	class Rule
 	{
 	public:

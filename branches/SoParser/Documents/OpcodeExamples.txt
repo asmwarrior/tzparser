@@ -1,0 +1,103 @@
+
+simpleCString	::=
+	'"' #ReadChar('a', 'z') '"'
+;
+
+save context
+ignore
+read '"'
+if fail
+	restore context and go back
+ignore
+read a char range from 'a' to 'z'
+if fail
+	restore context and go back
+ignore
+read '"'
+if fail
+	restore context and go back
+cancel context
+go back
+
+===============================================================================
+
+IdentifierStart ::=
+	#ReadChar('a', 'z') | #ReadChar('A', 'Z') | #ReadChar('_')
+;
+
+save context
+ignore
+save context
+read a char range from 'a' to 'z'
+if fail
+	restore context
+else
+	go to :0
+read a char range from 'A' to 'Z'
+if fail
+	restore context
+else
+	go to :0
+read '_'
+:0
+cancel context
+if fail
+	restore context and go back
+cancel context
+go back
+
+===============================================================================
+
+IdentifierEnd ::=
+	#ReadChar('a', 'z') | #ReadChar('A', 'Z') | #ReadChar('0', '9') | #ReadChar('_')
+;
+
+save context
+ignore
+save context
+read a char range from 'a' to 'z'
+if fail
+	restore context else go to :1
+read a char range from 'A' to 'Z'
+if fail
+	restore context else go to :1
+read a char range from '0' to '9'
+if fail
+	restore context else go to :1
+read '_'
+:1
+cancel context
+if fail
+	restore context and go back
+cancel context
+go back
+
+===============================================================================
+
+Repeaters	::=
+	#ReadChar('a')+ #ReadChar('b')? #ReadChar('c') #readChar('d')*
+;
+
+save context
+ignore
+read 'a'
+if fail
+	restore context and go back
+:0
+ignore
+read 'a'
+if sucess
+	go to :0
+ignore
+read 'b'
+ignore
+read 'c'
+if fail
+	restore context and go back
+:1
+ignore
+read 'd'
+if success
+	go to :1
+cancel context
+go back
