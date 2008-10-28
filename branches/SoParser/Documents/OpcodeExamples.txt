@@ -40,24 +40,24 @@ simpleCString	::=
 
 :simpleCString
 
-SAVE_CONTEXT
+SAVE_CONTEXT                        01 00 00
 
-IGNORE
-READ_CHAR '"'
-IF FAIL
-RESTORE_CONTEXT_AND_GO_BACK
+IGNORE                              10 00 00
+READ_CHAR '"'                       21 22 00
+IF FAIL                             40 00 00
+RESTORE_CONTEXT_AND_GO_BACK         F0 00 00
 
-IGNORE
-READ_CHAR_RANGE 'a', 'z'
-IF FAIL
-RESTORE_CONTEXT_AND_GO_BACK
+IGNORE                              10 00 00
+READ_CHAR_RANGE 'a', 'z'            22 61 7A
+IF FAIL                             40 00 00
+RESTORE_CONTEXT_AND_GO_BACK         F0 00 00
 
-IGNORE
-READ_CHAR '"'
-IF FAIL
-RESTORE_CONTEXT_AND_GO_BACK
+IGNORE                              10 00 00
+READ_CHAR '"'                       21 22 00
+IF FAIL                             40 00 00
+RESTORE_CONTEXT_AND_GO_BACK         F0 00 00
 
-CANCEL_CONTEXT_AND_GO_BACK
+CANCEL_CONTEXT_AND_GO_BACK          F1 00 00
 
 ===============================================================================
 
@@ -67,30 +67,30 @@ IdentifierStart ::=
 
 :IdentifierStart
 
-SAVE_CONTEXT
+SAVE_CONTEXT                        01 00 00
 
-IGNORE
-SAVE_CONTEXT
+IGNORE                              10 00 00
+SAVE_CONTEXT                        01 00 00
 
-READ_CHAR_RANGE 'a', 'z'
-IF FAIL, ELSE
-RESTORE_CONTEXT
-GO_TO :0
+READ_CHAR_RANGE 'a', 'z'            22 61 7A
+IF FAIL, ELSE                       40 00 01
+RESTORE_CONTEXT                     02 00 00
+GO_TO :0                            52 00 24
 
-READ_CHAR_RANGE 'A', 'Z'
-IF FAIL, ELSE
-RESTORE_CONTEXT
-GO_TO :0
+READ_CHAR_RANGE 'A', 'Z'            22 41 5A
+IF FAIL, ELSE                       40 00 01
+RESTORE_CONTEXT                     02 00 00
+GO_TO :0                            52 00 24
 
-READ_CHAR '_'
+READ_CHAR '_'                       21 5F 00
 
 :0
-CANCEL_CONTEXT
+CANCEL_CONTEXT                      03 00 00
 
-IF FAIL
-RESTORE_CONTEXT_AND_GO_BACK
+IF FAIL                             40 00 00
+RESTORE_CONTEXT_AND_GO_BACK         F0 00 00
 
-CANCEL_CONTEXT_AND_GO_BACK
+CANCEL_CONTEXT_AND_GO_BACK          F1 00 00
 
 ===============================================================================
 
@@ -100,37 +100,37 @@ Repeaters	::=
 
 :Repeaters
 
-SAVE_CONTEXT
+SAVE_CONTEXT                        01 00 00
 
-IGNORE
-READ_CHAR 'a'
-IF FAIL
-GO_TO :1
+IGNORE                              10 00 00
+READ_CHAR 'a'                       21 61 00
+IF FAIL                             40 00 00
+GO_TO :1                            52 00 1E
 :0
-IGNORE
-READ_CHAR 'a'
-if sucess
-GO_TO :0
-SET_SF SUCCESS
+IGNORE                              10 00 00
+READ_CHAR 'a'                       21 61 00
+IF SUCCESS                          40 01 00
+GO_TO :0                            52 00 0F
+SET_SF SUCCESS                      30 01 00
 :1
-IF FAIL
-RESTORE_CONTEXT_AND_GO_BACK
+IF FAIL                             40 00 00
+RESTORE_CONTEXT_AND_GO_BACK         F0 00 00
 
-IGNORE
-READ_CHAR 'b'
+IGNORE                              10 00 00
+READ_CHAR 'b'                       21 62 00
 
-IGNORE
-READ_CHAR 'c'
-IF FAIL
-RESTORE_CONTEXT_AND_GO_BACK
+IGNORE                              10 00 00
+READ_CHAR 'c'                       21 63 00
+IF FAIL                             40 00 00
+RESTORE_CONTEXT_AND_GO_BACK         F0 00 00
 
-:1
-IGNORE
-READ_CHAR 'd'
-IF SUCCESS
-GO_TO :1
+:2
+IGNORE                              10 00 00
+READ_CHAR 'd'                       21 64 00
+IF SUCCESS                          40 01 00
+GO_TO :2                            52 00 36
 
-CANCEL_CONTEXT_AND_GO_BACK
+CANCEL_CONTEXT_AND_GO_BACK          F1 00 00
 
 ===============================================================================
 
@@ -140,37 +140,37 @@ IdentifierEnd ::=
 
 :IdentifierEnd
 
-SAVE_CONTEXT
+SAVE_CONTEXT                        01 00 00
 
 :0
-IGNORE
-SAVE_CONTEXT
+IGNORE                              10 00 00
+SAVE_CONTEXT                        01 00 00
 
-READ_CHAR_RANGE 'a', 'z'
-IF FAIL, ELSE
-RESTORE_CONTEXT
-GO_TO :1
+READ_CHAR_RANGE 'a', 'z'            22 61 7A
+IF FAIL, ELSE                       40 00 01
+RESTORE_CONTEXT                     02 00 00
+GO_TO :1                            52 00 30
 
-READ_CHAR_RANGE 'A', 'Z'
-IF FAIL, ELSE
-RESTORE_CONTEXT
-GO_TO :1
+READ_CHAR_RANGE 'A', 'Z'            22 41 5A
+IF FAIL, ELSE                       40 00 01
+RESTORE_CONTEXT                     02 00 00
+GO_TO :1                            52 00 30
 
-READ_CHAR_RANGE '0', '9'
-IF FAIL, ELSE
-RESTORE_CONTEXT
-GO_TO :1
+READ_CHAR_RANGE '0', '9'            22 30 39
+IF FAIL, ELSE                       40 00 01
+RESTORE_CONTEXT                     02 00 00
+GO_TO :1                            52 00 30
 
-READ_CHAR '_'
+READ_CHAR '_'                       21 5F 00
 
 :1
-CANCEL_CONTEXT
+CANCEL_CONTEXT                      03 00 00
 
-IF SUCCESS
-GO_TO :0
-SET_SF SUCCESS
+IF SUCCESS                          40 01 00
+GO_TO :0                            52 00 03
+SET_SF SUCCESS                      30 01 00
 
-CANCEL_CONTEXT_AND_GO_BACK
+CANCEL_CONTEXT_AND_GO_BACK          F1 00 00
 
 ===============================================================================
 
@@ -180,19 +180,19 @@ Identifier	::=
 
 :Identifier
 
-SAVE_CONTEXT
+SAVE_CONTEXT                        01 00 00
 
-IGNORE
-LOAD :IdentifierStart
-IF FAIL
-RESTORE_CONTEXT_AND_GO_BACK
+IGNORE                              10 00 00
+LOAD :IdentifierStart               50 21 42
+IF FAIL                             40 00 00
+RESTORE_CONTEXT_AND_GO_BACK         F0 00 00
 
-IGNORE
-LOAD :IdentifierEnd
-IF FAIL
-RESTORE_CONTEXT_AND_GO_BACK
+IGNORE                              10 00 00
+LOAD :IdentifierEnd                 50 42 21
+IF FAIL                             40 00 00
+RESTORE_CONTEXT_AND_GO_BACK         F0 00 00
 
-CANCEL_CONTEXT_AND_GO_BACK
+CANCEL_CONTEXT_AND_GO_BACK          F1 00 00
 
 ===============================================================================
 
@@ -202,42 +202,41 @@ GroupWithRepeaters	::=
 
 :Repeaters
 
-SAVE_CONTEXT
+SAVE_CONTEXT                        01 00 00
 
-IGNORE
-SAVE_CONTEXT
+IGNORE                              10 00 00
+SAVE_CONTEXT                        01 00 00
 
-READ_CHAR 'a'
-IF FAIL
-GO_TO :1
+READ_CHAR 'a'                       21 61 00
+IF FAIL                             40 00 00
+GO_TO :1                            52 00 11
 :0
-IGNORE
-READ_CHAR 'a'
-if sucess
-GO_TO :0
-SET_SF SUCCESS
+IGNORE                              10 00 00
+READ_CHAR 'a'                       21 61 00
+IF SUCCESS                          40 01 00
+GO_TO :0                            52 00 12
+SET_SF SUCCESS                      30 01 00
 :1
-IF SUCCESS
-GO_TO :3
+IF SUCCESS                          40 01 00
+GO_TO :3                            52 00 45
 
-READ_CHAR 'b'
-GO_TO :3
-
-READ_CHAR 'c'
-IF SUCCESS
-GO_TO :3
+READ_CHAR 'b'                       21 62 00
+GO_TO :3                            52 00 45
+READ_CHAR 'c'                       21 63 00
+IF SUCCESS                          40 01 00
+GO_TO :3                            52 00 45
 
 :2
-IGNORE
-READ_CHAR 'd'
-IF SUCCESS
-GO_TO :2
-SET_SF SUCCESS
+IGNORE                              10 00 00
+READ_CHAR 'd'                       21 64 00
+IF SUCCESS                          40 01 00
+GO_TO :2                            52 00 18
+SET_SF SUCCESS                      30 01 00
 
 :3
-CANCEL_CONTEXT
+CANCEL_CONTEXT                      03 00 00
 
-IF FAIL
-RESTORE_CONTEXT_AND_GO_BACK
+IF FAIL                             40 00 00
+RESTORE_CONTEXT_AND_GO_BACK         F0 00 00
 
-CANCEL_CONTEXT_AND_GO_BACK
+CANCEL_CONTEXT_AND_GO_BACK          F1 00 00
