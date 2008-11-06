@@ -129,6 +129,7 @@ IGNORE                              10 00 00
 READ_CHAR 'd'                       21 64 00
 IF SUCCESS                          40 01 00
 GO_TO :2                            52 00 36
+SET_SF SUCCESS                      30 01 00
 
 CANCEL_CONTEXT_AND_GO_BACK          F1 00 00
 
