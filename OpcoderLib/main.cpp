@@ -1,5 +1,5 @@
-#include "RuleGroup.h"
-#include "preRules.h"
+#include "Rule.h"
+#include "ReadChar.h"
 
 using namespace SoParse;
 
@@ -9,28 +9,29 @@ int	main()
 // 		'"' #ReadChar('a', 'z') '"'
 // 	;
 	Rule(SimpleCString) =
-			ReadAChar('"')
-		&	ReadCharRange('a', 'z')
-		&	ReadAChar('"')
+			ReadChar('"')
+		&	ReadChar('a', 'z')
+		&	ReadChar('"')
 	;
 
+/*
 // 	IdentifierStart ::=
 // 		#ReadChar('a', 'z') | #ReadChar('A', 'Z') | #ReadChar('_')
 // 	;
 	Rule(IdentifierStart) =
-			ReadCharRange('a', 'z')
-		|	ReadCharRange('A', 'Z')
-		|	ReadAChar('_')
+			ReadChar('a', 'z')
+		|	ReadChar('A', 'Z')
+		|	ReadChar('_')
 	;
 
 // 	Repeaters	::=
 // 		#ReadChar('a')+ #ReadChar('b')? #ReadChar('c') #readChar('d')*
 // 	;
 	Rule(Repeater) =
-			ReadAChar('a') -> Repeat('+')
-		&	ReadAChar('b') -> Repeat('?')
-		&	ReadAChar('c')
-		&	ReadAChar('d') -> Repeat('*')
+			ReadChar('a') -> Repeat('+')
+		&	ReadChar('b') -> Repeat('?')
+		&	ReadChar('c')
+		&	ReadChar('d') -> Repeat('*')
 	;
 
 // 	IdentifierEnd ::=
@@ -38,10 +39,10 @@ int	main()
 // 	;
 	Rule(IdentifierEnd) =
 		(
-				ReadCharRange('a', 'z')
-			|	ReadCharRange('A', 'Z')
-			|	ReadCharRange('0', '9')
-			|	ReadAChar('_')
+				ReadChar('a', 'z')
+			|	ReadChar('A', 'Z')
+			|	ReadChar('0', '9')
+			|	ReadChar('_')
 		) << Repeat('*')
 	;
 
@@ -57,9 +58,10 @@ int	main()
 // 		#ReadChar('a')+ | #ReadChar('b')? | #ReadChar('c') | #readChar('d')*
 // 	;
 	Rule(GroupWithRepeaters) =
-			ReadAChar('a') -> Repeat('+')
-		|	ReadAChar('b') -> Repeat('?')
-		|	ReadAChar('c')
-		|	ReadAChar('d') -> Repeat('*')
+			ReadChar('a') -> Repeat('+')
+		|	ReadChar('b') -> Repeat('?')
+		|	ReadChar('c')
+		|	ReadChar('d') -> Repeat('*')
 	;
+*/
 }
