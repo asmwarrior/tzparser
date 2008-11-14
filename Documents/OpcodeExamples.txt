@@ -62,7 +62,7 @@ CANCEL_CONTEXT_AND_GO_BACK          F1 00 00
 ===============================================================================
 
 IdentifierStart ::=
-	[#ReadChar('a', 'z') | #ReadChar('A', 'Z') | #ReadChar('_')]
+	#ReadChar('a', 'z') | #ReadChar('A', 'Z') | #ReadChar('_')
 ;
 
 :IdentifierStart
@@ -198,7 +198,7 @@ CANCEL_CONTEXT_AND_GO_BACK          F1 00 00
 ===============================================================================
 
 GroupWithRepeaters	::=
-	[#ReadChar('a')+ | #ReadChar('b')? | #ReadChar('c') | #readChar('d')*]
+	#ReadChar('a')+ | #ReadChar('b')? | #ReadChar('c') | #readChar('d')*
 ;
 
 :Repeaters
