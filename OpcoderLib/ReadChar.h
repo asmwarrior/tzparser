@@ -5,9 +5,16 @@
 
 namespace SoParse
 {
-	class ReadAChar : public IRule
+	class AtomicRule : public StandardRule
 	{
 	public:
+		virtual ~AtomicRule() {}
+	};
+
+	class ReadAChar : public AtomicRule
+	{
+	public:
+		virtual ~ReadAChar() {}
 		ReadAChar(char c) : _c(c) {}
 
 		virtual char const * getName() const { return "GetChar"; }
@@ -21,9 +28,11 @@ namespace SoParse
 		return APIRule(new ReadAChar(c));
 	};
 
-	class ReadCharRange : public IRule
+	class ReadCharRange : public AtomicRule
 	{
 	public:
+		virtual ~ReadCharRange() {}
+
 		ReadCharRange(char s, char e) : _s(s), _e(e) {}
 
 		virtual char const * getName() const { return "GetChar"; }

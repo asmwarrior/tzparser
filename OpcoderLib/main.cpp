@@ -1,4 +1,4 @@
-#include "Rule.h"
+#include "UserRule.h"
 #include "ReadChar.h"
 
 using namespace SoParse;
@@ -14,7 +14,6 @@ int	main()
 		&	ReadChar('"')
 	;
 
-/*
 // 	IdentifierStart ::=
 // 		#ReadChar('a', 'z') | #ReadChar('A', 'Z') | #ReadChar('_')
 // 	;
@@ -27,13 +26,15 @@ int	main()
 // 	Repeaters	::=
 // 		#ReadChar('a')+ #ReadChar('b')? #ReadChar('c') #readChar('d')*
 // 	;
+/*
 	Rule(Repeater) =
 			ReadChar('a') -> Repeat('+')
 		&	ReadChar('b') -> Repeat('?')
 		&	ReadChar('c')
 		&	ReadChar('d') -> Repeat('*')
 	;
-
+*/
+/*
 // 	IdentifierEnd ::=
 // 		[#ReadChar('a', 'z') | #ReadChar('A', 'Z') | #ReadChar('0', '9') | #ReadChar('_')]*
 // 	;

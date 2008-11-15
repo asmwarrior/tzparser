@@ -1,38 +1,32 @@
 #ifndef __SO_RULE_H__
 #define __SO_RULE_H__
 
-#include "RuleGroup.h"
-
 #include "AutoPtr.h"
 
 namespace SoParse
 {
 	class IRule;
-	typedef SoUtil::AutoPtr<IRule>	APIRule;
-
-	typedef SoUtil::AutoPtr<RuleGroup>	APRuleGroup;
+	typedef SoUtil::AutoPtr<IRule> APIRule;
 
 	class IRule
 	{
 	public:
+		virtual ~IRule() {}
+
 		virtual char const * getName() const = 0;
+
+		virtual APIRule	groupizeAND(APIRule self, APIRule r) = 0;
+		virtual APIRule	groupizeOR(APIRule self, APIRule r) = 0;
 	};
 
-	inline	APRuleGroup operator & (APIRule r1, APIRule r2)
+	inline APIRule	operator & (APIRule r1, APIRule r2)
 	{
-		APRuleGroup	g(new RuleGroupAND);
-
-		g->push(r1);
-		g->push(r2);
-
-		return g;
+		return r1->groupizeAND(r1, r2);
 	}
 
-	inline	APRuleGroup & operator & (APRuleGroup & g, APIRule r)
+	inline APIRule	operator | (APIRule r1, APIRule r2)
 	{
-		g->push(r);
-
-		return g;
+		return r1->groupizeOR(r1, r2);
 	}
 }
 
