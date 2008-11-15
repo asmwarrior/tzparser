@@ -171,26 +171,50 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
-			<File
-				RelativePath=".\AutoPtr.h"
+			<Filter
+				Name="Utils"
 				>
-			</File>
-			<File
-				RelativePath=".\ReadChar.h"
+				<File
+					RelativePath=".\AutoPtr.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Rules"
 				>
-			</File>
-			<File
-				RelativePath=".\Rule.h"
+				<File
+					RelativePath=".\ReadChar.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Rule.h"
+					>
+				</File>
+				<File
+					RelativePath=".\RuleGroup.h"
+					>
+				</File>
+				<File
+					RelativePath=".\StandardRule.h"
+					>
+				</File>
+				<File
+					RelativePath=".\UserRule.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Decorators"
 				>
-			</File>
-			<File
-				RelativePath=".\RuleGroup.h"
-				>
-			</File>
-			<File
-				RelativePath=".\UserRule.h"
-				>
-			</File>
+				<File
+					RelativePath=".\Repeaters.h"
+					>
+				</File>
+				<File
+					RelativePath=".\RuleDecorator.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Resource Files"
@@ -202,6 +226,10 @@
 				>
 			</File>
 		</Filter>
+		<File
+			RelativePath=".\ClassDiagram.cd"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>
