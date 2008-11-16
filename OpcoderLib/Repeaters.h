@@ -20,9 +20,20 @@ namespace SoParse
 		virtual ~Repeat_OneToMany() {}
 	};
 
-	void Repeat()
+	RuleDecorator * Repeat(char c)
 	{
-
+		switch (c)
+		{
+		case '?':
+			return new Repeat_ZeroOrOne;
+			break;
+		case '*':
+			return new Repeat_ZeroToMany;
+			break;
+		case '+':
+			return new Repeat_OneToMany;
+		}
+		return 0;
 	}
 }
 
