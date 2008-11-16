@@ -1,5 +1,6 @@
 #include "UserRule.h"
 #include "ReadChar.h"
+#include "Repeaters.h"
 
 using namespace SoParse;
 
@@ -26,15 +27,13 @@ int	main()
 // 	Repeaters	::=
 // 		#ReadChar('a')+ #ReadChar('b')? #ReadChar('c') #readChar('d')*
 // 	;
-/*
 	Rule(Repeater) =
-			ReadChar('a') -> Repeat('+')
-		&	ReadChar('b') -> Repeat('?')
+			ReadChar('a') << Repeat('+')
+		&	ReadChar('b') << Repeat('?')
 		&	ReadChar('c')
-		&	ReadChar('d') -> Repeat('*')
+		&	ReadChar('d') << Repeat('*')
 	;
-*/
-/*
+
 // 	IdentifierEnd ::=
 // 		[#ReadChar('a', 'z') | #ReadChar('A', 'Z') | #ReadChar('0', '9') | #ReadChar('_')]*
 // 	;
@@ -51,18 +50,17 @@ int	main()
 // 		IdentifierStart IdentifierEnd
 // 	;
 	Rule(Identifier) =
-		IdentifierStart
-		IdentifierEnd
+			IdentifierStart
+		&	IdentifierEnd
 	;
 
 // 	GroupWithRepeaters	::=
 // 		#ReadChar('a')+ | #ReadChar('b')? | #ReadChar('c') | #readChar('d')*
 // 	;
 	Rule(GroupWithRepeaters) =
-			ReadChar('a') -> Repeat('+')
-		|	ReadChar('b') -> Repeat('?')
+			ReadChar('a') << Repeat('+')
+		|	ReadChar('b') << Repeat('?')
 		|	ReadChar('c')
-		|	ReadChar('d') -> Repeat('*')
+		|	ReadChar('d') << Repeat('*')
 	;
-*/
 }

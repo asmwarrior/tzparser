@@ -4,9 +4,11 @@
 #include "StandardRule.h"
 #include "RuleGroup.h"
 
+#include "AutoPtr.h"
+
 namespace SoParse
 {
-	#define Rule(name)	UserRule name(#name) ; name
+	#define Rule(name)	UserRule* name##_r = new UserRule(#name); APIRule name(name##_r); *name##_r
 
 	class UserRule : public StandardRule
 	{

@@ -6,7 +6,7 @@
 
 namespace SoParse
 {
-	class StandardRule : IRule
+	class StandardRule : public IRule
 	{
 	public:
 		virtual ~StandardRule() {}
