@@ -8,6 +8,8 @@ namespace SoParse
 	class IRule;
 	typedef SoUtil::AutoPtr<IRule> APIRule;
 
+	class IRulesVisitor;
+
 	class IRule
 	{
 	public:
@@ -17,6 +19,8 @@ namespace SoParse
 
 		virtual APIRule	groupizeAND(APIRule self, APIRule r) = 0;
 		virtual APIRule	groupizeOR(APIRule self, APIRule r) = 0;
+
+		virtual void	acceptVisitor(IRulesVisitor * visitor) = 0;
 	};
 
 	inline APIRule	operator & (APIRule r1, APIRule r2)

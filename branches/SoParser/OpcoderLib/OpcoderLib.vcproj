@@ -165,6 +165,10 @@
 				RelativePath=".\main.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\PrintRuleAST.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -212,6 +216,14 @@
 				</File>
 				<File
 					RelativePath=".\RuleDecorator.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="visitors"
+				>
+				<File
+					RelativePath=".\RulesVisitor.h"
 					>
 				</File>
 			</Filter>
