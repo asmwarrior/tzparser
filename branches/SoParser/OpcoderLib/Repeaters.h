@@ -8,16 +8,22 @@ namespace SoParse
 	class Repeat_ZeroOrOne : public RuleDecorator
 	{
 		virtual ~Repeat_ZeroOrOne() {}
+
+		virtual char const * getName() const { return "Repeat ?"; }
 	};
 
 	class Repeat_ZeroToMany : public RuleDecorator
 	{
 		virtual ~Repeat_ZeroToMany() {}
+
+		virtual char const * getName() const { return "Repeat *"; }
 	};
 
 	class Repeat_OneToMany : public RuleDecorator
 	{
 		virtual ~Repeat_OneToMany() {}
+
+		virtual char const * getName() const { return "Repeat +"; }
 	};
 
 	RuleDecorator * Repeat(char c)

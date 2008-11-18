@@ -11,8 +11,6 @@ namespace SoParse
 	public:
 		virtual ~RuleDecorator() {}
 
-		virtual char const * getName() const { return _r->getName(); }
-
 		virtual APIRule	groupizeAND(APIRule self, APIRule r) { return _r->groupizeAND(self, r); }
 		virtual APIRule	groupizeOR(APIRule self, APIRule r) { return _r->groupizeOR(self, r); }
 

@@ -3,6 +3,8 @@
 
 #include <string>
 
+#include "Rule.h"
+
 namespace SoParse
 {
 	class IRule;
@@ -12,8 +14,8 @@ namespace SoParse
 	public:
 		virtual	~IRulesVisitor() {}
 
-		virtual void	enter(IRule * rule) = 0;
-		virtual void	leave();
+		virtual void	enter(IRule * rule, bool hasChild = true) = 0;
+		virtual void	leave() = 0;
 	};
 }
 

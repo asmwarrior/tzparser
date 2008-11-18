@@ -18,11 +18,15 @@ namespace SoParse
 
 		virtual char const *	getName() const { return _name; }
 
-		UserRule &				operator = (APIRule r) { _rules->push(r); return *this; };
+		UserRule &				operator = (APIRule r) { _rules->push_back(r); return *this; };
 
 		virtual void	acceptVisitor(IRulesVisitor * visitor)
 		{
 			visitor->enter(this);
+			for (RuleGroup::iterator i = _rules->begin(); i != _rules->end(); ++i)
+			{
+				(*i)->acceptVisitor(visitor);
+			}
 			visitor->leave();
 		}
 

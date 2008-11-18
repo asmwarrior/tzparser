@@ -12,8 +12,7 @@ namespace SoParse
 
 		virtual void	acceptVisitor(IRulesVisitor * visitor)
 		{
-			visitor->enter(this);
-			visitor->leave();
+			visitor->enter(this, false);
 		}
 
 	};
