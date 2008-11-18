@@ -22,12 +22,13 @@ namespace SoParse
 
 		virtual void	acceptVisitor(IRulesVisitor * visitor)
 		{
-			visitor->enter(this);
-			for (RuleGroup::iterator i = _rules->begin(); i != _rules->end(); ++i)
+			bool child = visitor->enter(this);
+			if (child)
 			{
-				(*i)->acceptVisitor(visitor);
+				for (RuleGroup::iterator i = _rules->begin(); i != _rules->end(); ++i)
+					(*i)->acceptVisitor(visitor);
+				visitor->leave(this);
 			}
-			visitor->leave();
 		}
 
 	private:

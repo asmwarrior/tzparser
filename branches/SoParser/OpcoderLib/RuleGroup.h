@@ -34,7 +34,7 @@ namespace SoParse
 			{
 				(*i)->acceptVisitor(visitor);
 			}
-			visitor->leave();
+			visitor->leave(this);
 		}
 	};
 

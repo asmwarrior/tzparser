@@ -14,8 +14,8 @@ namespace SoParse
 	public:
 		virtual	~IRulesVisitor() {}
 
-		virtual void	enter(IRule * rule, bool hasChild = true) = 0;
-		virtual void	leave() = 0;
+		virtual bool	enter(IRule * rule, bool hasChild = true) = 0;
+		virtual void	leave(IRule * rule) = 0;
 	};
 }
 

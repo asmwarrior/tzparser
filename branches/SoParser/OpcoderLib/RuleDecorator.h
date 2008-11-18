@@ -20,7 +20,7 @@ namespace SoParse
 		{
 			visitor->enter(this);
 			_r->acceptVisitor(visitor);
-			visitor->leave();
+			visitor->leave(this);
 		}
 
 	private:
