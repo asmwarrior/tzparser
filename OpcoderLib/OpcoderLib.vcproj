@@ -227,6 +227,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Opcoder.h"
+					>
+				</File>
+				<File
 					RelativePath=".\RulesVisitor.h"
 					>
 				</File>

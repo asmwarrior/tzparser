@@ -5,25 +5,32 @@
 
 namespace SoParse
 {
-	class Repeat_ZeroOrOne : public RuleDecorator
+	class Repeater : public RuleDecorator
+	{
+	public:
+		virtual ~Repeater() {}
+		virtual char const * getType() const { return "repeater"; }
+	};
+
+	class Repeat_ZeroOrOne : public Repeater
 	{
 		virtual ~Repeat_ZeroOrOne() {}
 
-		virtual char const * getName() const { return "Repeat_?"; }
+		virtual std::string getName() const { return "_Repeat(?)"; }
 	};
 
-	class Repeat_ZeroToMany : public RuleDecorator
+	class Repeat_ZeroToMany : public Repeater
 	{
 		virtual ~Repeat_ZeroToMany() {}
 
-		virtual char const * getName() const { return "Repeat_*"; }
+		virtual std::string getName() const { return "_Repeat(*)"; }
 	};
 
-	class Repeat_OneToMany : public RuleDecorator
+	class Repeat_OneToMany : public Repeater
 	{
 		virtual ~Repeat_OneToMany() {}
 
-		virtual char const * getName() const { return "Repeat_+"; }
+		virtual std::string getName() const { return "_Repeat(+)"; }
 	};
 
 	RuleDecorator * Repeat(char c)

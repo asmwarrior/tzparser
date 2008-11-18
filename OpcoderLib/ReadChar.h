@@ -11,7 +11,7 @@ namespace SoParse
 		virtual ~ReadAChar() {}
 		ReadAChar(char c) : _c(c) {}
 
-		virtual char const * getName() const { return "GetChar"; }
+		virtual std::string getName() const { return std::string("GetChar(") + _c + ')'; }
 
 	private:
 		const char _c;
@@ -29,7 +29,7 @@ namespace SoParse
 
 		ReadCharRange(char s, char e) : _s(s), _e(e) {}
 
-		virtual char const * getName() const { return "GetChar"; }
+		virtual std::string getName() const { return std::string("GetChar(") + _s + ", " + _e + ")"; }
 
 	private:
 		const char _s;

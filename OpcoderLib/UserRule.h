@@ -16,7 +16,8 @@ namespace SoParse
 		virtual ~UserRule() {}
 		UserRule(const char * name) : _name(name), _rules(new RuleGroupAND) {}
 
-		virtual char const *	getName() const { return _name; }
+		virtual std::string	getName() const { return _name; }
+		virtual char const * getType() const { return "rule"; }
 
 		UserRule &				operator = (APIRule r) { _rules->push_back(r); return *this; };
 
