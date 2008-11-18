@@ -187,6 +187,10 @@
 				Name="Rules"
 				>
 				<File
+					RelativePath=".\AtomicRule.h"
+					>
+				</File>
+				<File
 					RelativePath=".\ReadChar.h"
 					>
 				</File>
