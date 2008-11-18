@@ -4,32 +4,36 @@
 #include "AutoPtr.h"
 #include "Rule.h"
 
-#include <queue>
+#include <deque>
 
 namespace SoParse
 {
 	typedef SoUtil::AutoPtr<IRule>	APIRule;
-	typedef std::queue<APIRule>		QueueAPIRule;
+	typedef std::deque<APIRule>		DequeAPIRule;
 
-	class RuleGroup : public QueueAPIRule, public IRule
+	class RuleGroup : public DequeAPIRule, public IRule
 	{
 	public:
 		virtual ~RuleGroup() {}
 		virtual APIRule	groupizeAND(APIRule self, APIRule r)
 		{
-			this->push(r);
+			this->push_back(r);
 			return self;
 		}
 
 		virtual APIRule	groupizeOR(APIRule self, APIRule r)
 		{
-			this->push(r);
+			this->push_back(r);
 			return self;
 		}
 
 		virtual void	acceptVisitor(IRulesVisitor * visitor)
 		{
 			visitor->enter(this);
+			for (RuleGroup::iterator i = this->begin(); i != this->end(); ++i)
+			{
+				(*i)->acceptVisitor(visitor);
+			}
 			visitor->leave();
 		}
 	};
@@ -49,15 +53,6 @@ namespace SoParse
 		virtual ~RuleGroupOR() {}
 		virtual char const * getName() const { return "GroupOR"; }
 	};
-
-/*
-	inline	APRuleGroup operator & (APRuleGroup g, APIRule r)
-	{
-		g->push(r);
-
-		return g;
-	}
-*/
 }
 
 #endif  // !__SO_RULE_GROUP_H__

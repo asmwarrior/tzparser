@@ -21,10 +21,10 @@ namespace SoParse
 		}
 
 	private:
-		APIRule	groupize(APIRule self, APIRule r, RuleGroup * g)
+		static APIRule	groupize(APIRule self, APIRule r, RuleGroup * g)
 		{
-			g->push(self);
-			g->push(r);
+			g->push_back(self);
+			g->push_back(r);
 			return APIRule(g);
 		}
 	};

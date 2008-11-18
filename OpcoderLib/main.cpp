@@ -2,6 +2,8 @@
 #include "ReadChar.h"
 #include "Repeaters.h"
 
+#include "DispAST.h"
+
 using namespace SoParse;
 
 int	main()
@@ -53,6 +55,9 @@ int	main()
 			IdentifierStart
 		&	IdentifierEnd
 	;
+
+	DispAST	disp;
+	Identifier->acceptVisitor(&disp);
 
 // 	GroupWithRepeaters	::=
 // 		#ReadChar('a')+ | #ReadChar('b')? | #ReadChar('c') | #readChar('d')*
