@@ -18,6 +18,13 @@ namespace SoParse
 
 		void	assign(APIRule r) { _r = r; }
 
+		virtual void	acceptVisitor(IRulesVisitor * visitor)
+		{
+			visitor->enter(this);
+			_r->acceptVisitor(visitor);
+			visitor->leave();
+		}
+
 	private:
 		APIRule	_r;
 	};

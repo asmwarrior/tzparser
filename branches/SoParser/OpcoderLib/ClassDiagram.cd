@@ -10,8 +10,8 @@
   <Class Name="SoParse::AtomicRule">
     <Position X="16.75" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
-      <FileName>ReadChar.h</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAgA=</HashCode>
+      <FileName>AtomicRule.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SoParse::ReadAChar">
@@ -28,17 +28,10 @@
       <FileName>ReadChar.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SoParse::IRule">
-    <Position X="12" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAICAAAAQAAAAAAAAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
-      <FileName>Rule.h</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="SoParse::RuleGroup">
     <Position X="4.75" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAICAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAICAAAAAAAAAAAABAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
       <FileName>RuleGroup.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -59,21 +52,21 @@
   <Class Name="SoParse::StandardRule">
     <Position X="18" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAICAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <HashCode>gAAAAAICAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
       <FileName>StandardRule.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SoParse::UserRule">
     <Position X="20.25" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAAAAAAAAAAAAAQAAAAAAAAgAAAAFAAAAAAA=</HashCode>
+      <HashCode>AAAAIAAAAAAAAAAAAAAAAQAAAAAAAAggAAAFAACAAAA=</HashCode>
       <FileName>UserRule.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SoParse::RuleDecorator">
     <Position X="10.75" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAICAAAAAAAAAAAAAgAAAAAAAAAAACAEAAAAAAA=</HashCode>
+      <HashCode>AAAAAAICAAAEAAAAAAAAAgAAAAAAAAAgACAEAAAAAAA=</HashCode>
       <FileName>RuleDecorator.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -98,13 +91,6 @@
       <FileName>Repeaters.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Typedef Name="SoParse::APIRule" Collapsed="true">
-    <Position X="21.75" Y="0.5" Width="2.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Rule.h</FileName>
-    </TypeIdentifier>
-  </Typedef>
   <Typedef Name="SoParse::QueueAPIRule" Collapsed="true">
     <Position X="21.75" Y="2" Width="2.75" />
     <TypeIdentifier>
@@ -121,8 +107,10 @@
     <AliasOfLine Type="SoUtil::AutoPtr&lt;T&gt;" FixedFromPoint="true">
       <Path>
         <Point X="20.5" Y="1.009" />
-        <Point X="20.5" Y="1.127" />
-        <Point X="23.375" Y="1.127" />
+        <Point X="20.5" Y="1.259" />
+        <Point X="21.5" Y="1.259" />
+        <Point X="21.5" Y="0.875" />
+        <Point X="23.375" Y="0.875" />
         <Point X="23.375" Y="1.25" />
       </Path>
     </AliasOfLine>

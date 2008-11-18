@@ -1,16 +1,10 @@
 #ifndef __SO_READCHAR_H__
 #define __SO_READCHAR_H__
 
-#include "Rule.h"
+#include "AtomicRule.h"
 
 namespace SoParse
 {
-	class AtomicRule : public StandardRule
-	{
-	public:
-		virtual ~AtomicRule() {}
-	};
-
 	class ReadAChar : public AtomicRule
 	{
 	public:

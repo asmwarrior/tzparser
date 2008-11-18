@@ -20,6 +20,12 @@ namespace SoParse
 
 		UserRule &				operator = (APIRule r) { _rules->push(r); return *this; };
 
+		virtual void	acceptVisitor(IRulesVisitor * visitor)
+		{
+			visitor->enter(this);
+			visitor->leave();
+		}
+
 	private:
 		char const * const	_name;
 		APRuleGroup			_rules;

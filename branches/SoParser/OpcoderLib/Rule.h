@@ -2,6 +2,7 @@
 #define __SO_RULE_H__
 
 #include "AutoPtr.h"
+#include "RulesVisitor.h"
 
 namespace SoParse
 {

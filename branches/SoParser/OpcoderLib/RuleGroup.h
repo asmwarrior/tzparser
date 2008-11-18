@@ -2,12 +2,12 @@
 #define __SO_RULE_GROUP_H__
 
 #include "AutoPtr.h"
+#include "Rule.h"
 
 #include <queue>
 
 namespace SoParse
 {
-	class IRule;
 	typedef SoUtil::AutoPtr<IRule>	APIRule;
 	typedef std::queue<APIRule>		QueueAPIRule;
 
@@ -25,6 +25,12 @@ namespace SoParse
 		{
 			this->push(r);
 			return self;
+		}
+
+		virtual void	acceptVisitor(IRulesVisitor * visitor)
+		{
+			visitor->enter(this);
+			visitor->leave();
 		}
 	};
 
