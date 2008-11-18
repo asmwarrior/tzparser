@@ -15,6 +15,9 @@ namespace SoParse
 	{
 	public:
 		virtual ~RuleGroup() {}
+
+		virtual char const * getType() const { return "group"; }
+
 		virtual APIRule	groupizeAND(APIRule self, APIRule r)
 		{
 			this->push_back(r);
@@ -44,14 +47,14 @@ namespace SoParse
 	{
 	public:
 		virtual ~RuleGroupAND() {}
-		virtual char const * getName() const { return "GroupAND"; }
+		virtual std::string getName() const { return "_GroupAND"; }
 	};
 
 	class RuleGroupOR : public RuleGroup
 	{
 	public:
 		virtual ~RuleGroupOR() {}
-		virtual char const * getName() const { return "GroupOR"; }
+		virtual std::string getName() const { return "_GroupOR"; }
 	};
 }
 

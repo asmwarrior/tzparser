@@ -15,6 +15,8 @@ namespace SoParse
 			visitor->enter(this, false);
 		}
 
+		virtual char const * getType() const { return "atomic"; }
+
 	};
 }
 

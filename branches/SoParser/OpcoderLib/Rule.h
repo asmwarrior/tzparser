@@ -4,6 +4,8 @@
 #include "AutoPtr.h"
 #include "RulesVisitor.h"
 
+#include <string>
+
 namespace SoParse
 {
 	class IRule;
@@ -16,7 +18,8 @@ namespace SoParse
 	public:
 		virtual ~IRule() {}
 
-		virtual char const * getName() const = 0;
+		virtual std::string getName() const = 0;
+		virtual char const * getType() const = 0;
 
 		virtual APIRule	groupizeAND(APIRule self, APIRule r) = 0;
 		virtual APIRule	groupizeOR(APIRule self, APIRule r) = 0;
