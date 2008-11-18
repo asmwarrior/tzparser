@@ -56,9 +56,6 @@ int	main()
 		&	IdentifierEnd
 	;
 
-	DispAST	disp;
-	Identifier->acceptVisitor(&disp);
-
 // 	GroupWithRepeaters	::=
 // 		#ReadChar('a')+ | #ReadChar('b')? | #ReadChar('c') | #readChar('d')*
 // 	;
@@ -68,4 +65,19 @@ int	main()
 		|	ReadChar('c')
 		|	ReadChar('d') << Repeat('*')
 	;
+
+//	RecursiveRule	::=
+//		Identifier | #ReadChar('_') RecursiveRule
+//	;
+
+	Rule(RecursiveRule) =
+			Identifier
+		|(
+				ReadChar('_')
+			&	RecursiveRule
+		)
+	;
+
+	DispAST	disp;
+	RecursiveRule->acceptVisitor(&disp);
 }

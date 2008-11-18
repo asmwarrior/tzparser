@@ -9,21 +9,21 @@ namespace SoParse
 	{
 		virtual ~Repeat_ZeroOrOne() {}
 
-		virtual char const * getName() const { return "Repeat ?"; }
+		virtual char const * getName() const { return "Repeat_?"; }
 	};
 
 	class Repeat_ZeroToMany : public RuleDecorator
 	{
 		virtual ~Repeat_ZeroToMany() {}
 
-		virtual char const * getName() const { return "Repeat *"; }
+		virtual char const * getName() const { return "Repeat_*"; }
 	};
 
 	class Repeat_OneToMany : public RuleDecorator
 	{
 		virtual ~Repeat_OneToMany() {}
 
-		virtual char const * getName() const { return "Repeat +"; }
+		virtual char const * getName() const { return "Repeat_+"; }
 	};
 
 	RuleDecorator * Repeat(char c)

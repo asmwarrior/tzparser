@@ -6,6 +6,8 @@
 #include <iostream>
 #include <iomanip>
 
+#include <set>
+
 namespace SoParse
 {
 	class DispAST : public IRulesVisitor
@@ -14,28 +16,41 @@ namespace SoParse
 		virtual	~DispAST() {}
 		DispAST() : _indent(0) {}
 
-		virtual void	enter(IRule * rule, bool hasChild /* = true */)
+		virtual bool	enter(IRule * rule, bool hasChild /* = true */)
 		{
+			if (hasChild && _inside.find(rule) != _inside.end())
+				hasChild = false;
+			_inside.insert(rule);
+
 			std::cout << std::setfill(' ') << std::setw(_indent * 4) << "";
+
+			std::cout << "<" << rule->getName();
 			if (hasChild)
 			{
-				std::cout << "ENTER ";
+				std::cout << ">";
 				++_indent;
 			}
 			else
-				std::cout << "EXEC ";
-			std::cout << rule->getName() << std::endl;
+				std::cout << " />";
+
+			std::cout << std::endl;
+
+			return hasChild;
 		}
 
-		virtual void	leave()
+		virtual void	leave(IRule * rule)
 		{
 			--_indent;
 			std::cout << std::setfill(' ') << std::setw(_indent * 4) << ""
-				<< "LEAVE" << std::endl;
+				<< "</" << rule->getName() << ">" << std::endl;
+			_inside.erase(rule);
 		}
 
 	private:
 		int		_indent;
+
+		typedef	std::set<IRule *>	SetIRule;
+		SetIRule	_inside;
 	};
 }
 
