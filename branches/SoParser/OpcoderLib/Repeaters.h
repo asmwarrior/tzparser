@@ -10,8 +10,6 @@ namespace SoParse
 	public:
 		virtual ~Repeater() {}
 		virtual char const * getType() const { return "repeater"; }
-
-		virtual bool	hasRepeater() { return true; }
 	};
 
 	class Repeat_ZeroOrOne : public Repeater
@@ -44,16 +42,6 @@ namespace SoParse
 		virtual std::string	getOpcodeEnd() { return ""; }
 	};
 
-	class Repeat_OnlyOne : public Repeater
-	{
-		virtual ~Repeat_OnlyOne() {}
-
-		virtual std::string getName() const { return "_Repeat(-)"; }
-
-		virtual std::string	getOpcodeStart() { return ""; }
-		virtual std::string	getOpcodeEnd() { return ""; }
-	};
-
 	RuleDecorator * Repeat(char c)
 	{
 		switch (c)
@@ -66,9 +54,6 @@ namespace SoParse
 			break;
 		case '+':
 			return new Repeat_OneToMany;
-			break;
-		case '-':
-			return new Repeat_OnlyOne;
 			break;
 		}
 		return 0;

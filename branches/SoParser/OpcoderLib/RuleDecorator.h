@@ -23,8 +23,6 @@ namespace SoParse
 			visitor->leave(this);
 		}
 
-		virtual bool	hasRepeater() { return _r->hasRepeater(); }
-
 	private:
 		APIRule	_r;
 	};
