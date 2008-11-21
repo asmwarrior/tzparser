@@ -3,8 +3,6 @@
 
 #include <string>
 
-#include "Rule.h"
-
 namespace SoParse
 {
 	class IRule;
