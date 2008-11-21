@@ -7,6 +7,7 @@
 #include "Opcoder.h"
 
 #include <iostream>
+#include <sstream>
 
 using namespace SoParse;
 
@@ -85,6 +86,10 @@ int	main()
 	DispAST	disp;
 	SimpleCString->acceptVisitor(&disp);
 
-	Opcoder opc(std::cout);
+	std::stringstream	ss(std::ios::in | std::ios::out | std::ios::binary);
+	Opcoder opc(ss);
 	SimpleCString->acceptVisitor(&opc);
+
+	std::cout << "GENERATED OPCODE :" << std::endl
+		<< "Len: " << ss.str().length() << std::endl;
 }

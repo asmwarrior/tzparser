@@ -13,7 +13,7 @@ namespace SoParse
 
 		virtual std::string getName() const { return "GetChar)"; }
 
-		virtual std::string	getOpcodeStart() { return std::string().append("\x20\x00\x00", 3); }
+		virtual std::string	getOpcodeStart() { return std::string("\x20\x00\x00", 3); }
 		virtual std::string	getOpcodeEnd() { return ""; }
 	};
 
@@ -30,7 +30,7 @@ namespace SoParse
 
 		virtual std::string getName() const { return std::string("GetChar(") + _c + ')'; }
 
-		virtual std::string	getOpcodeStart() { return std::string().append("\x21", 1).append(_c, 1).append("\x00", 1); }
+		virtual std::string	getOpcodeStart() { return std::string("\x21", 1).append(_c, 1).append("\x00", 1); }
 		virtual std::string	getOpcodeEnd() { return ""; }
 
 	private:
@@ -51,7 +51,7 @@ namespace SoParse
 
 		virtual std::string getName() const { return std::string("GetChar(") + _s + ", " + _e + ")"; }
 
-		virtual std::string	getOpcodeStart() { return std::string().append("\x22", 1).append(_s, 1).append(_e, 1); }
+		virtual std::string	getOpcodeStart() { return std::string("\x22", 1).append(_s, 1).append(_e, 1); }
 		virtual std::string	getOpcodeEnd() { return ""; }
 
 	private:

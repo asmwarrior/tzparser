@@ -32,8 +32,8 @@ namespace SoParse
 			}
 		}
 
-		virtual std::string	getOpcodeStart() { return ""; }
-		virtual std::string	getOpcodeEnd() { return ""; }
+		virtual std::string	getOpcodeStart() { return std::string("\x01\x00\x00", 3); }
+		virtual std::string	getOpcodeEnd() { return std::string("\xF1\x00\x00", 3); }
 		
 	private:
 		char const * const	_name;
