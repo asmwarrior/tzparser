@@ -32,6 +32,9 @@ namespace SoParse
 			}
 		}
 
+		virtual std::string	getOpcodeStart() { return ""; }
+		virtual std::string	getOpcodeEnd() { return ""; }
+		
 	private:
 		char const * const	_name;
 		APRuleGroup			_rules;

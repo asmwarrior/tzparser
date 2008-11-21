@@ -16,7 +16,6 @@ namespace SoParse
 		}
 
 		virtual char const * getType() const { return "atomic"; }
-
 	};
 }
 

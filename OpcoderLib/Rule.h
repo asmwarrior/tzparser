@@ -28,15 +28,32 @@ namespace SoParse
 		virtual APIRule	groupizeOR(APIRule self, APIRule r) = 0;
 
 		virtual void	acceptVisitor(IRulesVisitor * visitor) = 0;
-	};
 
+		virtual bool	hasRepeater() { return false; };
+	};
+}
+
+#include "Repeaters.h"
+
+namespace SoParse
+{
 	inline APIRule	operator & (APIRule r1, APIRule r2)
 	{
+		if (!r1->hasRepeater())
+			r1 = r1 << Repeat('-');
+		if (!r2->hasRepeater())
+			r2 = r2 << Repeat('-');
+
 		return r1->groupizeAND(r1, r2);
 	}
 
 	inline APIRule	operator | (APIRule r1, APIRule r2)
 	{
+		if (!r1->hasRepeater())
+			r1 = r1 << Repeat('-');
+		if (!r2->hasRepeater())
+			r2 = r2 << Repeat('-');
+
 		return r1->groupizeOR(r1, r2);
 	}
 }

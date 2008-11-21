@@ -1,119 +1,158 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="SoUtil::AutoPtr&lt;T&gt;" Collapsed="true">
-    <Position X="19.75" Y="0.5" Width="1.5" />
+    <Position X="6.5" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EAAAAAAAAAAAAAAAoAwAhQAAAAAABEAAEAEEEAAEAgA=</HashCode>
       <FileName>AutoPtr.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SoParse::AtomicRule">
-    <Position X="16.75" Y="5" Width="1.5" />
+  <Class Name="SoParse::AtomicRule" Collapsed="true">
+    <Position X="17" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAgA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAgAAAAAAAAAgA=</HashCode>
       <FileName>AtomicRule.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SoParse::ReadAChar">
-    <Position X="15.75" Y="6.75" Width="1.5" />
+  <Class Name="SoParse::ReadAnyChar" Collapsed="true">
+    <Position X="14.75" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAEAABBAAA=</HashCode>
+      <HashCode>AAAAAgAAAAAAAAAAAAIAAAAAAAAgAAAAACAEAAAAAAA=</HashCode>
       <FileName>ReadChar.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SoParse::ReadCharRange">
-    <Position X="18" Y="6.75" Width="1.5" />
+  <Class Name="SoParse::ReadAChar" Collapsed="true">
+    <Position X="17" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAgAAAAAAABAAAAAAAAAAAAAAAEAgAAAAAAEAAAAAAA=</HashCode>
+      <HashCode>AAAAAgAAAAAAAAAAAAIAAAAAAAAAAAAAIAAEAABBAAA=</HashCode>
       <FileName>ReadChar.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SoParse::RuleGroup">
-    <Position X="4.75" Y="2.75" Width="1.5" />
+  <Class Name="SoParse::ReadCharRange" Collapsed="true">
+    <Position X="19.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAICAAAAAAAAAAAABAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <HashCode>AAgAAgAAAABAAAAAAAIAAAAAAAEAgAAAAAAEAAAAAAA=</HashCode>
+      <FileName>ReadChar.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SoParse::IRule" Collapsed="true">
+    <Position X="10.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgICAAAAQAAAAAIAAAAAAQAAAAAgAAAEAAAAAAA=</HashCode>
+      <FileName>Rule.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SoParse::RuleGroup" Collapsed="true">
+    <Position X="9.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAICAAAAAAAAAAAABAAAAQAAAAAgAAAAAAAAAAA=</HashCode>
       <FileName>RuleGroup.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SoParse::RuleGroupAND">
-    <Position X="3.75" Y="5" Width="1.5" />
+  <Class Name="SoParse::RuleGroupAND" Collapsed="true">
+    <Position X="8" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
       <FileName>RuleGroup.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SoParse::RuleGroupOR">
-    <Position X="6" Y="5" Width="1.5" />
+  <Class Name="SoParse::RuleGroupOR" Collapsed="true">
+    <Position X="10.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAEAAAAAAA=</HashCode>
       <FileName>RuleGroup.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SoParse::StandardRule">
-    <Position X="18" Y="2.75" Width="1.5" />
+  <Class Name="SoParse::StandardRule" Collapsed="true">
+    <Position X="16" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gAAAAAICAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
       <FileName>StandardRule.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SoParse::UserRule">
-    <Position X="20.25" Y="5" Width="1.5" />
+  <Class Name="SoParse::UserRule" Collapsed="true">
+    <Position X="12.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAAAAAAAAAAAAAQAAAAAAAAggAAAFAACAAAA=</HashCode>
+      <HashCode>AAAAIAAAAAAAAAAAAAAAAQAAAQAAAAggAAAFAACAAAA=</HashCode>
       <FileName>UserRule.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SoParse::RuleDecorator">
-    <Position X="10.75" Y="2.75" Width="1.5" />
+  <Class Name="SoParse::Repeater" Collapsed="true">
+    <Position X="3.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAICAAAEAAAAAAAAAgAAAAAAAAAgACAEAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAABAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Repeaters.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SoParse::Repeat_ZeroOrOne" Collapsed="true">
+    <Position X="1.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>Repeaters.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SoParse::Repeat_ZeroToMany" Collapsed="true">
+    <Position X="3.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAEAAAAAAA=</HashCode>
+      <FileName>Repeaters.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SoParse::Repeat_OneToMany" Collapsed="true">
+    <Position X="5.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEABAAAAA=</HashCode>
+      <FileName>Repeaters.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SoParse::RuleDecorator" Collapsed="true">
+    <Position X="3.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAICAAAEAAAAAAAAAgAAAAAAAAAgACAAAAAAAAA=</HashCode>
       <FileName>RuleDecorator.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SoParse::Repeat_ZeroOrOne">
-    <Position X="8.25" Y="5.5" Width="1.75" />
+  <Class Name="SoParse::DispAST" Collapsed="true">
+    <Position X="0.5" Y="7.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Repeaters.h</FileName>
+      <HashCode>AAAABAAAAAAAAAAAAAIAAAAAAAAgAAABBAAQAAAAAAA=</HashCode>
+      <FileName>DispAST.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SoParse::Repeat_ZeroToMany">
-    <Position X="10.75" Y="5.5" Width="1.75" />
+  <Class Name="SoParse::Opcoder" Collapsed="true">
+    <Position X="2.75" Y="7.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
-      <FileName>Repeaters.h</FileName>
+      <HashCode>AAAAAAAAAQAAEAAAAAAAAAAAAAAAEAABBAAAAAAAAAA=</HashCode>
+      <FileName>Opcoder.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SoParse::Repeat_OneToMany">
-    <Position X="13.25" Y="5.5" Width="1.75" />
+  <Class Name="SoParse::IRulesVisitor" Collapsed="true">
+    <Position X="1.75" Y="6.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAA=</HashCode>
-      <FileName>Repeaters.h</FileName>
+      <HashCode>BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBAAAAAAAAAA=</HashCode>
+      <FileName>RulesVisitor.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Typedef Name="SoParse::QueueAPIRule" Collapsed="true">
-    <Position X="21.75" Y="2" Width="2.75" />
+  <Typedef Name="SoParse::APIRule" Collapsed="true">
+    <Position X="8.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rule.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="SoParse::DequeAPIRule" Collapsed="true">
+    <Position X="21.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>RuleGroup.h</FileName>
     </TypeIdentifier>
   </Typedef>
   <Typedef Name="SoParse::APRuleGroup" Collapsed="true">
-    <Position X="21.75" Y="1.25" Width="3.25" />
+    <Position X="6.5" Y="9.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>RuleGroup.h</FileName>
     </TypeIdentifier>
-    <AliasOfLine Type="SoUtil::AutoPtr&lt;T&gt;" FixedFromPoint="true">
-      <Path>
-        <Point X="20.5" Y="1.009" />
-        <Point X="20.5" Y="1.259" />
-        <Point X="21.5" Y="1.259" />
-        <Point X="21.5" Y="0.875" />
-        <Point X="23.375" Y="0.875" />
-        <Point X="23.375" Y="1.25" />
-      </Path>
-    </AliasOfLine>
   </Typedef>
   <Font Name="Tahoma" Size="8.25" />
 </ClassDiagram>

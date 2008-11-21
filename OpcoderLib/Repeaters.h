@@ -10,6 +10,8 @@ namespace SoParse
 	public:
 		virtual ~Repeater() {}
 		virtual char const * getType() const { return "repeater"; }
+
+		virtual bool	hasRepeater() { return true; }
 	};
 
 	class Repeat_ZeroOrOne : public Repeater
@@ -17,6 +19,9 @@ namespace SoParse
 		virtual ~Repeat_ZeroOrOne() {}
 
 		virtual std::string getName() const { return "_Repeat(?)"; }
+
+		virtual std::string	getOpcodeStart() { return ""; }
+		virtual std::string	getOpcodeEnd() { return ""; }
 	};
 
 	class Repeat_ZeroToMany : public Repeater
@@ -24,6 +29,9 @@ namespace SoParse
 		virtual ~Repeat_ZeroToMany() {}
 
 		virtual std::string getName() const { return "_Repeat(*)"; }
+
+		virtual std::string	getOpcodeStart() { return ""; }
+		virtual std::string	getOpcodeEnd() { return ""; }
 	};
 
 	class Repeat_OneToMany : public Repeater
@@ -31,6 +39,19 @@ namespace SoParse
 		virtual ~Repeat_OneToMany() {}
 
 		virtual std::string getName() const { return "_Repeat(+)"; }
+
+		virtual std::string	getOpcodeStart() { return ""; }
+		virtual std::string	getOpcodeEnd() { return ""; }
+	};
+
+	class Repeat_OnlyOne : public Repeater
+	{
+		virtual ~Repeat_OnlyOne() {}
+
+		virtual std::string getName() const { return "_Repeat(-)"; }
+
+		virtual std::string	getOpcodeStart() { return ""; }
+		virtual std::string	getOpcodeEnd() { return ""; }
 	};
 
 	RuleDecorator * Repeat(char c)
@@ -45,6 +66,10 @@ namespace SoParse
 			break;
 		case '+':
 			return new Repeat_OneToMany;
+			break;
+		case '-':
+			return new Repeat_OnlyOne;
+			break;
 		}
 		return 0;
 	}
