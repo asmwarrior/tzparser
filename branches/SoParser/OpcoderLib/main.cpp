@@ -4,6 +4,10 @@
 
 #include "DispAST.h"
 
+#include "Opcoder.h"
+
+#include <iostream>
+
 using namespace SoParse;
 
 int	main()
@@ -79,5 +83,8 @@ int	main()
 	;
 
 	DispAST	disp;
-	RecursiveRule->acceptVisitor(&disp);
+	SimpleCString->acceptVisitor(&disp);
+
+	Opcoder opc(std::cout);
+	SimpleCString->acceptVisitor(&opc);
 }
