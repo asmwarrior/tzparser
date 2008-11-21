@@ -165,6 +165,10 @@
 				RelativePath=".\main.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\Opcoder.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"

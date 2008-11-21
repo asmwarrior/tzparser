@@ -5,6 +5,23 @@
 
 namespace SoParse
 {
+	class ReadAnyChar : public AtomicRule
+	{
+	public:
+		virtual ~ReadAnyChar() {}
+		ReadAnyChar() {}
+
+		virtual std::string getName() const { return "GetChar)"; }
+
+		virtual std::string	getOpcodeStart() { return std::string().append("\x20\x00\x00", 3); }
+		virtual std::string	getOpcodeEnd() { return ""; }
+	};
+
+	inline APIRule ReadChar()
+	{
+		return APIRule(new ReadAnyChar);
+	};
+
 	class ReadAChar : public AtomicRule
 	{
 	public:
@@ -12,6 +29,9 @@ namespace SoParse
 		ReadAChar(char c) : _c(c) {}
 
 		virtual std::string getName() const { return std::string("GetChar(") + _c + ')'; }
+
+		virtual std::string	getOpcodeStart() { return std::string().append("\x21", 1).append(_c, 1).append("\x00", 1); }
+		virtual std::string	getOpcodeEnd() { return ""; }
 
 	private:
 		const char _c;
@@ -30,6 +50,9 @@ namespace SoParse
 		ReadCharRange(char s, char e) : _s(s), _e(e) {}
 
 		virtual std::string getName() const { return std::string("GetChar(") + _s + ", " + _e + ")"; }
+
+		virtual std::string	getOpcodeStart() { return std::string().append("\x22", 1).append(_s, 1).append(_e, 1); }
+		virtual std::string	getOpcodeEnd() { return ""; }
 
 	private:
 		const char _s;

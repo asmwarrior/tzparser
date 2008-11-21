@@ -21,6 +21,9 @@ namespace SoParse
 		virtual std::string getName() const = 0;
 		virtual char const * getType() const = 0;
 
+		virtual std::string	getOpcodeStart() = 0;
+		virtual std::string	getOpcodeEnd() = 0;
+
 		virtual APIRule	groupizeAND(APIRule self, APIRule r) = 0;
 		virtual APIRule	groupizeOR(APIRule self, APIRule r) = 0;
 
