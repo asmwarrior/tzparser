@@ -83,13 +83,14 @@ int	main()
 		)
 	;
 
+	APIRule r = SimpleCString;
+
 	DispAST	disp;
-	SimpleCString->acceptVisitor(&disp);
+	r->acceptVisitor(&disp);
 
-	std::stringstream	ss(std::ios::in | std::ios::out | std::ios::binary);
-	Opcoder opc(ss);
-	SimpleCString->acceptVisitor(&opc);
+	Opcoder opc;
+	r->acceptVisitor(&opc);
 
-	std::cout << "GENERATED OPCODE :" << std::endl
-		<< "Len: " << ss.str().length() << std::endl;
+	std::cout << "GENERATED OPCODE :" << std::endl;
+	opc.disp();
 }

@@ -4,11 +4,13 @@
 #include "StandardRule.h"
 #include "RuleGroup.h"
 
+#include "Opcodes.h"
+
 #include "AutoPtr.h"
 
 namespace SoParse
 {
-	#define Rule(name)	UserRule* name##_r = new UserRule(#name); APIRule name(name##_r); *name##_r
+	#define Rule(name)	UserRule * name##_r = new UserRule(#name); APIRule name(name##_r); *name##_r
 
 	class UserRule : public StandardRule
 	{
@@ -17,7 +19,7 @@ namespace SoParse
 		UserRule(const char * name) : _name(name), _rules(new RuleGroupAND) {}
 
 		virtual std::string	getName() const { return _name; }
-		virtual char const * getType() const { return "rule"; }
+		virtual IRule::type getType() const { return IRule::RULE; }
 
 		UserRule &				operator = (APIRule r) { _rules->push_back(r); return *this; };
 
@@ -32,8 +34,8 @@ namespace SoParse
 			}
 		}
 
-		virtual OpcodePart *	getOpcodeStart() { return 0; }
-		virtual OpcodePart *	getOpcodeEnd() { return 0; }
+		virtual OpcodePart *	getOpcodeStart() { return new OpcodePart(SAVE_CONTEXT); }
+		virtual OpcodePart *	getOpcodeEnd() { return new OpcodePart(CANCEL_CONTEXT_AND_GO_BACK); }
 		
 	private:
 		char const * const	_name;

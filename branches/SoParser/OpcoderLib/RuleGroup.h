@@ -16,7 +16,7 @@ namespace SoParse
 	public:
 		virtual ~RuleGroup() {}
 
-		virtual char const * getType() const { return "group"; }
+		virtual IRule::type getType() const { return IRule::INTERNAL; }
 
 		virtual APIRule	groupizeAND(APIRule self, APIRule r)
 		{

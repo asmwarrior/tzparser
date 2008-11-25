@@ -3,7 +3,11 @@
 
 #include "RulesVisitor.h"
 
+#include "OpcodePart.h"
+
 #include <iostream>
+
+#include <deque>
 
 namespace SoParse
 {
@@ -11,13 +15,19 @@ namespace SoParse
 	{
 	public:
 		virtual	~Opcoder() {}
-		Opcoder(std::ostream & out) : _os(out) {}
 
 		virtual bool	enter(IRule * rule, bool hasChild = true);
 		virtual void	leave(IRule * rule);
 
+		void			disp();
+
 	private:
-		std::ostream &	_os;
+		void			fillOpcode(OpcodePart * opcp, bool surround = true);
+
+		OpcodePart	_opc;
+
+		typedef std::deque< std::pair<unsigned short int, std::string> > dequePairShortIntString;
+		dequePairShortIntString _refs;
 	};
 }
 

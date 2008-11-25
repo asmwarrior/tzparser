@@ -253,6 +253,10 @@
 				RelativePath="..\Documents\OpcodeExamples.txt"
 				>
 			</File>
+			<File
+				RelativePath=".\Opcodes.h"
+				>
+			</File>
 		</Filter>
 		<File
 			RelativePath=".\ClassDiagram.cd"
