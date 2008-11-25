@@ -4,7 +4,7 @@
 #include "AutoPtr.h"
 #include "RulesVisitor.h"
 
-#include <string>
+#include "OpcodePart.h"
 
 namespace SoParse
 {
@@ -21,8 +21,8 @@ namespace SoParse
 		virtual std::string getName() const = 0;
 		virtual char const * getType() const = 0;
 
-		virtual std::string	getOpcodeStart() = 0;
-		virtual std::string	getOpcodeEnd() = 0;
+		virtual OpcodePart *	getOpcodeStart() = 0;
+		virtual OpcodePart *	getOpcodeEnd() = 0;
 
 		virtual APIRule	groupizeAND(APIRule self, APIRule r) = 0;
 		virtual APIRule	groupizeOR(APIRule self, APIRule r) = 0;

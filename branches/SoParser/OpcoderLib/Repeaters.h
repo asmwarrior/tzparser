@@ -18,8 +18,8 @@ namespace SoParse
 
 		virtual std::string getName() const { return "_Repeat(?)"; }
 
-		virtual std::string	getOpcodeStart() { return ""; }
-		virtual std::string	getOpcodeEnd() { return ""; }
+		virtual OpcodePart *	getOpcodeStart() { return 0; }
+		virtual OpcodePart *	getOpcodeEnd() { return 0; }
 	};
 
 	class Repeat_ZeroToMany : public Repeater
@@ -28,8 +28,8 @@ namespace SoParse
 
 		virtual std::string getName() const { return "_Repeat(*)"; }
 
-		virtual std::string	getOpcodeStart() { return ""; }
-		virtual std::string	getOpcodeEnd() { return ""; }
+		virtual OpcodePart *	getOpcodeStart() { return 0; }
+		virtual OpcodePart *	getOpcodeEnd() { return 0; }
 	};
 
 	class Repeat_OneToMany : public Repeater
@@ -38,8 +38,8 @@ namespace SoParse
 
 		virtual std::string getName() const { return "_Repeat(+)"; }
 
-		virtual std::string	getOpcodeStart() { return ""; }
-		virtual std::string	getOpcodeEnd() { return ""; }
+		virtual OpcodePart *	getOpcodeStart() { return 0; }
+		virtual OpcodePart *	getOpcodeEnd() { return 0; }
 	};
 
 	RuleDecorator * Repeat(char c)

@@ -49,8 +49,8 @@ namespace SoParse
 		virtual ~RuleGroupAND() {}
 		virtual std::string getName() const { return "_GroupAND"; }
 
-		virtual std::string	getOpcodeStart() { return ""; }
-		virtual std::string	getOpcodeEnd() { return ""; }
+		virtual OpcodePart *	getOpcodeStart() { return 0; }
+		virtual OpcodePart *	getOpcodeEnd() { return 0; }
 	};
 
 	class RuleGroupOR : public RuleGroup
@@ -59,8 +59,8 @@ namespace SoParse
 		virtual ~RuleGroupOR() {}
 		virtual std::string getName() const { return "_GroupOR"; }
 
-		virtual std::string	getOpcodeStart() { return ""; }
-		virtual std::string	getOpcodeEnd() { return ""; }
+		virtual OpcodePart *	getOpcodeStart() { return 0; }
+		virtual OpcodePart *	getOpcodeEnd() { return 0; }
 	};
 }
 
