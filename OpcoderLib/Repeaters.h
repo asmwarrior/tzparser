@@ -9,7 +9,6 @@ namespace SoParse
 	{
 	public:
 		virtual ~Repeater() {}
-		virtual char const * getType() const { return "repeater"; }
 	};
 
 	class Repeat_ZeroOrOne : public Repeater

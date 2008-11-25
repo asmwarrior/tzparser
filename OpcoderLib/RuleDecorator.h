@@ -11,6 +11,8 @@ namespace SoParse
 	public:
 		virtual ~RuleDecorator() {}
 
+		virtual IRule::type getType() const { return IRule::INTERNAL; }
+
 		virtual APIRule	groupizeAND(APIRule self, APIRule r) { return _r->groupizeAND(self, r); }
 		virtual APIRule	groupizeOR(APIRule self, APIRule r) { return _r->groupizeOR(self, r); }
 

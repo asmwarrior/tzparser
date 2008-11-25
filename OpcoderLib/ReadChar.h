@@ -2,6 +2,7 @@
 #define __SO_READCHAR_H__
 
 #include "AtomicRule.h"
+#include "Opcodes.h"
 
 namespace SoParse
 {
@@ -11,9 +12,9 @@ namespace SoParse
 		virtual ~ReadAnyChar() {}
 		ReadAnyChar() {}
 
-		virtual std::string getName() const { return "GetChar)"; }
+		virtual std::string getName() const { return "GetChar"; }
 
-		virtual OpcodePart *	getOpcodeStart() { return 0; }
+		virtual OpcodePart *	getOpcodeStart() { return new OpcodePart(READ_CHAR); }
 		virtual OpcodePart *	getOpcodeEnd() { return 0; }
 	};
 
@@ -30,7 +31,7 @@ namespace SoParse
 
 		virtual std::string getName() const { return std::string("GetChar(") + _c + ')'; }
 
-		virtual OpcodePart *	getOpcodeStart() { return 0; }
+		virtual OpcodePart *	getOpcodeStart() { return new OpcodePart(READ_A_CHAR, _c, 0); }
 		virtual OpcodePart *	getOpcodeEnd() { return 0; }
 
 	private:
@@ -51,7 +52,7 @@ namespace SoParse
 
 		virtual std::string getName() const { return std::string("GetChar(") + _s + ", " + _e + ")"; }
 
-		virtual OpcodePart *	getOpcodeStart() { return 0; }
+		virtual OpcodePart *	getOpcodeStart() { return new OpcodePart(READ_CHAR_RANGE, _s, _e); }
 		virtual OpcodePart *	getOpcodeEnd() { return 0; }
 
 	private:

@@ -19,7 +19,14 @@ namespace SoParse
 		virtual ~IRule() {}
 
 		virtual std::string getName() const = 0;
-		virtual char const * getType() const = 0;
+
+		enum type
+		{
+			ATOMIC,
+			INTERNAL,
+			RULE
+		};
+		virtual type getType() const = 0;
 
 		virtual OpcodePart *	getOpcodeStart() = 0;
 		virtual OpcodePart *	getOpcodeEnd() = 0;

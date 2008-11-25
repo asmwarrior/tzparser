@@ -15,7 +15,7 @@ namespace SoParse
 			visitor->enter(this, false);
 		}
 
-		virtual char const * getType() const { return "atomic"; }
+		virtual IRule::type getType() const { return IRule::ATOMIC; }
 	};
 }
 
