@@ -34,6 +34,16 @@ namespace SoParse
 		NO_ELSE						= '\x00', // (default)
 		ELSE						= '\x01'
 	};
+
+
+	struct CodeName
+	{
+		unsigned char code;
+		const char * name;
+		int nArgs;
+	};
+
+	extern CodeName codeNames[];
 }
 
 #endif  // !__SO_OPCODES_H__

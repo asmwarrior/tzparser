@@ -7,13 +7,15 @@
 
 #include <iostream>
 
-#include <deque>
+#include <map>
+#include <queue>
 
 namespace SoParse
 {
 	class Opcoder : public IRulesVisitor
 	{
 	public:
+		Opcoder() : _inRule(false) {}
 		virtual	~Opcoder() {}
 
 		virtual bool	enter(IRule * rule, bool hasChild = true);
@@ -26,8 +28,16 @@ namespace SoParse
 
 		OpcodePart	_opc;
 
-		typedef std::deque< std::pair<unsigned short int, std::string> > dequePairShortIntString;
-		dequePairShortIntString _refs;
+		typedef std::map<IRule *, short int> mapLPIruleShortInt;
+		mapLPIruleShortInt _ruleRefs;
+
+		typedef std::map<short int, IRule *> mapShortIntLPIrule;
+		mapShortIntLPIrule _waitingRefs;
+
+		bool	_inRule;
+		
+		typedef std::queue<IRule *> queueLPIRule;
+		queueLPIRule	_rulesToGen;
 	};
 }
 
