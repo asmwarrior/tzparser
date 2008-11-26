@@ -11,11 +11,25 @@ namespace SoParse
 {
 	bool	Opcoder::enter(IRule * rule, bool hasChild /* = true */)
 	{
+		if (!_inRule && rule->getType() != IRule::RULE)
+			throw "You MUST Opcode a UserRule first";
+
+		if (_inRule && rule->getType() == IRule::RULE)
+		{
+			_waitingRefs[_opc.opcodes.size() * 3] = rule;
+			fillOpcode(new OpcodePart(LOAD));
+			_rulesToGen.push(rule);
+			return false;
+		}
+
+		if (rule->getType() == IRule::RULE)
+			_inRule = true;
+
 		OpcodePart * opcp = rule->getOpcodeStart();
 		if (opcp)
 		{
 			if (rule->getType() == IRule::RULE)
-				;
+				_ruleRefs[rule] = _opc.opcodes.size() * 3;
 			fillOpcode(opcp, rule->getType() != IRule::RULE);
 		}
 		return hasChild;
@@ -26,6 +40,18 @@ namespace SoParse
 		OpcodePart * opcp = rule->getOpcodeEnd();
 		if (opcp)
 			fillOpcode(opcp, rule->getType() != IRule::RULE);
+
+		if (rule->getType() == IRule::RULE)
+		{
+			_inRule = false;
+			if (!_rulesToGen.empty())
+			{
+				IRule * ruleToGen = _rulesToGen.front();
+				_rulesToGen.pop();
+				if (_ruleRefs.find(ruleToGen) == _ruleRefs.end())
+					ruleToGen->acceptVisitor(this);
+			}
+		}
 	}
 
 	void	Opcoder::fillOpcode(OpcodePart * opcp, bool surround /* = true */)
@@ -43,10 +69,20 @@ namespace SoParse
 		for (OpcodePart::listOpcode::iterator i = _opc.opcodes.begin(); i != _opc.opcodes.end(); ++i)
 		{
 			std::cout.setf(std::ios::hex, std::ios::basefield);
-			std::cout
-				<< std::setfill('0') << std::setw(2) << (int)(i->a.cmd) << ' '
-				<< std::setfill('0') << std::setw(2) << (int)(i->a.arg1) << ' '
-				<< std::setfill('0') << std::setw(2) << (int)(i->a.arg2) << std::endl;
+			int c;
+			for (c = 0; codeNames[c].code; ++c)
+				if (codeNames[c].code == i->a.cmd)
+					break ;
+
+			std::cout << std::setfill('0') << std::setw(2) << (int)(i->a.cmd) << ' ';
+			if (codeNames[c].nArgs == 1)
+				std::cout << std::setfill('0') << std::setw(4) << (int)(i->r.ref) << ' ';
+			else
+				std::cout
+					<< std::setfill('0') << std::setw(2) << (int)(i->a.arg1) << ' '
+					<< std::setfill('0') << std::setw(2) << (int)(i->a.arg2) << ' ';
+
+			std::cout << ' ' << codeNames[c].name << std::endl;
 		}
 	}
 }

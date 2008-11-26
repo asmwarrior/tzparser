@@ -169,6 +169,10 @@
 				RelativePath=".\Opcoder.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\Opcodes.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
