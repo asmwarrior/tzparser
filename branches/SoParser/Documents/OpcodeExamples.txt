@@ -118,6 +118,7 @@ RESTORE_CONTEXT_AND_GO_BACK         F0 00 00
 
 IGNORE                              10 00 00
 READ_CHAR 'b'                       21 62 00
+SET_SF SUCCESS						30 01 00
 
 IGNORE                              10 00 00
 READ_CHAR 'c'                       21 63 00
