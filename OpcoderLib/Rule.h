@@ -5,6 +5,7 @@
 #include "RulesVisitor.h"
 
 #include "OpcodePart.h"
+#include "OpcoderInfos.h"
 
 namespace SoParse
 {
@@ -28,13 +29,15 @@ namespace SoParse
 		};
 		virtual type getType() const = 0;
 
-		virtual OpcodePart *	getOpcodeStart() = 0;
-		virtual OpcodePart *	getOpcodeEnd() = 0;
+		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) = 0;
+		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) = 0;
 
 		virtual APIRule	groupizeAND(APIRule self, APIRule r) = 0;
 		virtual APIRule	groupizeOR(APIRule self, APIRule r) = 0;
 
 		virtual void	acceptVisitor(IRulesVisitor * visitor) = 0;
+
+		virtual bool	needRepeater() { return true; }
 	};
 
 	inline APIRule	operator & (APIRule r1, APIRule r2)

@@ -3,6 +3,7 @@
 
 #include "AutoPtr.h"
 #include "Rule.h"
+#include "GroupInsides.h"
 
 #include <deque>
 
@@ -20,15 +21,17 @@ namespace SoParse
 
 		virtual APIRule	groupizeAND(APIRule self, APIRule r)
 		{
-			this->push_back(r);
+			this->pushRule(r);
 			return self;
 		}
 
 		virtual APIRule	groupizeOR(APIRule self, APIRule r)
 		{
-			this->push_back(r);
+			this->pushRule(r);
 			return self;
 		}
+
+		virtual void pushRule(APIRule r) = 0;
 
 		virtual void	acceptVisitor(IRulesVisitor * visitor)
 		{
@@ -49,8 +52,17 @@ namespace SoParse
 		virtual ~RuleGroupAND() {}
 		virtual std::string getName() const { return "_GroupAND"; }
 
-		virtual OpcodePart *	getOpcodeStart() { return 0; }
-		virtual OpcodePart *	getOpcodeEnd() { return 0; }
+		virtual bool	needRepeater() { return false; }
+
+		virtual void pushRule(APIRule r)
+		{
+			if (r->needRepeater())
+				r = r << new Inside_AND();
+			this->push_back(r);
+		}
+
+		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return 0; }
+		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return 0; }
 	};
 
 	class RuleGroupOR : public RuleGroup
@@ -59,8 +71,15 @@ namespace SoParse
 		virtual ~RuleGroupOR() {}
 		virtual std::string getName() const { return "_GroupOR"; }
 
-		virtual OpcodePart *	getOpcodeStart() { return 0; }
-		virtual OpcodePart *	getOpcodeEnd() { return 0; }
+		virtual void pushRule(APIRule r)
+		{
+			if (r->needRepeater())
+				r = r << new Inside_OR();
+			this->push_back(r);
+		}
+
+		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return &(new OpcodePart(IGNORE))->addOpcode(SAVE_CONTEXT); }
+		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return new OpcodePart(CANCEL_CONTEXT); }
 	};
 }
 

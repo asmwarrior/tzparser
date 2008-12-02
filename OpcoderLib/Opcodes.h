@@ -25,8 +25,8 @@ namespace SoParse
 		GO_BACK						= '\x51',
 		GO_TO						= '\x52', // unsigned short int pointing to the code to go to
 
-		RESTORE_CONTEXT_AND_GO_BACK	= '\xF0',
-		CANCEL_CONTEXT_AND_GO_BACK	= '\xF1',
+		RESTORE_CONTEXT_AND_GO_BACK	= '\xE0',
+		CANCEL_CONTEXT_AND_GO_BACK	= '\xE1',
 
 		FAIL						= '\x00',
 		SUCCESS						= '\x01',

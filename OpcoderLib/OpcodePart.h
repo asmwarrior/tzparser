@@ -5,28 +5,22 @@
 
 namespace SoParse
 {
-	union Opcode
+	struct Opcode
 	{
-		struct
+		unsigned char	cmd;
+		union
 		{
-			unsigned char	cmd;
-			unsigned char	arg1;
-			unsigned char	arg2;
-		} a;
-
-		struct
-		{
-			unsigned char		cmd;
+			unsigned char		arg[2];
 			unsigned short int	ref;
-		} r;
+		};
 
 		Opcode(unsigned char cmd, unsigned char arg1, unsigned char arg2) { set(cmd, arg1, arg2); }
 		Opcode(unsigned char cmd, unsigned short int ref) { set(cmd, ref); }
 		Opcode(unsigned char cmd) { set(cmd); }
 
-		void	set(unsigned char cmd, unsigned char arg1, unsigned char arg2) { a.cmd = cmd; a.arg1 = arg1; a.arg2 = arg2; }
-		void	set(unsigned char cmd, unsigned short int ref) { r.cmd = cmd; r.ref = ref; }
-		void	set(unsigned char cmd) { a.cmd = cmd; a.arg1 = 0; a.arg2 = 0; }
+		void	set(unsigned char cmd, unsigned char arg1, unsigned char arg2) { this->cmd = cmd; this->arg[0] = arg1; this->arg[1] = arg2; }
+		void	set(unsigned char cmd, unsigned short int ref) { this->cmd = cmd; this->ref = ref; }
+		void	set(unsigned char cmd) { set(cmd, 0); }
 	};
 
 	struct OpcodePart
@@ -46,6 +40,7 @@ namespace SoParse
 		OpcodePart & addOpcode(unsigned char cmd, unsigned char arg1, unsigned char arg2) { opcodes.push_back(Opcode(cmd, arg1, arg2)); return *this; }
 		OpcodePart & addOpcode(unsigned char cmd, unsigned short int ref) { opcodes.push_back(Opcode(cmd, ref)); return *this; }
 		OpcodePart & addOpcode(unsigned char cmd) { opcodes.push_back(Opcode(cmd)); return *this; }
+		OpcodePart & addOpcode(Opcode const & o) { opcodes.push_back(o); return *this; }
 
 		OpcodePart & addString(unsigned short int ref, std::string str) { strings.push_back(pairShortIntString(ref, str)); return *this; }
 

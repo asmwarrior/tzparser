@@ -83,7 +83,7 @@ int	main()
 		)
 	;
 
-	APIRule r = SimpleCString;
+	APIRule r = IdentifierStart;
 
 	DispAST	disp;
 	r->acceptVisitor(&disp);

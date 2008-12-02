@@ -2,6 +2,7 @@
 #define __SO_REPEATERS_H__
 
 #include "RuleDecorator.h"
+#include "Opcodes.h"
 
 namespace SoParse
 {
@@ -9,6 +10,7 @@ namespace SoParse
 	{
 	public:
 		virtual ~Repeater() {}
+		virtual bool	needRepeater() { return false; }
 	};
 
 	class Repeat_ZeroOrOne : public Repeater
@@ -17,8 +19,8 @@ namespace SoParse
 
 		virtual std::string getName() const { return "_Repeat(?)"; }
 
-		virtual OpcodePart *	getOpcodeStart() { return 0; }
-		virtual OpcodePart *	getOpcodeEnd() { return 0; }
+		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return 0; }
+		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return 0; }
 	};
 
 	class Repeat_ZeroToMany : public Repeater
@@ -27,8 +29,8 @@ namespace SoParse
 
 		virtual std::string getName() const { return "_Repeat(*)"; }
 
-		virtual OpcodePart *	getOpcodeStart() { return 0; }
-		virtual OpcodePart *	getOpcodeEnd() { return 0; }
+		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return 0; }
+		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return 0; }
 	};
 
 	class Repeat_OneToMany : public Repeater
@@ -37,8 +39,8 @@ namespace SoParse
 
 		virtual std::string getName() const { return "_Repeat(+)"; }
 
-		virtual OpcodePart *	getOpcodeStart() { return 0; }
-		virtual OpcodePart *	getOpcodeEnd() { return 0; }
+		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return 0; }
+		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return 0; }
 	};
 
 	RuleDecorator * Repeat(char c)
