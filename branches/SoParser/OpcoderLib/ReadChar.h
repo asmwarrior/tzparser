@@ -14,8 +14,8 @@ namespace SoParse
 
 		virtual std::string getName() const { return "GetChar"; }
 
-		virtual OpcodePart *	getOpcodeStart() { return new OpcodePart(READ_CHAR); }
-		virtual OpcodePart *	getOpcodeEnd() { return 0; }
+		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return new OpcodePart(READ_CHAR); }
+		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return 0; }
 	};
 
 	inline APIRule ReadChar()
@@ -31,8 +31,8 @@ namespace SoParse
 
 		virtual std::string getName() const { return std::string("GetChar(") + _c + ')'; }
 
-		virtual OpcodePart *	getOpcodeStart() { return new OpcodePart(READ_A_CHAR, _c, 0); }
-		virtual OpcodePart *	getOpcodeEnd() { return 0; }
+		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return new OpcodePart(READ_A_CHAR, _c, 0); }
+		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return 0; }
 
 	private:
 		const char _c;
@@ -52,8 +52,8 @@ namespace SoParse
 
 		virtual std::string getName() const { return std::string("GetChar(") + _s + ", " + _e + ")"; }
 
-		virtual OpcodePart *	getOpcodeStart() { return new OpcodePart(READ_CHAR_RANGE, _s, _e); }
-		virtual OpcodePart *	getOpcodeEnd() { return 0; }
+		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return new OpcodePart(READ_CHAR_RANGE, _s, _e); }
+		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return 0; }
 
 	private:
 		const char _s;

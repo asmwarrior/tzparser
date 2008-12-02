@@ -21,7 +21,7 @@ namespace SoParse
 		virtual std::string	getName() const { return _name; }
 		virtual IRule::type getType() const { return IRule::RULE; }
 
-		UserRule &				operator = (APIRule r) { _rules->push_back(r); return *this; };
+		UserRule &				operator = (APIRule r) { _rules->pushRule(r); return *this; };
 
 		virtual void	acceptVisitor(IRulesVisitor * visitor)
 		{
@@ -34,8 +34,8 @@ namespace SoParse
 			}
 		}
 
-		virtual OpcodePart *	getOpcodeStart() { return new OpcodePart(SAVE_CONTEXT); }
-		virtual OpcodePart *	getOpcodeEnd() { return new OpcodePart(CANCEL_CONTEXT_AND_GO_BACK); }
+		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { infos.wayOut.push(Opcode(RESTORE_CONTEXT_AND_GO_BACK)); return new OpcodePart(SAVE_CONTEXT); }
+		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return new OpcodePart(CANCEL_CONTEXT_AND_GO_BACK); }
 		
 	private:
 		char const * const	_name;

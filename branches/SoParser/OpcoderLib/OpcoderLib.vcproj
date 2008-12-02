@@ -183,6 +183,10 @@
 				RelativePath=".\OpcodePart.h"
 				>
 			</File>
+			<File
+				RelativePath=".\OpcoderInfos.h"
+				>
+			</File>
 			<Filter
 				Name="Utils"
 				>
@@ -222,6 +226,10 @@
 			<Filter
 				Name="Decorators"
 				>
+				<File
+					RelativePath=".\GroupInsides.h"
+					>
+				</File>
 				<File
 					RelativePath=".\Repeaters.h"
 					>

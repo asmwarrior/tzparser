@@ -4,6 +4,7 @@
 #include "RulesVisitor.h"
 
 #include "OpcodePart.h"
+#include "OpcoderInfos.h"
 
 #include <iostream>
 
@@ -28,16 +29,18 @@ namespace SoParse
 
 		OpcodePart	_opc;
 
-		typedef std::map<IRule *, short int> mapLPIruleShortInt;
+		typedef std::map<IRule *, unsigned short int> mapLPIruleShortInt;
 		mapLPIruleShortInt _ruleRefs;
 
-		typedef std::map<short int, IRule *> mapShortIntLPIrule;
+		typedef std::map<unsigned short int, IRule *> mapShortIntLPIrule;
 		mapShortIntLPIrule _waitingRefs;
 
 		bool	_inRule;
 		
 		typedef std::queue<IRule *> queueLPIRule;
 		queueLPIRule	_rulesToGen;
+
+		OpcoderInfos	_infos;
 	};
 }
 
