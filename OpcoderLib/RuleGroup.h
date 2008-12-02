@@ -74,7 +74,7 @@ namespace SoParse
 		virtual void pushRule(APIRule r)
 		{
 			if (r->needRepeater())
-				r = r << new Inside_OR();
+				r = r << new Inside_OR(this);
 			this->push_back(r);
 		}
 

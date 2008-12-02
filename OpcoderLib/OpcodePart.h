@@ -2,6 +2,7 @@
 #define __SO_OPCODE_PART_H__
 
 #include <list>
+#include <map>
 
 namespace SoParse
 {
@@ -50,6 +51,11 @@ namespace SoParse
 		typedef std::pair<unsigned short int, std::string> pairShortIntString;
 		typedef std::list<pairShortIntString> listPairShortIntString;
 		listPairShortIntString strings;
+
+		typedef std::list<unsigned short int> listShortInt;
+		typedef std::map<unsigned short int, listShortInt> mapShortIntListShortInt;
+		mapShortIntListShortInt	refs;
+		// => std::list<std::map<unsigned short int, std::list<unsigned short int> > >
 	};
 }
 
