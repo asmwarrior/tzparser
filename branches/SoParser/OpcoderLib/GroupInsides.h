@@ -24,15 +24,21 @@ namespace SoParse
 		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return &(new OpcodePart(IF, FAIL, NO_ELSE))->addOpcode(infos.wayOut.top()); }
 	};
 
+	class RuleGroupOR;
+
 	class Inside_OR : public GroupInside
 	{
 	public:
 		virtual ~Inside_OR() {}
+		Inside_OR(RuleGroupOR * g) : _group(g) {}
 
 		virtual std::string getName() const { return "_OR"; }
 
 		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return 0; }
 		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return &(new OpcodePart(IF, FAIL, ELSE))->addOpcode(RESTORE_CONTEXT).addOpcode(GO_TO); }
+
+	private:
+		RuleGroupOR * _group;
 	};
 }
 
