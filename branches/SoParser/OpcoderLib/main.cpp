@@ -88,8 +88,12 @@ int	main()
 	DispAST	disp;
 	r->acceptVisitor(&disp);
 
+	std::cout << "VISITING TO CREATE AST" << std::endl;
 	Opcoder opc;
 	r->acceptVisitor(&opc);
+
+	std::cout << "SETTING REFERENCES" << std::endl;
+	opc.setRefs();
 
 	std::cout << "GENERATED OPCODE :" << std::endl;
 	opc.disp();

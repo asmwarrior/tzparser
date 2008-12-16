@@ -3,8 +3,65 @@
 
 namespace SoUtil
 {
+	template<typename R, typename V>
+	class SelfArithmeticOpOverload
+	{
+	public:
+		template<typename C>
+		R&	operator += (const C a) { getV() += a; return *this; }
+		template<typename C>
+		R&	operator -= (const C a) { getV() -= a; return *this; }
+		template<typename C>
+		R&	operator *= (const C a) { getV() *= a; return *this; }
+		template<typename C>
+		R&	operator /= (const C a) { getV() /= a; return *this; }
+		template<typename C>
+		R&	operator %= (const C a) { getV() %= a; return *this; }
+
+		R&	operator ++ (void) { ++getV(); return *this; }
+		R&	operator -- (void) { --getV(); return *this; }
+
+	protected:
+		virtual V&	getV() = 0;
+	};
+
+	template<typename V>
+	class ArithmeticOpOverload
+	{
+		template<typename C>
+		V	operator + (const C a) const { return getV() + a; }
+		template<typename C>
+		V	operator - (const C a) const { return getV() - a; }
+		template<typename C>
+		V	operator * (const C a) const { return getV() * a; }
+		template<typename C>
+		V	operator / (const C a) const { return getV() / a; }
+		template<typename C>
+		V	operator % (const C a) const { return getV() % a; }
+
+	protected:
+		virtual V const &	getV() const = 0;
+	};
+
+	template<typename V>
+	class ComparisonOpOverload
+	{
+	public:
+		template<typename C>
+		bool	operator == (const C& v) const { return (getV() == v); }
+		template<typename C>
+		bool	operator <  (const C& v) const { return (getV() < v); }
+		template<typename C>
+		bool	operator >  (const C& v) const { return (getV() > v); }
+		template<typename C>
+		bool	operator >= (const C& v) const { return (getV() >= v); }
+
+	protected:
+		virtual V const &	getV() const = 0;
+	};
+
 	template<typename T>
-	class AutoPtr
+	class AutoPtr : public SelfArithmeticOpOverload<AutoPtr<T>, T*>, public ArithmeticOpOverload<T*>, public ComparisonOpOverload<T*>
 	{
 	public:
 		AutoPtr() : ptr(0), n(0), ptrDel(true) {}
@@ -13,12 +70,11 @@ namespace SoUtil
 		AutoPtr(const AutoPtr& ap) { clone(ap); }
 		virtual ~AutoPtr() { del(); }
 
-		AutoPtr&	operator =  (const AutoPtr& ap) { del(); if (&ap != this) clone(ap); return *this; }
-		AutoPtr&	operator =  (T* p) { del(); set(p); return *this; }
+		AutoPtr<T>&	operator =  (const AutoPtr& ap) { del(); if (&ap != this) clone(ap); return *this; }
+		AutoPtr<T>&	operator =  (T* p) { del(); set(p); return *this; }
 		T&			operator *  (void) const { return *ptr; }
 		T*			operator -> (void) const { return ptr;  }
-		bool		operator == (const T* p) const { return (p == ptr); }
-		bool		operator == (const AutoPtr& ap) const { return (ap.ptr == ptr); }
+
 		operator T*  (void) { return ptr; }
 		operator int (void) { return (int)ptr; }
 
@@ -32,6 +88,9 @@ namespace SoUtil
 	protected:
 		void		clone(const AutoPtr& ap) { ptr = ap.ptr; n = ap.n; if (n) ++(*n); ptrDel = ap.ptrDel; }
 		void		del(void) { if (n && --(*n) == 0) { if (ptrDel) delete ptr; delete n; } n = 0; ptr = 0; }
+
+		T*&			getV()       { return ptr; }
+		T* const &	getV() const { return ptr; }
 
 	private:
 		T*			ptr;

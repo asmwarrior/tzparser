@@ -35,7 +35,7 @@ namespace SoParse
 		virtual std::string getName() const { return "_OR"; }
 
 		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return 0; }
-		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return (new OpcodePart(IF, FAIL, ELSE))->addOpcode(RESTORE_CONTEXT)->addOpcode(GO_TO); }
+		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return (new OpcodePart(IF, FAIL, ELSE))->addOpcode(RESTORE_CONTEXT)->addOpcode(GO_TO)->setRefHere((unsigned int)_group + 0); }
 
 	private:
 		RuleGroupOR * _group;
