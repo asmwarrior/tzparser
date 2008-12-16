@@ -22,7 +22,9 @@ namespace SoParse
 		virtual bool	enter(IRule * rule, bool hasChild = true);
 		virtual void	leave(IRule * rule);
 
-		void			disp();
+		void			setRefs(void);
+
+		void			disp(void);
 
 	private:
 		void			fillOpcode(OpcodePart * opcp, bool surround = true);
@@ -36,7 +38,7 @@ namespace SoParse
 		mapShortIntLPIrule _waitingRefs;
 
 		bool	_inRule;
-		
+
 		typedef std::queue<IRule *> queueLPIRule;
 		queueLPIRule	_rulesToGen;
 
