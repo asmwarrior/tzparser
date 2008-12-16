@@ -78,8 +78,8 @@ namespace SoParse
 			this->push_back(r);
 		}
 
-		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return &(new OpcodePart(IGNORE))->addOpcode(SAVE_CONTEXT); }
-		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return new OpcodePart(CANCEL_CONTEXT); }
+		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return (new OpcodePart(IGNORE))->addOpcode(SAVE_CONTEXT); }
+		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { new OpcodePart(CANCEL_CONTEXT); }
 	};
 }
 

@@ -21,7 +21,7 @@ namespace SoParse
 		virtual std::string getName() const { return "_AND"; }
 
 		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return new OpcodePart(IGNORE); }
-		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return &(new OpcodePart(IF, FAIL, NO_ELSE))->addOpcode(infos.wayOut.top()); }
+		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return (new OpcodePart(IF, FAIL, NO_ELSE))->addOpcode(infos.wayOut.top()); }
 	};
 
 	class RuleGroupOR;
@@ -35,7 +35,7 @@ namespace SoParse
 		virtual std::string getName() const { return "_OR"; }
 
 		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return 0; }
-		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return &(new OpcodePart(IF, FAIL, ELSE))->addOpcode(RESTORE_CONTEXT).addOpcode(GO_TO); }
+		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return (new OpcodePart(IF, FAIL, ELSE))->addOpcode(RESTORE_CONTEXT)->addOpcode(GO_TO); }
 
 	private:
 		RuleGroupOR * _group;

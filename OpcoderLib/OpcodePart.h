@@ -3,6 +3,7 @@
 
 #include <list>
 #include <map>
+#include <string>
 
 namespace SoParse
 {
@@ -22,6 +23,8 @@ namespace SoParse
 		void	set(unsigned char cmd, unsigned char arg1, unsigned char arg2) { this->cmd = cmd; this->arg[0] = arg1; this->arg[1] = arg2; }
 		void	set(unsigned char cmd, unsigned short int ref) { this->cmd = cmd; this->ref = ref; }
 		void	set(unsigned char cmd) { set(cmd, 0); }
+
+		std::string	label;
 	};
 
 	struct OpcodePart
@@ -34,28 +37,24 @@ namespace SoParse
 		OpcodePart & operator += (OpcodePart & opcp)
 		{
 			opcodes.splice(opcodes.end(), opcp.opcodes);
-			strings.splice(strings.end(), opcp.strings);
+//			strings.splice(strings.end(), opcp.strings);
 			return *this;
 		}
 
-		OpcodePart & addOpcode(unsigned char cmd, unsigned char arg1, unsigned char arg2) { opcodes.push_back(Opcode(cmd, arg1, arg2)); return *this; }
-		OpcodePart & addOpcode(unsigned char cmd, unsigned short int ref) { opcodes.push_back(Opcode(cmd, ref)); return *this; }
-		OpcodePart & addOpcode(unsigned char cmd) { opcodes.push_back(Opcode(cmd)); return *this; }
-		OpcodePart & addOpcode(Opcode const & o) { opcodes.push_back(o); return *this; }
+		OpcodePart * addOpcode(unsigned char cmd, unsigned char arg1, unsigned char arg2) { opcodes.push_back(Opcode(cmd, arg1, arg2)); return this; }
+		OpcodePart * addOpcode(unsigned char cmd, unsigned short int ref) { opcodes.push_back(Opcode(cmd, ref)); return this; }
+		OpcodePart * addOpcode(unsigned char cmd) { opcodes.push_back(Opcode(cmd)); return this; }
+		OpcodePart * addOpcode(Opcode const & o) { opcodes.push_back(o); return this; }
 
-		OpcodePart & addString(unsigned short int ref, std::string str) { strings.push_back(pairShortIntString(ref, str)); return *this; }
+		OpcodePart * addRef(std::string label) { opcodes.back().label = label; return this; }
+
+		OpcodePart * addLabel(std::string label) { labels[label] = opcodes.size() * 3; return this; }
 
 		typedef	std::list<Opcode> listOpcode;
 		listOpcode	opcodes;
 
-		typedef std::pair<unsigned short int, std::string> pairShortIntString;
-		typedef std::list<pairShortIntString> listPairShortIntString;
-		listPairShortIntString strings;
-
-		typedef std::list<unsigned short int> listShortInt;
-		typedef std::map<unsigned short int, listShortInt> mapShortIntListShortInt;
-		mapShortIntListShortInt	refs;
-		// => std::list<std::map<unsigned short int, std::list<unsigned short int> > >
+		typedef std::map<std::string, unsigned short int> mapStringShortInt;
+		mapStringShortInt	labels;
 	};
 }
 
