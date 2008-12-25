@@ -10,7 +10,6 @@ namespace SoParse
 	{
 	public:
 		virtual ~Repeater() {}
-		virtual bool	needRepeater() { return false; }
 	};
 
 	class Repeat_ZeroOrOne : public Repeater
@@ -19,8 +18,8 @@ namespace SoParse
 
 		virtual std::string getName() const { return "_Repeat(?)"; }
 
-		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return 0; }
-		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return 0; }
+		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return new OpcodePart(IGNORE); }
+		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return new OpcodePart(SET_REG, 0, 1); }
 	};
 
 	class Repeat_ZeroToMany : public Repeater
@@ -29,8 +28,10 @@ namespace SoParse
 
 		virtual std::string getName() const { return "_Repeat(*)"; }
 
-		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return 0; }
-		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return 0; }
+		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return (new OpcodePart(IGNORE))->addLabelHere((int)this); }
+		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return (new OpcodePart(IF, 0, 0))
+																				->addOpcode(GO_TO)->setRefHere((int)this)
+																				->addOpcode(SET_REG, 0, 1); }
 	};
 
 	class Repeat_OneToMany : public Repeater
@@ -39,8 +40,15 @@ namespace SoParse
 
 		virtual std::string getName() const { return "_Repeat(+)"; }
 
-		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return 0; }
-		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return 0; }
+		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return (new OpcodePart(ADD_REPEAT, 0, 1))
+																				->addOpcode(SKIP_NEXT)
+																				->addOpcode(DEC_REPEAT)->addLabelHere((int)this)
+																				->addOpcode(IGNORE); }
+		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return (new OpcodePart(IF, 0, 0))
+																				->addOpcode(GO_TO)->setRefHere((int)this)
+																				->addOpcode(IF_NOT, 1)
+																				->addOpcode(SET_REG, 0, 1)
+																				->addOpcode(POP_REPEAT); }
 	};
 
 	RuleDecorator * Repeat(char c)
@@ -59,6 +67,7 @@ namespace SoParse
 		}
 		return 0;
 	}
+	#define _r(c) Repeat(c)
 }
 
 #endif  // !__SO_REPEATERS_H__

@@ -2,6 +2,8 @@ Each instruction is on 3 bytes : the first is the number of the command, the two
 other may be a short int pointing to the argument(s) or the argument(s) itself.
 
 Commands:
+0x00: DO_NOTHING
+
 0x01: SAVE_CONTEXT
 0x02: RESTORE_CONTEXT
 0x03: CANCEL_CONTEXT
@@ -14,23 +16,33 @@ Commands:
 0x22: READ_CHAR_RANGE: first byte = starting character, second byte = ending character
 0x23: READ_CHAR_IN: unsigned short int pointing to a null terminated character array containing all the characters to read
 
-0x30: SET_SF: first byte = 0 to set FAIL, 1 to set SUCCESS, second byte unused
+0x30: SET_REG: first byte = the register to set, second byte = the value to set
+0x31: INC_REG: first byte = the register to increase, second byte = how much to increase it
+0x32: DEC_REG: first byte = the register to decrease, second byte = how much to decrease it
 
-0x40: IF : first byte = what to test (FAIL or SUCCESS), second byte = if there is an ELSE (0 = no, 1 = yes)
+0x40: IF: first byte = the register to test, second byte = if there is an ELSE (0 = no, 1 = yes)
+0x41: IF_NOT: first byte = the register to test, second byte = if there is an ELSE (0 = no, 1 = yes)
+0x42: SKIP_NEXT
 
 0x50: LOAD: unsigned short int pointing to the code to load 
 0x51: GO_BACK
 0x52: GO_TO: unsigned short int pointig to the code to go to
 
+0x60: ADD_REPEAT: first byte = min, second byte = max
+0x61: DEC_REPEAT
+0x62: POP_REPEAT
+
 0xF0: RESTORE_CONTEXT_AND_GO_BACK
 0xF1: CANCEL_CONTEXT_AND_GO_BACK
 
 Arguments:
-FAIL: 0
-SUCCESS: 1
-
 NO_ELSE: 0 (default)
 ELSE: 1
+
+Registers:
+0: Fail / Succes
+1: max
+2: min
 
 ===============================================================================
 
@@ -38,26 +50,25 @@ simpleCString	::=
 	'"' #ReadChar('a', 'z') '"'
 ;
 
-:simpleCString
+    >simpleCString
+00: SAVE_CONTEXT                        01 00 00
 
-SAVE_CONTEXT                        01 00 00
+03: IGNORE                              10 00 00
+06: READ_CHAR '"'                       21 22 00
+09: IF_NOT 0                            41 00 00
+0C: RESTORE_CONTEXT_AND_GO_BACK         F0 00 00
 
-IGNORE                              10 00 00
-READ_CHAR '"'                       21 22 00
-IF FAIL                             40 00 00
-RESTORE_CONTEXT_AND_GO_BACK         F0 00 00
+0F: IGNORE                              10 00 00
+12: READ_CHAR_RANGE 'a', 'z'            22 61 7A
+15: IF_NOT 0                            41 00 00
+18: RESTORE_CONTEXT_AND_GO_BACK         F0 00 00
 
-IGNORE                              10 00 00
-READ_CHAR_RANGE 'a', 'z'            22 61 7A
-IF FAIL                             40 00 00
-RESTORE_CONTEXT_AND_GO_BACK         F0 00 00
+1B: IGNORE                              10 00 00
+1E: READ_CHAR '"'                       21 22 00
+21: IF_NOT 0                            41 00 00
+24: RESTORE_CONTEXT_AND_GO_BACK         F0 00 00
 
-IGNORE                              10 00 00
-READ_CHAR '"'                       21 22 00
-IF FAIL                             40 00 00
-RESTORE_CONTEXT_AND_GO_BACK         F0 00 00
-
-CANCEL_CONTEXT_AND_GO_BACK          F1 00 00
+27: CANCEL_CONTEXT_AND_GO_BACK          F1 00 00
 
 ===============================================================================
 
@@ -65,32 +76,31 @@ IdentifierStart ::=
 	#ReadChar('a', 'z') | #ReadChar('A', 'Z') | #ReadChar('_')
 ;
 
-:IdentifierStart
+    >IdentifierStart
+00: SAVE_CONTEXT                        01 00 00
 
-SAVE_CONTEXT                        01 00 00
+03: IGNORE                              10 00 00
+06: SAVE_CONTEXT                        01 00 00
 
-IGNORE                              10 00 00
-SAVE_CONTEXT                        01 00 00
+09: READ_CHAR_RANGE 'a', 'z'            22 61 7A
+0C: IF_NOT 0, ELSE                      41 00 01
+0F: RESTORE_CONTEXT                     02 00 00
+12: GO_TO >0                            52 0024
 
-READ_CHAR_RANGE 'a', 'z'            22 61 7A
-IF FAIL, ELSE                       40 00 01
-RESTORE_CONTEXT                     02 00 00
-GO_TO :0                            52 00 24
+15: READ_CHAR_RANGE 'A', 'Z'            22 41 5A
+18: IF_NOT 0, ELSE                      41 00 01
+1B: RESTORE_CONTEXT                     02 00 00
+1E: GO_TO >0                            52 0024
 
-READ_CHAR_RANGE 'A', 'Z'            22 41 5A
-IF FAIL, ELSE                       40 00 01
-RESTORE_CONTEXT                     02 00 00
-GO_TO :0                            52 00 24
+21: READ_CHAR '_'                       21 5F 00
 
-READ_CHAR '_'                       21 5F 00
+    >0
+24: CANCEL_CONTEXT                      03 00 00
 
-:0
-CANCEL_CONTEXT                      03 00 00
+27: IF_NOT 0                            41 00 00
+2A: RESTORE_CONTEXT_AND_GO_BACK         F0 00 00
 
-IF FAIL                             40 00 00
-RESTORE_CONTEXT_AND_GO_BACK         F0 00 00
-
-CANCEL_CONTEXT_AND_GO_BACK          F1 00 00
+2D: CANCEL_CONTEXT_AND_GO_BACK          F1 00 00
 
 ===============================================================================
 
@@ -98,41 +108,41 @@ Repeaters	::=
 	#ReadChar('a')+ #ReadChar('b')? #ReadChar('c') #readChar('d')*
 ;
 
-:Repeaters
+    >Repeaters
+00: SAVE_CONTEXT                        01 00 00
 
-SAVE_CONTEXT                        01 00 00
+03: ADD_REPEAT 0, 1                     60 01 02
+06: SKIP_NEXT                           42 00 00
 
-IGNORE                              10 00 00
-READ_CHAR 'a'                       21 61 00
-IF FAIL                             40 00 00
-GO_TO :1                            52 00 1E
-:0
-IGNORE                              10 00 00
-READ_CHAR 'a'                       21 61 00
-IF SUCCESS                          40 01 00
-GO_TO :0                            52 00 0F
-SET_SF SUCCESS                      30 01 00
-:1
-IF FAIL                             40 00 00
-RESTORE_CONTEXT_AND_GO_BACK         F0 00 00
+    >0
+09: DEC_REPEAT                          62 01 01
+0C: IGNORE                              10 00 00
+0F: READ_CHAR 'a'                       21 61 00
+12: IF 0                                40 00 00
+15: GO_TO >0                            52 0009
+18: IF_NOT 1                            41 01 00
+1B: SET_REG 0, 1                        30 00 01
+1E: POP_REPEAT                          61 00 00
+21: IF_NOT 0                            41 00 00
+24: RESTORE_CONTEXT_AND_GO_BACK         F0 00 00
 
-IGNORE                              10 00 00
-READ_CHAR 'b'                       21 62 00
-SET_SF SUCCESS						30 01 00
+27: IGNORE                              10 00 00
+2A: READ_CHAR 'b'                       21 62 00
+2D: SET_REG 0, 1                        30 00 01
 
-IGNORE                              10 00 00
-READ_CHAR 'c'                       21 63 00
-IF FAIL                             40 00 00
-RESTORE_CONTEXT_AND_GO_BACK         F0 00 00
+30: IGNORE                              10 00 00
+33: READ_CHAR 'c'                       21 63 00
+36: IF_NOT 0                            41 00 00
+39: RESTORE_CONTEXT_AND_GO_BACK         F0 00 00
 
-:2
-IGNORE                              10 00 00
-READ_CHAR 'd'                       21 64 00
-IF SUCCESS                          40 01 00
-GO_TO :2                            52 00 36
-SET_SF SUCCESS                      30 01 00
+    >2
+3C: IGNORE                              10 00 00
+3F: READ_CHAR 'd'                       21 64 00
+42: IF 0                                40 01 00
+45: GO_TO >2                            52 00 3C
+48: SET_REG 0, 1                        30 00 01
 
-CANCEL_CONTEXT_AND_GO_BACK          F1 00 00
+4B: CANCEL_CONTEXT_AND_GO_BACK          F1 00 00
 
 ===============================================================================
 
@@ -140,39 +150,38 @@ IdentifierEnd ::=
 	[#ReadChar('a', 'z') | #ReadChar('A', 'Z') | #ReadChar('0', '9') | #ReadChar('_')]*
 ;
 
-:IdentifierEnd
+    >IdentifierEnd
+00: SAVE_CONTEXT                        01 00 00
 
-SAVE_CONTEXT                        01 00 00
+    >1
+03: IGNORE                              10 00 00
+06: SAVE_CONTEXT                        01 00 00
 
-:0
-IGNORE                              10 00 00
-SAVE_CONTEXT                        01 00 00
+09: READ_CHAR_RANGE 'a', 'z'            22 61 7A
+0C: IF_NOT 0, ELSE                      41 00 01
+0F: RESTORE_CONTEXT                     02 00 00
+12: GO_TO >1                            52 0030
 
-READ_CHAR_RANGE 'a', 'z'            22 61 7A
-IF FAIL, ELSE                       40 00 01
-RESTORE_CONTEXT                     02 00 00
-GO_TO :1                            52 00 30
+15: READ_CHAR_RANGE 'A', 'Z'            22 41 5A
+18: IF_NOT 0, ELSE                      41 00 01
+1B: RESTORE_CONTEXT                     02 00 00
+1E: GO_TO >1                            52 0030
 
-READ_CHAR_RANGE 'A', 'Z'            22 41 5A
-IF FAIL, ELSE                       40 00 01
-RESTORE_CONTEXT                     02 00 00
-GO_TO :1                            52 00 30
+21: READ_CHAR_RANGE '0', '9'            22 30 39
+24: IF_NOT 0, ELSE                      41 00 01
+27: RESTORE_CONTEXT                     02 00 00
+2A: GO_TO >1                            52 0030
 
-READ_CHAR_RANGE '0', '9'            22 30 39
-IF FAIL, ELSE                       40 00 01
-RESTORE_CONTEXT                     02 00 00
-GO_TO :1                            52 00 30
+2D: READ_CHAR '_'                       21 5F 00
 
-READ_CHAR '_'                       21 5F 00
+    >1
+30: CANCEL_CONTEXT                      03 00 00
 
-:1
-CANCEL_CONTEXT                      03 00 00
+33: IF 0                                40 01 00
+36: GO_TO >0                            52 0003
+39: SET_REG 0, 1                        30 00 01
 
-IF SUCCESS                          40 01 00
-GO_TO :0                            52 00 03
-SET_SF SUCCESS                      30 01 00
-
-CANCEL_CONTEXT_AND_GO_BACK          F1 00 00
+3C: CANCEL_CONTEXT_AND_GO_BACK          F1 00 00
 
 ===============================================================================
 
@@ -180,65 +189,70 @@ Identifier	::=
 	IdentifierStart IdentifierEnd
 ;
 
-:Identifier
+    >Identifier
+00: SAVE_CONTEXT                        01 00 00
 
-SAVE_CONTEXT                        01 00 00
+03: IGNORE                              10 00 00
+06: LOAD >IdentifierStart               50 21 42
+09: IF_NOT 0                            41 00 00
+1C: RESTORE_CONTEXT_AND_GO_BACK         F0 00 00
 
-IGNORE                              10 00 00
-LOAD :IdentifierStart               50 21 42
-IF FAIL                             40 00 00
-RESTORE_CONTEXT_AND_GO_BACK         F0 00 00
+1F: IGNORE                              10 00 00
+12: LOAD >IdentifierEnd                 50 42 21
+15: IF_NOT 0                            41 00 00
+18: RESTORE_CONTEXT_AND_GO_BACK         F0 00 00
 
-IGNORE                              10 00 00
-LOAD :IdentifierEnd                 50 42 21
-IF FAIL                             40 00 00
-RESTORE_CONTEXT_AND_GO_BACK         F0 00 00
-
-CANCEL_CONTEXT_AND_GO_BACK          F1 00 00
+1B: CANCEL_CONTEXT_AND_GO_BACK          F1 00 00
 
 ===============================================================================
 
 GroupWithRepeaters	::=
-	#ReadChar('a')+ | #ReadChar('b')? | #ReadChar('c') | #readChar('d')*
+	[#ReadChar('a')+ | #ReadChar('b')? | #ReadChar('c') | #readChar('d')*]
 ;
 
-:Repeaters
+    >Repeaters
+00: SAVE_CONTEXT                        01 00 00
 
-SAVE_CONTEXT                        01 00 00
+03: IGNORE                              10 00 00
+06: SAVE_CONTEXT                        01 00 00
 
-IGNORE                              10 00 00
-SAVE_CONTEXT                        01 00 00
+09: ADD_REPEAT 0, 1                     60 00 01
+0C: SKIP_NEXT                           52 00 00
 
-READ_CHAR 'a'                       21 61 00
-IF FAIL                             40 00 00
-GO_TO :1                            52 00 11
-:0
-IGNORE                              10 00 00
-READ_CHAR 'a'                       21 61 00
-IF SUCCESS                          40 01 00
-GO_TO :0                            52 00 12
-SET_SF SUCCESS                      30 01 00
-:1
-IF SUCCESS                          40 01 00
-GO_TO :3                            52 00 45
+    >0
+0F: DEC_REPEAT                          61 00 00
+12: IGNORE                              10 00 00
+15: READ_CHAR 'a'                       21 61 00
+18: IF 0                                40 00 00
+1B: GO_TO >0                            52 000F
+1E: IF_NOT 1                            41 01 00
+21: SET_REG 0, 1                        30 00 01
+24: POP_REPEAT                          61 00 00
+27: IF_NOT 0, ELSE                      41 00 01
+2A: RESTORE_CONTEXT                     02 00 00
+2D: GO_TO >3                            52 00 54
 
-READ_CHAR 'b'                       21 62 00
-GO_TO :3                            52 00 45
-READ_CHAR 'c'                       21 63 00
-IF SUCCESS                          40 01 00
-GO_TO :3                            52 00 45
+30: READ_CHAR 'b'                       21 62 00
+XX: SET_REG 0 1                         30 00 01
+33: GO_TO >3                            52 00 4B
 
-:2
-IGNORE                              10 00 00
-READ_CHAR 'd'                       21 64 00
-IF SUCCESS                          40 01 00
-GO_TO :2                            52 00 18
-SET_SF SUCCESS                      30 01 00
+36: READ_CHAR 'c'                       21 63 00
+39: IF_NOT 0, ELSE                      41 00 01
+3C: RESTORE_CONTEXT                     02 00 00
+3F: GO_TO >3                            52 00 54
 
-:3
-CANCEL_CONTEXT                      03 00 00
+    >2
+42: IGNORE                              10 00 00
+45: READ_CHAR 'd'                       21 64 00
+48: IF_NOT 0, ELSE                      41 00 01
+4B: RESTORE_CONTEXT                     02 00 00
+4E: GO_TO >2                            52 00 42
+51: SET_REG 0, 1                        30 00 01
 
-IF FAIL                             40 00 00
-RESTORE_CONTEXT_AND_GO_BACK         F0 00 00
+    >3
+54: CANCEL_CONTEXT                      03 00 00
 
-CANCEL_CONTEXT_AND_GO_BACK          F1 00 00
+57: IF_NOT 0                            41 00 00
+5A: RESTORE_CONTEXT_AND_GO_BACK         F0 00 00
+
+5D: CANCEL_CONTEXT_AND_GO_BACK          F1 00 00

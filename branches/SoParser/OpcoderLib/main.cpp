@@ -34,11 +34,11 @@ int	main()
 // 	Repeaters	::=
 // 		#ReadChar('a')+ #ReadChar('b')? #ReadChar('c') #readChar('d')*
 // 	;
-	Rule(Repeater) =
-			ReadChar('a') << Repeat('+')
-		&	ReadChar('b') << Repeat('?')
+	Rule(Repeaters) =
+			ReadChar('a') << _r('+')
+		&	ReadChar('b') << _r('?')
 		&	ReadChar('c')
-		&	ReadChar('d') << Repeat('*')
+		&	ReadChar('d') << _r('*')
 	;
 
 // 	IdentifierEnd ::=
@@ -50,7 +50,7 @@ int	main()
 			|	ReadChar('A', 'Z')
 			|	ReadChar('0', '9')
 			|	ReadChar('_')
-		) << Repeat('*')
+		) << _r('*')
 	;
 
 // 	Identifier	::=
@@ -65,10 +65,10 @@ int	main()
 // 		#ReadChar('a')+ | #ReadChar('b')? | #ReadChar('c') | #readChar('d')*
 // 	;
 	Rule(GroupWithRepeaters) =
-			ReadChar('a') << Repeat('+')
-		|	ReadChar('b') << Repeat('?')
+			ReadChar('a') << _r('+')
+		|	ReadChar('b') << _r('?')
 		|	ReadChar('c')
-		|	ReadChar('d') << Repeat('*')
+		|	ReadChar('d') << _r('*')
 	;
 
 //	RecursiveRule	::=
@@ -83,17 +83,25 @@ int	main()
 		)
 	;
 
-	APIRule r = IdentifierStart;
+	APIRule r = GroupWithRepeaters;
 
 	DispAST	disp;
 	r->acceptVisitor(&disp);
 
-	std::cout << "VISITING TO CREATE AST" << std::endl;
+	std::cout << "VISITING TO CREATE OPCODE" << std::endl;
 	Opcoder opc;
 	r->acceptVisitor(&opc);
 
-	std::cout << "SETTING REFERENCES" << std::endl;
-	opc.setRefs();
+	std::cout << "CLEANING" << std::endl;
+	opc.clean();
+
+	do 
+	{
+		std::cout << "SETTING REFERENCES" << std::endl;
+		opc.setRefs();
+
+		std::cout << "CLEANING REFERENCES" << std::endl;
+	} while (opc.cleanRefs());
 
 	std::cout << "GENERATED OPCODE :" << std::endl;
 	opc.disp();

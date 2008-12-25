@@ -22,7 +22,9 @@ namespace SoParse
 		virtual bool	enter(IRule * rule, bool hasChild = true);
 		virtual void	leave(IRule * rule);
 
+		void			clean(void);
 		void			setRefs(void);
+		bool			cleanRefs(void);
 
 		void			disp(void);
 

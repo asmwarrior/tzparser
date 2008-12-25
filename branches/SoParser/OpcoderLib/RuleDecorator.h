@@ -18,8 +18,6 @@ namespace SoParse
 
 		void	assign(APIRule r) { _r = r; }
 
-		virtual bool	needRepeater() { return _r->needRepeater(); }
-
 		virtual void	acceptVisitor(IRulesVisitor * visitor)
 		{
 			visitor->enter(this);
