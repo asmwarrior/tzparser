@@ -55,7 +55,23 @@ namespace SoParse
 		}
 	}
 
-	void	Opcoder::setRefs()
+	void	Opcoder::clean(void)
+	{
+		// Removing multiple IGNORES
+		OpcodePart::listAPOpcode::iterator prec;
+		for (OpcodePart::listAPOpcode::iterator i = _opc.opcodes.begin(); i != _opc.opcodes.end(); ++i)
+		{
+			if ((*i)->cmd == IGNORE && i != _opc.opcodes.begin() && (*prec)->cmd == IGNORE)
+			{
+				//_opc.opcodes.erase(i);
+				_opc.eraseOpcode(i);
+				i = prec;
+			}
+			prec = i;
+		}
+	}
+
+	void	Opcoder::setRefs(void)
 	{
 		unsigned short int pos = 0;
 		for (OpcodePart::listAPOpcode::iterator i = _opc.opcodes.begin(); i != _opc.opcodes.end(); ++i)
@@ -78,13 +94,35 @@ namespace SoParse
 
 	}
 
+	bool	Opcoder::cleanRefs(void)
+	{
+		bool ret = false;
+
+		OpcodePart::listAPOpcode::iterator prec;
+
+		OpcodePart::listAPOpcode::iterator i = _opc.opcodes.begin();
+		while (i != _opc.opcodes.end())
+		{
+			if (i != _opc.opcodes.begin() && (*prec)->cmd == GO_TO && (*prec)->ref == (*i)->pos)
+			{
+				//_opc.opcodes.erase(prec);
+				if (_opc.eraseOpcode(prec))
+					ret = true;
+			}
+			prec = i;
+			++i;
+		}
+
+		return ret;
+	}
+
 	void	Opcoder::fillOpcode(OpcodePart * opcp, bool surround /* = true */)
 	{
 		_opc += *opcp;
 		delete opcp;
 	}
 
-	void	Opcoder::disp()
+	void	Opcoder::disp(void)
 	{
 		for (OpcodePart::listAPOpcode::iterator i = _opc.opcodes.begin(); i != _opc.opcodes.end(); ++i)
 		{
@@ -104,7 +142,14 @@ namespace SoParse
 					<< std::setfill('0') << std::setw(2) << (int)((*i)->arg[0]) << ' '
 					<< std::setfill('0') << std::setw(2) << (int)((*i)->arg[1]) << ' ';
 
-			std::cout << ' ' << codeNames[c].name << std::endl;
+			std::cout << ' ' << ' ' << codeNames[c].name;
+			if (codeNames[c].nArgs == 1)
+				std::cout << ' ' << std::setw(4) << (*i)->ref;
+			else if (codeNames[c].nArgs == 2)
+				std::cout
+					<< ' ' << std::setfill('0') << std::setw(2) << (int)((*i)->arg[0]) << ','
+					<< ' ' << std::setfill('0') << std::setw(2) << (int)((*i)->arg[1]);
+			std::cout << std::endl;
 		}
 	}
 }

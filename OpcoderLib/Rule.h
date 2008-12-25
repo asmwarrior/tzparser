@@ -36,8 +36,6 @@ namespace SoParse
 		virtual APIRule	groupizeOR(APIRule self, APIRule r) = 0;
 
 		virtual void	acceptVisitor(IRulesVisitor * visitor) = 0;
-
-		virtual bool	needRepeater() { return true; }
 	};
 
 	inline APIRule	operator & (APIRule r1, APIRule r2)

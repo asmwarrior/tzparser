@@ -3,7 +3,7 @@
 
 #include "AutoPtr.h"
 #include "Rule.h"
-#include "GroupInsides.h"
+#include "RuleDecorator.h"
 
 #include <deque>
 
@@ -44,42 +44,73 @@ namespace SoParse
 		}
 	};
 
+	template<typename TYPE_RG>
+	class _InsideRuleGroup : public RuleGroup
+	{
+	public:
+		virtual void pushRule(APIRule r)
+		{
+			TYPE_RG* rg = dynamic_cast<TYPE_RG*>(r.getPtr());
+			if (rg)
+			{
+				for (TYPE_RG::iterator i = rg->begin(); i != rg->end(); ++i)
+					this->pushRule(*i);
+				return ;
+			}
+			if (!dynamic_cast<TYPE_RG::Inside*>(r.getPtr()))
+				r = r << new TYPE_RG::Inside((TYPE_RG*)this);
+			this->push_back(r);
+		}
+	};
+
 	typedef SoUtil::AutoPtr<RuleGroup> APRuleGroup;
 
-	class RuleGroupAND : public RuleGroup
+	class RuleGroupAND : public _InsideRuleGroup<RuleGroupAND>
 	{
 	public:
 		virtual ~RuleGroupAND() {}
 		virtual std::string getName() const { return "_GroupAND"; }
 
-		virtual bool	needRepeater() { return false; }
-
-		virtual void pushRule(APIRule r)
-		{
-			if (r->needRepeater())
-				r = r << new Inside_AND();
-			this->push_back(r);
-		}
-
 		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return 0; }
 		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return 0; }
+
+		virtual class Inside : public RuleDecorator
+		{
+		public:
+			virtual ~Inside() {}
+			Inside(RuleGroupAND * g) {}
+
+			virtual std::string getName() const { return "_AND"; }
+
+			virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return new OpcodePart(IGNORE); }
+			virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return (new OpcodePart(IF_NOT, 0, 0))->addOpcode(infos.wayOut.top()); }
+		};
+
 	};
 
-	class RuleGroupOR : public RuleGroup
+	class RuleGroupOR : public _InsideRuleGroup<RuleGroupOR>
 	{
 	public:
 		virtual ~RuleGroupOR() {}
 		virtual std::string getName() const { return "_GroupOR"; }
 
-		virtual void pushRule(APIRule r)
-		{
-			if (r->needRepeater())
-				r = r << new Inside_OR(this);
-			this->push_back(r);
-		}
-
 		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return (new OpcodePart(IGNORE))->addOpcode(SAVE_CONTEXT); }
 		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return (new OpcodePart(CANCEL_CONTEXT))->addLabelHere((unsigned int)this); }
+
+		virtual class Inside : public RuleDecorator
+		{
+		public:
+			virtual ~Inside() {}
+			Inside(RuleGroupOR * g) : _group(g) {}
+
+			virtual std::string getName() const { return "_OR"; }
+
+			virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return 0; }
+			virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return (new OpcodePart(IF_NOT, 0, ELSE))->addOpcode(RESTORE_CONTEXT)->addOpcode(GO_TO)->setRefHere((unsigned int)_group + 0); }
+
+		private:
+			RuleGroupOR * _group;
+		};
 	};
 }
 
