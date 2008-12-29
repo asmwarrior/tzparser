@@ -14,18 +14,29 @@ namespace SoParse
 		if (!_inRule && rule->getType() != IRule::RULE)
 			throw "You MUST Opcode a UserRule first";
 
-		if (_inRule && rule->getType() == IRule::RULE)
+		if (_inRule && rule->hasRuleRef())
 		{
-			_waitingRefs[_opc.opcodes.size() * 3] = rule;
-			fillOpcode(new OpcodePart(LOAD));
-			_rulesToGen.push(rule);
-			return false;
+			_waitingRefs[_opc.opcodes.size() * 3] = rule->hasRuleRef();
+			_rulesToGen.push(rule->hasRuleRef());
+
+			if (rule->getType() == IRule::RULE)
+			{
+				_opc.addOpcode(LOAD)->setRefHere((int)rule->hasRuleRef());
+				return false;
+			}
 		}
 
-		if (rule->getType() == IRule::RULE)
-			_inRule = true;
-
 		OpcodePart * opcp = rule->getOpcodeStart(_infos);
+
+		if (rule->getType() == IRule::RULE)
+		{
+			_inRule = true;
+			if (opcp)
+				/*opcp->addLabelHere((int)rule);*/
+				opcp->labels[(int)rule] = opcp->opcodes.front().getPtr();
+			opcp->opcodes.front()->strLabel = rule->getName();
+		}
+
 		if (opcp)
 		{
 			if (rule->getType() == IRule::RULE)
@@ -122,34 +133,52 @@ namespace SoParse
 		delete opcp;
 	}
 
-	void	Opcoder::disp(void)
+	void	Opcoder::disp(std::ostream& os)
 	{
+		os.setf(std::ios::hex, std::ios::basefield);
 		for (OpcodePart::listAPOpcode::iterator i = _opc.opcodes.begin(); i != _opc.opcodes.end(); ++i)
 		{
-			std::cout.setf(std::ios::hex, std::ios::basefield);
 			int c;
 			for (c = 0; codeNames[c].code; ++c)
 				if (codeNames[c].code == (*i)->cmd)
 					break ;
 
-			std::cout << std::setfill('0') << std::setw(4) << (int)((*i)->pos) << ':' << ' ';
+			if ((*i)->strLabel != "")
+				os << std::endl << "   >" << (*i)->strLabel << std::endl;
 
-			std::cout << std::setfill('0') << std::setw(2) << (int)((*i)->cmd) << ' ';
+			os << std::setfill('0') << std::setw(4) << (int)((*i)->pos) << ':' << ' ';
+
+			os << std::setfill('0') << std::setw(2) << (int)((*i)->cmd) << ' ';
 			if (codeNames[c].nArgs == 1)
-				std::cout << std::setfill('0') << std::setw(4) << ((*i)->ref) << ' ' << ' ';
+				os << std::setfill('0') << std::setw(4) << ((*i)->ref) << ' ' << ' ';
 			else
-				std::cout
+				os
 					<< std::setfill('0') << std::setw(2) << (int)((*i)->arg[0]) << ' '
 					<< std::setfill('0') << std::setw(2) << (int)((*i)->arg[1]) << ' ';
 
-			std::cout << ' ' << ' ' << codeNames[c].name;
+			os << ' ' << ' ' << codeNames[c].name;
 			if (codeNames[c].nArgs == 1)
-				std::cout << ' ' << std::setw(4) << (*i)->ref;
+				os << ' ' << std::setw(4) << (*i)->ref << ' ' << '>' << labelPos((*i)->ref);
 			else if (codeNames[c].nArgs == 2)
-				std::cout
+				os
 					<< ' ' << std::setfill('0') << std::setw(2) << (int)((*i)->arg[0]) << ','
 					<< ' ' << std::setfill('0') << std::setw(2) << (int)((*i)->arg[1]);
-			std::cout << std::endl;
+			os << std::endl;
 		}
+		os.unsetf(std::ios::basefield);
+	}
+
+	std::string	Opcoder::labelPos(int p)
+	{
+		for (OpcodePart::listAPOpcode::iterator i = _opc.opcodes.begin(); i != _opc.opcodes.end(); ++i)
+			if ((*i)->pos == p)
+				return (*i)->strLabel;
+		return "";
+	}
+
+	void	Opcoder::save(std::ostream& os)
+	{
+		for (OpcodePart::listAPOpcode::iterator i = _opc.opcodes.begin(); i != _opc.opcodes.end(); ++i)
+			os << (*i)->cmd << (*i)->arg[0] << (*i)->arg[1];
 	}
 }

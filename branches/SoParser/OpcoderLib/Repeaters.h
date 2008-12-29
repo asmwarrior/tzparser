@@ -16,7 +16,7 @@ namespace SoParse
 	{
 		virtual ~Repeat_ZeroOrOne() {}
 
-		virtual std::string getName() const { return "_Repeat(?)"; }
+		virtual std::string getName() const { return "#Repeat(?)"; }
 
 		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return new OpcodePart(IGNORE); }
 		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return new OpcodePart(SET_REG, 0, 1); }
@@ -26,7 +26,7 @@ namespace SoParse
 	{
 		virtual ~Repeat_ZeroToMany() {}
 
-		virtual std::string getName() const { return "_Repeat(*)"; }
+		virtual std::string getName() const { return "#Repeat(*)"; }
 
 		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return (new OpcodePart(IGNORE))->addLabelHere((int)this); }
 		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return (new OpcodePart(IF, 0, 0))
@@ -38,7 +38,7 @@ namespace SoParse
 	{
 		virtual ~Repeat_OneToMany() {}
 
-		virtual std::string getName() const { return "_Repeat(+)"; }
+		virtual std::string getName() const { return "#Repeat(+)"; }
 
 		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return (new OpcodePart(ADD_REPEAT, 0, 1))
 																				->addOpcode(SKIP_NEXT)

@@ -1,6 +1,7 @@
 #include "UserRule.h"
 #include "ReadChar.h"
 #include "Repeaters.h"
+#include "Ignore.h"
 
 #include "DispAST.h"
 
@@ -53,12 +54,26 @@ int	main()
 		) << _r('*')
 	;
 
+//	Blanks ::=
+//		[' ' | '\t' | '\r' | '\n']+
+//	;
+	Rule(Blanks) =
+		(
+				ReadChar(' ')
+			|	ReadChar('\t')
+			|	ReadChar('\r')
+			|	ReadChar('\n')
+		) << _r('+')
+	;
+
 // 	Identifier	::=
 // 		IdentifierStart IdentifierEnd
 // 	;
 	Rule(Identifier) =
+		(
 			IdentifierStart
 		&	IdentifierEnd
+		) << Ignore(Blanks)
 	;
 
 // 	GroupWithRepeaters	::=
@@ -83,7 +98,9 @@ int	main()
 		)
 	;
 
-	APIRule r = GroupWithRepeaters;
+
+
+	APIRule r = Identifier;
 
 	DispAST	disp;
 	r->acceptVisitor(&disp);
@@ -104,5 +121,5 @@ int	main()
 	} while (opc.cleanRefs());
 
 	std::cout << "GENERATED OPCODE :" << std::endl;
-	opc.disp();
+	opc.disp(std::cout);
 }

@@ -9,7 +9,8 @@ Commands:
 0x03: CANCEL_CONTEXT
 
 0x10: IGNORE
-0x11: SET_IGNORE: unsigned short int pointing to the IGNORE rule
+0x11: ADD_IGNORE: unsigned short int pointing to the IGNORE rule
+0x12: POP_IGNORE
 
 0x20: READ_CHAR
 0x21: READ_A_CHAR: first byte = the character to read, second byte unused

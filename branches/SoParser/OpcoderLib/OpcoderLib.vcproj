@@ -199,6 +199,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Ignore.h"
+					>
+				</File>
+				<File
 					RelativePath=".\ReadChar.h"
 					>
 				</File>
