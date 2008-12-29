@@ -11,7 +11,8 @@ namespace SoParse
 		CANCEL_CONTEXT				= '\x03',
 
 		IGNORE						= '\x10',
-		SET_IGNORE					= '\x11', // unsigned short int pointing to the IGNORE rule
+		ADD_IGNORE					= '\x11', // unsigned short int pointing to the IGNORE rule
+		POP_IGNORE					= '\x12',
 
 		READ_CHAR					= '\x20',
 		READ_A_CHAR					= '\x21', // first byte = the character to read, second byte unused

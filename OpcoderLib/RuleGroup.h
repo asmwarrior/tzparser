@@ -69,7 +69,7 @@ namespace SoParse
 	{
 	public:
 		virtual ~RuleGroupAND() {}
-		virtual std::string getName() const { return "_GroupAND"; }
+		virtual std::string getName() const { return "#GroupAND"; }
 
 		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return 0; }
 		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return 0; }
@@ -80,7 +80,7 @@ namespace SoParse
 			virtual ~Inside() {}
 			Inside(RuleGroupAND * g) {}
 
-			virtual std::string getName() const { return "_AND"; }
+			virtual std::string getName() const { return "#AND"; }
 
 			virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return new OpcodePart(IGNORE); }
 			virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return (new OpcodePart(IF_NOT, 0, 0))->addOpcode(infos.wayOut.top()); }
@@ -92,7 +92,7 @@ namespace SoParse
 	{
 	public:
 		virtual ~RuleGroupOR() {}
-		virtual std::string getName() const { return "_GroupOR"; }
+		virtual std::string getName() const { return "#GroupOR"; }
 
 		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return (new OpcodePart(IGNORE))->addOpcode(SAVE_CONTEXT); }
 		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return (new OpcodePart(CANCEL_CONTEXT))->addLabelHere((unsigned int)this); }
@@ -103,7 +103,7 @@ namespace SoParse
 			virtual ~Inside() {}
 			Inside(RuleGroupOR * g) : _group(g) {}
 
-			virtual std::string getName() const { return "_OR"; }
+			virtual std::string getName() const { return "#OR"; }
 
 			virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return 0; }
 			virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return (new OpcodePart(IF_NOT, 0, ELSE))->addOpcode(RESTORE_CONTEXT)->addOpcode(GO_TO)->setRefHere((unsigned int)_group + 0); }

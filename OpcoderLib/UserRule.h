@@ -36,6 +36,8 @@ namespace SoParse
 
 		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { infos.wayOut.push(Opcode(RESTORE_CONTEXT_AND_GO_BACK)); return new OpcodePart(SAVE_CONTEXT); }
 		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return new OpcodePart(CANCEL_CONTEXT_AND_GO_BACK); }
+
+		virtual IRule*	hasRuleRef(void) { return this; }
 		
 	private:
 		char const * const	_name;

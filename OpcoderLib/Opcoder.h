@@ -26,10 +26,12 @@ namespace SoParse
 		void			setRefs(void);
 		bool			cleanRefs(void);
 
-		void			disp(void);
+		void			disp(std::ostream& os);
+		void			save(std::ostream& os);
 
 	private:
 		void			fillOpcode(OpcodePart * opcp, bool surround = true);
+		std::string		labelPos(int p);
 
 		OpcodePart	_opc;
 

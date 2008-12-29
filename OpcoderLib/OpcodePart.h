@@ -37,6 +37,8 @@ namespace SoParse
 		unsigned int	label;
 
 		unsigned short int	pos;
+
+		std::string	strLabel;
 	};
 
 	struct OpcodePart
