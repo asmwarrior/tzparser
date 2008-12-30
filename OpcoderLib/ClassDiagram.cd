@@ -1,35 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram MajorVersion="1" MinorVersion="1">
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
   <Class Name="SoParse::AtomicRule">
-    <Position X="20.25" Y="6" Width="1.5" />
+    <Position X="5" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAgAAAAAAAAAgA=</HashCode>
       <FileName>AtomicRule.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SoParse::ReadAnyChar">
-    <Position X="18" Y="8" Width="1.5" />
+    <Position X="5" Y="8.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAgAAAAAAAAAAAAIAAAAAAAAgAAAAACAEAAAAAAA=</HashCode>
       <FileName>ReadChar.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SoParse::ReadAChar">
-    <Position X="20.25" Y="8" Width="1.5" />
+    <Position X="7.25" Y="8.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAgAAAAAAAAAAAAIAAAAAAAAAAAAAIAAEAABBAAA=</HashCode>
       <FileName>ReadChar.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SoParse::ReadCharRange">
-    <Position X="22.5" Y="8" Width="1.5" />
+    <Position X="2.75" Y="8.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAgAAgAAAABAAAAAAAIAAAAAAAEAgAAAAAAEAAAAAAA=</HashCode>
       <FileName>ReadChar.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SoParse::IRule">
-    <Position X="13.25" Y="0.5" Width="1.5" />
+    <Position X="11.75" Y="0.5" Width="1.5" />
     <NestedTypes>
       <Enum Name="SoParse::IRule::type" Collapsed="true">
         <TypeIdentifier>
@@ -38,82 +38,117 @@
       </Enum>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAAgICAAAAQAAAAAIAAAAAAQAAAAAgAAAEAAAAAAA=</HashCode>
+      <HashCode>AAgAAgICAAAAQAAAAAIAAAAAAQIAAAAgAAAEAAAAAAA=</HashCode>
       <FileName>Rule.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SoParse::RuleGroup">
-    <Position X="12.5" Y="3.5" Width="1.5" />
+    <Position X="21.5" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAICAAAAAAAAAAAABAAAAQAAAAAgAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAICAAAAEAAAAAAABAAAAQAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>RuleGroup.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SoParse::_InsideRuleGroup&lt;TYPE_RG&gt;">
+    <Position X="21" Y="6.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>RuleGroup.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SoParse::RuleGroupAND">
-    <Position X="11.25" Y="6.25" Width="1.5" />
+    <Position X="20" Y="8.75" Width="2" />
+    <NestedTypes>
+      <Class Name="SoParse::RuleGroupAND::Inside" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>RuleGroup.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
     <TypeIdentifier>
       <HashCode>AAAAAgAAAAAAAAAgAAIAAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
       <FileName>RuleGroup.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SoParse::RuleGroupOR">
-    <Position X="13.5" Y="6.25" Width="1.5" />
+    <Position X="22.75" Y="8.75" Width="2" />
+    <NestedTypes>
+      <Class Name="SoParse::RuleGroupOR::Inside" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>RuleGroup.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
     <TypeIdentifier>
       <HashCode>AAAAAgAAAAAAAAAAAAIAAACAAAAAAAAAAAAEAAAAAAA=</HashCode>
       <FileName>RuleGroup.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SoParse::StandardRule">
-    <Position X="19.25" Y="3.5" Width="1.5" />
+    <Position X="4" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gAAAAAICAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
       <FileName>StandardRule.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SoParse::UserRule">
-    <Position X="15.75" Y="6" Width="1.5" />
+    <Position X="0.5" Y="6.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIgAAAAAAAAAAAAIAAQAAAQAAAAggAAAFAACAAAA=</HashCode>
+      <HashCode>AAgAIgAAAAAAAAAAAAIAAQAAAQAAAAggAAAFAACAAAA=</HashCode>
       <FileName>UserRule.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SoParse::Repeater">
-    <Position X="6.5" Y="6.75" Width="1.5" />
+    <Position X="15" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Repeaters.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SoParse::Repeat_ZeroOrOne">
-    <Position X="3.75" Y="8.5" Width="1.75" />
+    <Position X="12.5" Y="9" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAgAAAAAAAAAgAAIAAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
       <FileName>Repeaters.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SoParse::Repeat_ZeroToMany">
-    <Position X="6.25" Y="8.5" Width="1.75" />
+    <Position X="14.75" Y="9" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAgAAAAAAAAAAAAIAAAAAAAAAAAAIAAAEAAAAAAA=</HashCode>
       <FileName>Repeaters.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SoParse::Repeat_OneToMany">
-    <Position X="8.75" Y="8.5" Width="1.75" />
+    <Position X="17.25" Y="9" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAgAAAAAAAAAAAAIAAAAAAAAAAAAAAAAEABAAAAA=</HashCode>
       <FileName>Repeaters.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SoParse::RuleDecorator">
-    <Position X="6.5" Y="3.5" Width="1.5" />
+    <Position X="13.5" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAICAAAEAAAAAAAAAgAAAQAAAAAgACAAAAAAAAA=</HashCode>
       <FileName>RuleDecorator.h</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="SoParse::InnocentRuleDecorator">
+    <Position X="9.5" Y="7" Width="2" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAEAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RuleDecorator.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SoParse::CIgnore">
+    <Position X="9.75" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAgAAAAAAAAAAAAIAAAAAAAAAAAAAAAAEkACAAAA=</HashCode>
+      <FileName>Ignore.h</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="SoParse::DispAST">
-    <Position X="12" Y="11.5" Width="1.5" />
+    <Position X="0.5" Y="13.5" Width="1.5" />
     <NestedTypes>
       <Typedef Name="SoParse::DispAST::SetIRule" Collapsed="true">
         <TypeIdentifier>
@@ -127,70 +162,150 @@
     </TypeIdentifier>
   </Class>
   <Class Name="SoParse::Opcoder">
-    <Position X="14.25" Y="11.5" Width="1.5" />
+    <Position X="2.75" Y="13.5" Width="1.5" />
+    <NestedTypes>
+      <Typedef Name="SoParse::Opcoder::mapLPIruleShortInt" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Opcoder.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Typedef>
+      <Typedef Name="SoParse::Opcoder::mapShortIntLPIrule" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Opcoder.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Typedef>
+      <Typedef Name="SoParse::Opcoder::queueLPIRule" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Opcoder.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Typedef>
+    </NestedTypes>
     <TypeIdentifier>
-      <HashCode>ACgAAAAAAQAAAAAAAAAAAAAAAAAAAAABBAAAAAAAAAA=</HashCode>
+      <HashCode>gCgAACAAgQDAEAEAIABAAAAAAAAAAEABBABgAAAAAAA=</HashCode>
       <FileName>Opcoder.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SoParse::IRulesVisitor">
-    <Position X="13.25" Y="9.5" Width="1.5" />
+    <Position X="1.75" Y="11.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBAAAAAAAAAA=</HashCode>
       <FileName>RulesVisitor.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SoUtil::AutoPtr&lt;T&gt;" Collapsed="true">
-    <Position X="26" Y="0.5" Width="2" />
+  <Class Name="SoUtil::SelfArithmeticOpOverload&lt;R, V&gt;" Collapsed="true">
+    <Position X="13" Y="15.75" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>EAAAAAAAAAAAAAAAoAwAhQAAAAAABEAAEAEEEAAEAgA=</HashCode>
+      <HashCode>GgAAAAAAAAAAAAAAAAAAIAAAAAAAAAIAAAAAAAAQAII=</HashCode>
       <FileName>AutoPtr.h</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="SoUtil::ArithmeticOpOverload&lt;V&gt;" Collapsed="true">
+    <Position X="16.25" Y="15.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAYAUBAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>AutoPtr.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SoUtil::ComparisonOpOverload&lt;V&gt;" Collapsed="true">
+    <Position X="19" Y="15.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAACAAAAQAwA=</HashCode>
+      <FileName>AutoPtr.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SoUtil::AutoPtr&lt;T&gt;" Collapsed="true">
+    <Position X="16" Y="14" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAoAwAhQAAAAAABEAAEAEEEAAUAAA=</HashCode>
+      <FileName>AutoPtr.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="SoParse::Opcode">
+    <Position X="9.5" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABCAAAAAAAAABQAAAYAAIAAgAAAAAAAAAAAAAAIAAQ=</HashCode>
+      <FileName>OpcodePart.h</FileName>
+    </TypeIdentifier>
+  </Struct>
   <Struct Name="SoParse::OpcodePart">
-    <Position X="23.5" Y="0.5" Width="2" />
+    <Position X="7.75" Y="12" Width="1.5" />
     <NestedTypes>
-      <Typedef Name="SoParse::OpcodePart::listOpcode" Collapsed="true">
+      <Typedef Name="SoParse::OpcodePart::APOpcode" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>OpcodePart.h</NewMemberFileName>
         </TypeIdentifier>
       </Typedef>
-      <Typedef Name="SoParse::OpcodePart::pairShortIntString" Collapsed="true">
+      <Typedef Name="SoParse::OpcodePart::listAPOpcode" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>OpcodePart.h</NewMemberFileName>
         </TypeIdentifier>
       </Typedef>
-      <Typedef Name="SoParse::OpcodePart::listPairShortIntString" Collapsed="true">
+      <Typedef Name="SoParse::OpcodePart::mapUIntLPOpcode" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>OpcodePart.h</NewMemberFileName>
         </TypeIdentifier>
       </Typedef>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>CCAAAAAIAAAAgAAAAAAAACAAAAIAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>CCAgAAAIAAAAgBAAAACAAAAAAAAAAAAABAAAAAAAAAA=</HashCode>
       <FileName>OpcodePart.h</FileName>
     </TypeIdentifier>
   </Struct>
+  <Struct Name="SoParse::OpcoderInfos">
+    <Position X="5.5" Y="13.5" Width="1.5" />
+    <NestedTypes>
+      <Typedef Name="SoParse::OpcoderInfos::stackOpcode" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>OpcoderInfos.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Typedef>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>OpcoderInfos.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="SoParse::CodeName">
+    <Position X="5.5" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAAAAAAAIAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Opcodes.h</FileName>
+    </TypeIdentifier>
+  </Struct>
   <Typedef Name="SoParse::APIRule" Collapsed="true">
-    <Position X="28" Y="1.25" Width="2.5" />
+    <Position X="19.25" Y="12.75" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Rule.h</FileName>
     </TypeIdentifier>
   </Typedef>
   <Typedef Name="SoParse::DequeAPIRule" Collapsed="true">
-    <Position X="23.5" Y="3.25" Width="2.75" />
+    <Position X="19.25" Y="12" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>RuleGroup.h</FileName>
     </TypeIdentifier>
   </Typedef>
   <Typedef Name="SoParse::APRuleGroup" Collapsed="true">
-    <Position X="27.5" Y="2" Width="3.25" />
+    <Position X="15.5" Y="12.75" Width="3.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>RuleGroup.h</FileName>
     </TypeIdentifier>
   </Typedef>
+  <Typedef Name="SoParse::APCIgnore" Collapsed="true">
+    <Position X="12.5" Y="12.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Ignore.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Enum Name="SoParse::Opcodes">
+    <Position X="23.25" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ECAIAAIAAAAIgAIAREQICAAhCIAAIAMAAABAQAIDCAA=</HashCode>
+      <FileName>Opcodes.h</FileName>
+    </TypeIdentifier>
+  </Enum>
   <Font Name="Tahoma" Size="8.25" />
 </ClassDiagram>

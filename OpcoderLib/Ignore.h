@@ -9,7 +9,7 @@
 
 namespace SoParse
 {
-	class CIgnore : public RuleDecorator
+	class CIgnore : public InnocentRuleDecorator
 	{
 	public:
 		virtual ~CIgnore() {}

@@ -169,6 +169,10 @@
 				RelativePath=".\Opcoder.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\RuleDecorator.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -199,10 +203,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Ignore.h"
-					>
-				</File>
-				<File
 					RelativePath=".\ReadChar.h"
 					>
 				</File>
@@ -226,6 +226,10 @@
 			<Filter
 				Name="Decorators"
 				>
+				<File
+					RelativePath=".\Ignore.h"
+					>
+				</File>
 				<File
 					RelativePath=".\Repeaters.h"
 					>

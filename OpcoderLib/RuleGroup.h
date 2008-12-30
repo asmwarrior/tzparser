@@ -82,8 +82,18 @@ namespace SoParse
 
 			virtual std::string getName() const { return "#AND"; }
 
-			virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return new OpcodePart(IGNORE); }
-			virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return (new OpcodePart(IF_NOT, 0, 0))->addOpcode(infos.wayOut.top()); }
+			virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos)
+			{
+				if (_r->innocent())
+					return 0;
+				return new OpcodePart(IGNORE);
+			}
+			virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos)
+			{
+				if (_r->innocent())
+					return 0;
+				return (new OpcodePart(IF_NOT, 0, 0))->addOpcode(infos.wayOut.top());
+			}
 		};
 
 	};
