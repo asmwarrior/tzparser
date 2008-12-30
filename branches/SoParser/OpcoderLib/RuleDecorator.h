@@ -16,7 +16,7 @@ namespace SoParse
 		virtual APIRule	groupizeAND(APIRule self, APIRule r) { return _r->groupizeAND(self, r); }
 		virtual APIRule	groupizeOR(APIRule self, APIRule r) { return _r->groupizeOR(self, r); }
 
-		void	assign(APIRule r) { _r = r; }
+		virtual void	assign(APIRule r) { _r = r; }
 
 		virtual void	acceptVisitor(IRulesVisitor * visitor)
 		{
@@ -25,11 +25,20 @@ namespace SoParse
 			visitor->leave(this);
 		}
 
-	private:
+	protected:
 		APIRule	_r;
 	};
 
-	APIRule operator << (APIRule r, RuleDecorator * d)
+	class InnocentRuleDecorator : public RuleDecorator
+	{
+	public:
+		virtual ~InnocentRuleDecorator() {}
+		virtual void	assign(APIRule r);
+
+		virtual bool	innocent(void) { return true; }
+	};
+
+	inline APIRule operator << (APIRule r, RuleDecorator * d)
 	{
 		d->assign(r);
 		return APIRule(d);

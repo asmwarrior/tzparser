@@ -38,6 +38,7 @@ namespace SoParse
 		virtual void	acceptVisitor(IRulesVisitor * visitor) = 0;
 
 		virtual IRule*	hasRuleRef(void) { return 0; }
+		virtual bool	innocent(void) { return false; }
 	};
 
 	inline APIRule	operator & (APIRule r1, APIRule r2)
