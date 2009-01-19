@@ -3,8 +3,9 @@
 
 #include "AutoPtr.h"
 
-#include <list>
 #include <map>
+#include <vector>
+#include <list>
 
 #include <iostream>
 
@@ -12,6 +13,22 @@
 
 namespace SoParse
 {
+	struct OpcodeArg
+	{
+		OpcodeArg(const char * str) { construct(str, strlen(str) + 1); }
+		OpcodeArg(const char * str, unsigned int len) { construct(str, len); }
+
+		virtual ~OpcodeArg() { delete arg; }
+
+		char * arg;
+		unsigned int size;
+
+	private:
+		void	construct(const char * str, unsigned int len) { arg = new char[len]; memcpy(arg, str, len); size = len; }
+	};
+
+	typedef SoUtil::AutoPtr<OpcodeArg> APOpcodeArg;
+
 	struct Opcode
 	{
 		unsigned char	cmd;
@@ -34,12 +51,15 @@ namespace SoParse
 
 		void	setCmd(unsigned char cmd) { this->cmd = cmd; }
 
-		unsigned int	label;
-
+		unsigned int label;
 		unsigned short int	pos;
+		APOpcodeArg refArg;
 
 		std::string	strLabel;
 	};
+
+	typedef std::map<unsigned int, Opcode*> mapUIntLPOpcode;
+	typedef std::vector<APOpcodeArg> vectorAPOpcodeArg;
 
 	struct OpcodePart
 	{
@@ -48,15 +68,7 @@ namespace SoParse
 		OpcodePart(unsigned char cmd, unsigned short int ref) { addOpcode(cmd, ref); }
 		OpcodePart(unsigned char cmd) { addOpcode(cmd); }
 
-		OpcodePart & operator += (OpcodePart & opcp)
-		{
-			opcodes.splice(opcodes.end(), opcp.opcodes);
-
-			for (mapUIntLPOpcode::iterator i = opcp.labels.begin(); i != opcp.labels.end(); ++i)
-				labels[i->first] = i->second;
-
-			return *this;
-		}
+		OpcodePart & operator += (OpcodePart & opcp);
 
 		typedef SoUtil::AutoPtr<Opcode>	APOpcode;
 		typedef std::list<APOpcode> listAPOpcode;
@@ -70,44 +82,17 @@ namespace SoParse
 
 		OpcodePart * addLabelHere(unsigned int label) { labels[label] = opcodes.back().getPtr(); return this; }
 
-		bool eraseOpcode(listAPOpcode::iterator position)
-		{
-			listAPOpcode::iterator tmp = position;
-			++tmp;
-			for (mapUIntLPOpcode::iterator i = labels.begin(); i != labels.end(); ++i)
-				if (i->second == *position)
-				{
-					if (tmp == opcodes.end())
-						return false;
-					i->second = *tmp;
-				}
+		OpcodePart * addRefArgHere(std::string str) { addRefArgHere(new OpcodeArg(str.c_str())); return this; }
+		OpcodePart * addRefArgHere(const char * str, int len) { addRefArgHere(new OpcodeArg(str, len)); return this; }
+		OpcodePart * addRefArgHere(APOpcodeArg arg) { opcodeArgs.push_back(arg); opcodes.back()->refArg = arg; return this; }
 
-			if (position != opcodes.begin())
-			{
-				listAPOpcode::iterator rev1 = position;
-				--rev1;
-				if ((*rev1)->cmd == SKIP_NEXT)
-					if (!eraseOpcode(rev1))
-						return false;
-
-				if (rev1 != opcodes.begin())
-				{
-					listAPOpcode::iterator rev2 = rev1;
-					--rev2;
-
-					if (((*rev2)->cmd == IF || (*rev2)->cmd == IF_NOT) && (*rev2)->arg[1] == ELSE)
-						(*rev2)->arg[1] = 0;
-				}
-			}
-
-			opcodes.erase(position);
-			return true;
-		}
+		bool eraseOpcode(listAPOpcode::iterator position);
 
 		listAPOpcode	opcodes;
 
-		typedef std::map<unsigned int, Opcode*> mapUIntLPOpcode;
 		mapUIntLPOpcode	labels;
+
+		vectorAPOpcodeArg opcodeArgs;
 	};
 }
 

@@ -38,8 +38,12 @@ namespace SoParse
 		RESTORE_CONTEXT_AND_GO_BACK	= '\xE0',
 		CANCEL_CONTEXT_AND_GO_BACK	= '\xE1',
 
+		OPCODE_END					= '\xE2',
+
 		ELSE						= '\x01'
 	};
+
+	#define __opc(a)	((unsigned char)a)
 
 
 	struct CodeName

@@ -2,6 +2,7 @@
 #define __SO_OPCODER_H__
 
 #include "RulesVisitor.h"
+#include "Rule.h"
 
 #include "OpcodePart.h"
 #include "OpcoderInfos.h"
@@ -22,15 +23,18 @@ namespace SoParse
 		virtual bool	enter(IRule * rule, bool hasChild = true);
 		virtual void	leave(IRule * rule);
 
-		void			clean(void);
-		void			setRefs(void);
-		bool			cleanRefs(void);
+		void			createOpcode(APIRule r);
 
 		void			disp(std::ostream& os);
 		void			save(std::ostream& os);
 
 	private:
-		void			fillOpcode(OpcodePart * opcp, bool surround = true);
+		void			clean(void);
+		void			setRefs(void);
+		bool			cleanRefs(void);
+
+		void			setArgs(void);
+
 		std::string		labelPos(int p);
 
 		OpcodePart	_opc;

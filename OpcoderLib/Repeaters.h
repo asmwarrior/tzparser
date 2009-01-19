@@ -16,7 +16,7 @@ namespace SoParse
 	{
 		virtual ~Repeat_ZeroOrOne() {}
 
-		virtual std::string getName() const { return "#Repeat(?)"; }
+		virtual std::string getName() const { return "#Repeat(!)"; }
 
 		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return new OpcodePart(IGNORE); }
 		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return new OpcodePart(SET_REG, 0, 1); }
@@ -56,6 +56,7 @@ namespace SoParse
 		switch (c)
 		{
 		case '?':
+		case '!':
 			return new Repeat_ZeroOrOne;
 			break;
 		case '*':
@@ -68,6 +69,21 @@ namespace SoParse
 		return 0;
 	}
 	#define _r(c) Repeat(c)
+
+	inline APIRule operator + (APIRule r)
+	{
+		return r << new Repeat_OneToMany;
+	}
+
+	inline APIRule operator * (APIRule r)
+	{
+		return r << new Repeat_ZeroToMany;
+	}
+
+	inline APIRule operator ! (APIRule r)
+	{
+		return r << new Repeat_ZeroOrOne;
+	}
 }
 
 #endif  // !__SO_REPEATERS_H__

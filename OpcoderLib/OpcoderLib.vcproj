@@ -166,6 +166,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\OpcodePart.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Opcoder.cpp"
 				>
 			</File>
