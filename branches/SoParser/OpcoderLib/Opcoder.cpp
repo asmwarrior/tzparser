@@ -41,7 +41,8 @@ namespace SoParse
 		{
 			if (rule->getType() == IRule::RULE)
 				_ruleRefs[rule] = _opc.opcodes.size() * 3;
-			fillOpcode(opcp/*, rule->getType() != IRule::RULE*/);
+			_opc += *opcp;
+			delete opcp;
 		}
 
 		return hasChild;
@@ -51,7 +52,10 @@ namespace SoParse
 	{
 		OpcodePart * opcp = rule->getOpcodeEnd(_infos);
 		if (opcp)
-			fillOpcode(opcp, rule->getType() != IRule::RULE);
+		{
+			_opc += *opcp;
+			delete opcp;
+		}
 
 		if (rule->getType() == IRule::RULE)
 		{
@@ -66,13 +70,35 @@ namespace SoParse
 		}
 	}
 
+	void	Opcoder::createOpcode(APIRule r)
+	{
+		std::cout << "VISITING TO CREATE OPCODE" << std::endl;
+		r->acceptVisitor(this);
+
+		std::cout << "CLEANING" << std::endl;
+		this->clean();
+
+		do
+		{
+			std::cout << "SETTING REFERENCES" << std::endl;
+			this->setRefs();
+
+			std::cout << "CLEANING REFERENCES" << std::endl;
+		} while (this->cleanRefs());
+
+		std::cout << "INSERTING ARGUMENTS" << std::endl;
+		_opc.addOpcode(OPCODE_END);
+		this->setArgs();
+
+	}
+
 	void	Opcoder::clean(void)
 	{
 		// Removing multiple IGNORES
 		OpcodePart::listAPOpcode::iterator prec;
 		for (OpcodePart::listAPOpcode::iterator i = _opc.opcodes.begin(); i != _opc.opcodes.end(); ++i)
 		{
-			if ((*i)->cmd == IGNORE && i != _opc.opcodes.begin() && (*prec)->cmd == IGNORE)
+			if ((*i)->cmd == __opc(IGNORE) && i != _opc.opcodes.begin() && (*prec)->cmd == __opc(IGNORE))
 			{
 				//_opc.opcodes.erase(i);
 				_opc.eraseOpcode(i);
@@ -116,7 +142,6 @@ namespace SoParse
 		{
 			if (i != _opc.opcodes.begin() && (*prec)->cmd == GO_TO && (*prec)->ref == (*i)->pos)
 			{
-				//_opc.opcodes.erase(prec);
 				if (_opc.eraseOpcode(prec))
 					ret = true;
 			}
@@ -127,10 +152,12 @@ namespace SoParse
 		return ret;
 	}
 
-	void	Opcoder::fillOpcode(OpcodePart * opcp, bool surround /* = true */)
+	void	Opcoder::setArgs(void)
 	{
-		_opc += *opcp;
-		delete opcp;
+		for (vectorAPOpcodeArg::iterator i = opcp.opcodeArgs.begin(); i != opcp.opcodeArgs.end(); ++i)
+		{
+			// TODOOOOOOOOOOOOOO
+		}
 	}
 
 	void	Opcoder::disp(std::ostream& os)
@@ -138,6 +165,9 @@ namespace SoParse
 		os.setf(std::ios::hex, std::ios::basefield);
 		for (OpcodePart::listAPOpcode::iterator i = _opc.opcodes.begin(); i != _opc.opcodes.end(); ++i)
 		{
+			if ((*i)->cmd == __opc(OPCODE_END))
+				break ;
+
 			int c;
 			for (c = 0; codeNames[c].code; ++c)
 				if (codeNames[c].code == (*i)->cmd)

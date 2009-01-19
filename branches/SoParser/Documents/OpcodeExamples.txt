@@ -36,6 +36,8 @@ Commands:
 0xF0: RESTORE_CONTEXT_AND_GO_BACK
 0xF1: CANCEL_CONTEXT_AND_GO_BACK
 
+0xFF: END
+
 Arguments:
 NO_ELSE: 0 (default)
 ELSE: 1

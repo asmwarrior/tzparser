@@ -72,7 +72,8 @@ namespace SoUtil
 
 		AutoPtr<T>&	operator =  (const AutoPtr& ap) { del(); if (&ap != this) clone(ap); return *this; }
 		AutoPtr<T>&	operator =  (T* p) { del(); set(p); return *this; }
-		T&			operator *  (void) const { return *ptr; }
+// !!! This line has been especially removed for this project !!!
+//		T&			operator *  (void) const { return *ptr; }
 		T*			operator -> (void) const { return ptr;  }
 
 		operator T*  (void) { return ptr; }

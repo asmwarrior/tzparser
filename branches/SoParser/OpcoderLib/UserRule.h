@@ -11,6 +11,7 @@
 namespace SoParse
 {
 	#define Rule(name)	UserRule * name##_r = new UserRule(#name); APIRule name(name##_r); *name##_r
+	#define _R_(a) Rule(a)
 
 	class UserRule : public StandardRule
 	{

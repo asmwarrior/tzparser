@@ -4,6 +4,8 @@
 #include "AtomicRule.h"
 #include "Opcodes.h"
 
+#include <string>
+
 namespace SoParse
 {
 	class ReadAnyChar : public AtomicRule
@@ -12,10 +14,9 @@ namespace SoParse
 		virtual ~ReadAnyChar() {}
 		ReadAnyChar() {}
 
-		virtual std::string getName() const { return "GetChar"; }
+		virtual std::string getName() const { return "ReadChar()"; }
 
 		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return new OpcodePart(READ_CHAR); }
-		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return 0; }
 	};
 
 	inline APIRule ReadChar()
@@ -29,10 +30,9 @@ namespace SoParse
 		virtual ~ReadAChar() {}
 		ReadAChar(char c) : _c(c) {}
 
-		virtual std::string getName() const { return std::string("GetChar(") + _c + ')'; }
+		virtual std::string getName() const { return std::string("ReadChar(") + _c + ')'; }
 
 		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return new OpcodePart(READ_A_CHAR, _c, 0); }
-		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return 0; }
 
 	private:
 		const char _c;
@@ -50,10 +50,9 @@ namespace SoParse
 
 		ReadCharRange(char s, char e) : _s(s), _e(e) {}
 
-		virtual std::string getName() const { return std::string("GetChar(") + _s + ", " + _e + ")"; }
+		virtual std::string getName() const { return std::string("ReadChar(") + _s + ", " + _e + ")"; }
 
 		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return new OpcodePart(READ_CHAR_RANGE, _s, _e); }
-		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return 0; }
 
 	private:
 		const char _s;
@@ -63,6 +62,26 @@ namespace SoParse
 	inline APIRule ReadChar(char s, char e)
 	{
 		return APIRule(new ReadCharRange(s, e));
+	};
+
+	class ReadCharIn : public AtomicRule
+	{
+	public:
+		virtual ~ReadCharIn() {}
+
+		ReadCharIn(const std::string & chars) : _chars(chars) {}
+
+		virtual std::string getName() const { return std::string("ReadChar(\"") + _chars + "\")"; }
+
+		virtual OpcodePart *	getOpcodeStart(OpcoderInfos& infos) { return (new OpcodePart(READ_CHAR_IN))->addRefArgHere(_chars); }
+
+	private:
+		std::string	_chars;
+	};
+
+	inline APIRule ReadChar(std::string chars)
+	{
+		return APIRule(new ReadCharIn(chars));
 	};
 }
 

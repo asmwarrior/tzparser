@@ -10,6 +10,8 @@ namespace SoParse
 	public:
 		virtual ~AtomicRule() {}
 
+		virtual OpcodePart *	getOpcodeEnd(OpcoderInfos& infos) { return 0; }
+
 		virtual void	acceptVisitor(IRulesVisitor * visitor)
 		{
 			visitor->enter(this, false);

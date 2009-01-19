@@ -17,7 +17,7 @@ int	main()
 // 	simpleCString	::=
 // 		'"' #ReadChar('a', 'z') '"'
 // 	;
-	Rule(SimpleCString) =
+	_R_(SimpleCString) =
 			ReadChar('"')
 		&	ReadChar('a', 'z')
 		&	ReadChar('"')
@@ -26,7 +26,7 @@ int	main()
 // 	IdentifierStart ::=
 // 		#ReadChar('a', 'z') | #ReadChar('A', 'Z') | #ReadChar('_')
 // 	;
-	Rule(IdentifierStart) =
+	_R_(IdentifierStart) =
 			ReadChar('a', 'z')
 		|	ReadChar('A', 'Z')
 		|	ReadChar('_')
@@ -35,41 +35,36 @@ int	main()
 // 	Repeaters	::=
 // 		#ReadChar('a')+ #ReadChar('b')? #ReadChar('c') #readChar('d')*
 // 	;
-	Rule(Repeaters) =
-			ReadChar('a') << _r('+')
-		&	ReadChar('b') << _r('?')
+	_R_(Repeaters) =
+			+ReadChar('a')
+		&	!ReadChar('b')
 		&	ReadChar('c')
-		&	ReadChar('d') << _r('*')
+		&	*ReadChar('d')
 	;
 
 // 	IdentifierEnd ::=
 // 		[#ReadChar('a', 'z') | #ReadChar('A', 'Z') | #ReadChar('0', '9') | #ReadChar('_')]*
 // 	;
-	Rule(IdentifierEnd) =
-		(
+	_R_(IdentifierEnd) =
+		*(
 				ReadChar('a', 'z')
 			|	ReadChar('A', 'Z')
 			|	ReadChar('0', '9')
 			|	ReadChar('_')
-		) << _r('*')
+		)
 	;
 
 //	Blanks ::=
 //		[' ' | '\t' | '\r' | '\n']+
 //	;
-	Rule(Blanks) =
-		(
-				ReadChar(' ')
-			|	ReadChar('\t')
-			|	ReadChar('\r')
-			|	ReadChar('\n')
-		) << _r('+')
+	_R_(Blanks) =
+			+ReadChar(" \t\r\n")
 	;
 
 // 	Identifier	::=
 // 		IdentifierStart IdentifierEnd
 // 	;
-	Rule(Identifier) =
+	_R_(Identifier) =
 		(
 			IdentifierStart
 		&	IdentifierEnd
@@ -79,18 +74,18 @@ int	main()
 // 	GroupWithRepeaters	::=
 // 		#ReadChar('a')+ | #ReadChar('b')? | #ReadChar('c') | #readChar('d')*
 // 	;
-	Rule(GroupWithRepeaters) =
-			ReadChar('a') << _r('+')
-		|	ReadChar('b') << _r('?')
+	_R_(GroupWithRepeaters) =
+			+ReadChar('a')
+		|	!ReadChar('b')
 		|	ReadChar('c')
-		|	ReadChar('d') << _r('*')
+		|	*ReadChar('d')
 	;
 
 //	RecursiveRule	::=
 //		Identifier | #ReadChar('_') RecursiveRule
 //	;
 
-	Rule(RecursiveRule) =
+	_R_(RecursiveRule) =
 			Identifier
 		|(
 				ReadChar('_')
@@ -105,20 +100,9 @@ int	main()
 	DispAST	disp;
 	r->acceptVisitor(&disp);
 
-	std::cout << "VISITING TO CREATE OPCODE" << std::endl;
+
 	Opcoder opc;
-	r->acceptVisitor(&opc);
-
-	std::cout << "CLEANING" << std::endl;
-	opc.clean();
-
-	do 
-	{
-		std::cout << "SETTING REFERENCES" << std::endl;
-		opc.setRefs();
-
-		std::cout << "CLEANING REFERENCES" << std::endl;
-	} while (opc.cleanRefs());
+	opc.createOpcode(r);
 
 	std::cout << "GENERATED OPCODE :" << std::endl;
 	opc.disp(std::cout);
