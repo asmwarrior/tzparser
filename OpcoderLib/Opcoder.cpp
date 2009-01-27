@@ -7,6 +7,8 @@
 #include <iostream>
 #include <iomanip>
 
+#include <cstring>
+
 namespace SoParse
 {
 	bool	Opcoder::enter(IRule * rule, bool hasChild /* = true */)
@@ -154,9 +156,17 @@ namespace SoParse
 
 	void	Opcoder::setArgs(void)
 	{
-		for (vectorAPOpcodeArg::iterator i = opcp.opcodeArgs.begin(); i != opcp.opcodeArgs.end(); ++i)
+		// TODOO
+		for (vectorAPOpcodeArg::iterator i =  _opc.opcodeArgs.begin(); i != _opc.opcodeArgs.end(); ++i)
+			_argsSize += (*i)->size;
+
+		_args = new char[_argsSize];
+		unsigned int n = 0;
+
+		for (vectorAPOpcodeArg::iterator i =  _opc.opcodeArgs.begin(); i != _opc.opcodeArgs.end(); ++i)
 		{
-			// TODOOOOOOOOOOOOOO
+			memcpy(_args + n, (*i)->arg, (*i)->size);
+			n += (*i)->size;
 		}
 	}
 
@@ -210,5 +220,7 @@ namespace SoParse
 	{
 		for (OpcodePart::listAPOpcode::iterator i = _opc.opcodes.begin(); i != _opc.opcodes.end(); ++i)
 			os << (*i)->cmd << (*i)->arg[0] << (*i)->arg[1];
+		for (unsigned int i = 0; i < _argsSize; ++i)
+			os << _args[i];
 	}
 }

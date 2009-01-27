@@ -2,7 +2,7 @@
 
 namespace SoParse
 {
-	OpcodePart & OpcodePart::operator += (OpcodePart & opcp);
+	OpcodePart & OpcodePart::operator += (OpcodePart & opcp)
 	{
 		opcodes.splice(opcodes.end(), opcp.opcodes);
 
