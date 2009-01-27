@@ -17,7 +17,7 @@ namespace SoParse
 	class Opcoder : public IRulesVisitor
 	{
 	public:
-		Opcoder() : _inRule(false) {}
+		Opcoder() : _inRule(false), _args(0), _argsSize(0) {}
 		virtual	~Opcoder() {}
 
 		virtual bool	enter(IRule * rule, bool hasChild = true);
@@ -37,7 +37,7 @@ namespace SoParse
 
 		std::string		labelPos(int p);
 
-		OpcodePart	_opc;
+		OpcodePart _opc;
 
 		typedef std::map<IRule *, unsigned short int> mapLPIruleShortInt;
 		mapLPIruleShortInt _ruleRefs;
@@ -45,10 +45,13 @@ namespace SoParse
 		typedef std::map<unsigned short int, IRule *> mapShortIntLPIrule;
 		mapShortIntLPIrule _waitingRefs;
 
-		bool	_inRule;
+		bool _inRule;
 
 		typedef std::queue<IRule *> queueLPIRule;
-		queueLPIRule	_rulesToGen;
+		queueLPIRule _rulesToGen;
+
+		char * _args;
+		unsigned int _argsSize;
 
 		OpcoderInfos	_infos;
 	};
