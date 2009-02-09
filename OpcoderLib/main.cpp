@@ -10,6 +10,8 @@
 #include <iostream>
 #include <sstream>
 
+#include <fstream>
+
 using namespace SoParse;
 
 int	main()
@@ -106,4 +108,8 @@ int	main()
 
 	std::cout << "GENERATED OPCODE :" << std::endl;
 	opc.disp(std::cout);
+
+	std::ofstream outfile("../test.spo", std::ios_base::out | std::ios_base::binary | std::ios_base::trunc);
+
+	opc.save(outfile);
 }
